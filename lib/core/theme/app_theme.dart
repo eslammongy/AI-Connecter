@@ -44,9 +44,9 @@ class AppTheme {
     onSecondary: Colors.black,
     error: const Color(0xffff3201),
     onError: Colors.black,
-    background: const Color(0xff121212),
+    background: const Color(0xff14141c),
     onBackground: Colors.white,
-    surface: const Color(0xff262626),
+    surface: const Color(0xff24252a),
     onSurface: Colors.white,
     tertiary: const Color(0xFFB1B1B1),
   );
