@@ -3,7 +3,7 @@ import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:ai_connect/core/utils/size_config.dart';
-import 'package:ai_connect/core/widgets/custom_elvated_btn.dart';
+import 'package:ai_connect/core/widgets/custom_elevated_btn.dart';
 import 'package:ai_connect/features/onboarding/model/onboarding_model.dart';
 import 'package:ai_connect/features/onboarding/presentation/widgets/onboarding_item.dart';
 import 'package:flutter/material.dart';
@@ -30,15 +30,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             buildOnboardingIntro(),
             SizedBox(height: 40),
             //onboarding items
-            SizedBox(
-              height: (SizeConfig.height * 0.65),
-              child: OnboardingItem(
-                onboardingModel:
-                    OnBoardingModel.listOfOnBoardingItems[currentIndex],
-              ),
+            OnboardingItem(
+              onboardingModel:
+                  OnBoardingModel.listOfOnBoardingItems[currentIndex],
             ),
-            // Get Started Button
+           currentIndex ==  2 ?CustomElevatedBtn(
+              text: "Get Started",
+              bkColor: context.theme.appColors.primary,
+              icon: null,
+              onPressed: () {
+               
+              },
+            ):
             CustomElevatedBtn(
+              text: "Next",
               onPressed: () {
                 setState(() {
                   currentIndex++;
@@ -72,6 +77,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 AppStrings.appName,
                 style: AppTextStyles.styleSemiBold24(context).copyWith(
                   fontFamily: AppAssetsManager.roboto,
+                ),
+              ),
+              SizedBox(width: 5),
+              Text(
+               "${currentIndex + 1} of 3",
+                style: AppTextStyles.styleSemiBold24(context).copyWith(
+                  fontFamily: AppAssetsManager.roboto,
+                  color: context.theme.appColors.tertiary,
                 ),
               ),
             ],

@@ -1,8 +1,18 @@
+import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedBtn extends StatelessWidget {
-  const CustomElevatedBtn({super.key, this.onPressed});
+  const CustomElevatedBtn({
+    super.key,
+    this.onPressed,
+    required this.text,
+    this.bkColor,
+    this.icon = Icons.arrow_forward,
+  });
   final Function()? onPressed;
+  final String text;
+  final Color? bkColor;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +24,7 @@ class CustomElevatedBtn extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: 14),
+            backgroundColor: bkColor ?? context.theme.appColors.surface,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),
@@ -22,7 +33,7 @@ class CustomElevatedBtn extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Get Started',
+                text,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
@@ -30,7 +41,7 @@ class CustomElevatedBtn extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 10),
-              Icon(Icons.arrow_forward, color: Colors.white),
+             icon == null ? SizedBox.shrink() : Icon(icon, color: Colors.white),
             ],
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
-import 'package:ai_connect/features/onboarding/presentation/screen/onboarding_screen.dart';
+import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,13 +12,13 @@ class AIConnector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: AppStrings.appName,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.dark,
-      home: const OnboardingScreen(),
+        routerConfig: AppRoutes.initRoutes(),
     );
   }
 }
