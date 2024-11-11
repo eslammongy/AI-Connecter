@@ -7,6 +7,12 @@ abstract class AppAssetsManager {
   static const String onboardingImg1 = 'assets/svg/onboarding_img1.svg';
   static const String onboardingImg2 = 'assets/svg/onboarding_img2.svg';
   static const String onboardingImg3 = 'assets/svg/onboarding_img3.svg';
+  static const String phoneIcon = 'assets/svg/phone_icon.svg';
+  static const String googleIcon = 'assets/svg/google_icon.svg';
+  static const String appleIcon = 'assets/svg/apple.svg';
+  static const String chatGptIcon = 'assets/svg/chatgpt_icon.svg';
+  static const String geminiIcon = 'assets/svg/gemini_icon.svg';
+
 
   static const String chakraPetch = 'ChakraPetch';
   static const String indieFlower = 'IndieFlower';

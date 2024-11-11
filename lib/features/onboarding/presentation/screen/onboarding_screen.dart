@@ -43,7 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     bkColor: context.theme.appColors.primary,
                     icon: null,
                     onPressed: () {
-                      GoRouter.of(context).go(AppRoutes.home);
+                      GoRouter.of(context).go(AppRoutes.auth);
                     },
                   )
                 : CustomElevatedBtn(
