@@ -1,3 +1,4 @@
+import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -21,58 +22,56 @@ class SocialAuthBtn extends StatelessWidget {
     return SizedBox(
       height: 50,
       width: double.infinity,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: const BorderRadius.all(Radius.circular(100)),
+      child: ElevatedButton(
+        onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 14),
+        backgroundColor: handleBtnBkColor(signInOption, context),
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 30,
+            horizontal: 24,
           ),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: handleBtnBkColor(signInOption, theme),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  width: 20,
-                ),
-                SvgPicture.asset(
-                  iconPath,
-                  width: 32,
-                  fit: BoxFit.contain,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  btnText,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                      color: signInOption == SignInOption.google
-                          ? theme.colorScheme.background
-                          : Colors.white,
-                      fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                btnText,
+                style: theme.textTheme.titleMedium?.copyWith(
+                    color: signInOption == SignInOption.google
+                        ? context.theme.appColors.surface
+                        : Colors.white,
+                    fontWeight: FontWeight.w700,),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              SvgPicture.asset(
+                iconPath,
+                width: 28,
+                fit: BoxFit.contain,
+                colorFilter:signInOption != SignInOption.google ? ColorFilter.mode(Colors.white, BlendMode.srcIn): null,
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Color handleBtnBkColor(SignInOption signInOption, ThemeData theme) {
+  Color handleBtnBkColor(SignInOption signInOption, BuildContext context) {
     switch (signInOption) {
       case SignInOption.google:
-        return theme.colorScheme.onSurface;
+        return context.theme.appColors.onSurface;
       case SignInOption.phone:
-        return theme.colorScheme.surface;
+         return context.theme.appColors.primary;
       case SignInOption.apple:
-        return theme.colorScheme.surface;
+         return context.theme.appColors.surface;
     }
-  }
+ }
 }
-//
