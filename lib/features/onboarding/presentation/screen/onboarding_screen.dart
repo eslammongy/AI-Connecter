@@ -2,11 +2,14 @@ import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
+import 'package:ai_connect/core/utils/app_routes.dart';
+import 'package:ai_connect/core/utils/helper.dart';
 import 'package:ai_connect/core/utils/size_config.dart';
 import 'package:ai_connect/core/widgets/custom_elevated_btn.dart';
 import 'package:ai_connect/features/onboarding/model/onboarding_model.dart';
 import 'package:ai_connect/features/onboarding/presentation/widgets/onboarding_item.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -34,22 +37,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               onboardingModel:
                   OnBoardingModel.listOfOnBoardingItems[currentIndex],
             ),
-           currentIndex ==  2 ?CustomElevatedBtn(
-              text: "Get Started",
-              bkColor: context.theme.appColors.primary,
-              icon: null,
-              onPressed: () {
-               
-              },
-            ):
-            CustomElevatedBtn(
-              text: "Next",
-              onPressed: () {
-                setState(() {
-                  currentIndex++;
-                });
-              },
-            ),
+            currentIndex == 2
+                ? CustomElevatedBtn(
+                    text: "Get Started",
+                    bkColor: context.theme.appColors.primary,
+                    icon: null,
+                    onPressed: () {
+                      GoRouter.of(context).go(AppRoutes.home);
+                    },
+                  )
+                : CustomElevatedBtn(
+                    text: "Next",
+                    onPressed: () {
+                      setState(() {
+                        currentIndex++;
+                      });
+                    },
+                  ),
           ],
         ),
       ),
@@ -63,8 +67,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
-            color: context.theme.appColors.surface,
+            color: context.theme.appColors.surface,  
             borderRadius: BorderRadius.circular(20),
+            boxShadow: [staticBoxShadow,]
           ),
           child: Row(
             children: [
@@ -72,17 +77,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 AppAssetsManager.aiIMage,
                 width: 35,
               ),
-              SizedBox(width: 5),
+              SizedBox(
+                width: 5,
+              ),
               Text(
                 AppStrings.appName,
                 style: AppTextStyles.styleSemiBold24(context).copyWith(
                   fontFamily: AppAssetsManager.roboto,
                 ),
               ),
-              SizedBox(width: 5),
+              SizedBox(
+                width: 5,
+              ),
               Text(
-               "${currentIndex + 1} of 3",
-                style: AppTextStyles.styleSemiBold24(context).copyWith(
+                "${currentIndex + 1} of 3",
+                style: AppTextStyles.styleMedium20(context).copyWith(
                   fontFamily: AppAssetsManager.roboto,
                   color: context.theme.appColors.tertiary,
                 ),
