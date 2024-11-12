@@ -1,6 +1,6 @@
-import 'package:ai_connect/features/auth/presentation/screen/auth_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:ai_connect/features/dashboard/dashboard_screen.dart';
+import 'package:ai_connect/features/user/presentation/screen/auth_screen.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRoutes {

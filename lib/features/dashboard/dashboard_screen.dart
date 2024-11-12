@@ -1,8 +1,8 @@
 import 'package:ai_connect/core/widgets/bottom_nav_bar.dart';
-import 'package:ai_connect/features/auth/presentation/user_settings_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/archived_questions_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/custom_appbar.dart';
+import 'package:ai_connect/features/user/presentation/screen/user_settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -13,7 +13,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  int currentIndex = 0;
+  int currentIndex = 2;
   final listOfScreens = [
     HomeScreen(),
     ArchivedQuestionsScreen(),
