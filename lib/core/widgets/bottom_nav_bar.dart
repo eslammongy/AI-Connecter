@@ -21,7 +21,7 @@ class FloatingBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final appColors = context.theme.appColors;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20),
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(20)),

@@ -3,15 +3,21 @@ import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'custom_text_input_filed.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppbar({super.key});
+  const CustomAppbar({super.key, required this.index});
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final searchController = TextEditingController();
+
     return AppBar(
       backgroundColor: context.theme.appColors.background,
-      elevation: 1,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(20),
@@ -29,12 +35,24 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
           const SizedBox(
             width: 10,
           ),
-          Text(
-            AppStrings.appName,
-            style: AppTextStyles.styleSemiBold24(context).copyWith(
-              fontFamily: AppAssetsManager.inter,
-            ),
-          ),
+          index != 0
+              ? Expanded(
+                  child: CustomTextInputField(
+                    textEditingController: searchController,
+                    height: 50,
+                    hint: "search for city by name...",
+                    bkColor: context.theme.appColors.surface,
+                    focusColor: context.theme.appColors.primary,
+                    prefix: const Icon(FontAwesomeIcons.magnifyingGlass),
+                    onSubmitted: (text) {},
+                  ),
+                )
+              : Text(
+                  AppStrings.appName,
+                  style: AppTextStyles.styleSemiBold24(context).copyWith(
+                    fontFamily: AppAssetsManager.inter,
+                  ),
+                ),
         ],
       ),
       actions: [
