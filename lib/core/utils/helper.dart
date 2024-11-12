@@ -76,11 +76,8 @@ get staticBoxShadow => BoxShadow(
       offset: const Offset(1, 1), // Shadow position (x, y)
     );
 
-DateTime validateDatetime(String strDate) {
-  final dateString = strDate.replaceFirst(':', ' ');
-  // Define the format pattern for the input string
-  DateFormat format = DateFormat('yyyy-MM-dd HH');
+String datetimeFormater(DateTime datetime) {
+  final formatDT = DateFormat.MMMEd().format(datetime);
   // Parse the string into a DateTime object
-  DateTime parsedDate = format.parse(dateString);
-  return parsedDate;
+  return formatDT;
 }

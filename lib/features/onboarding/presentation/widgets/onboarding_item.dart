@@ -39,8 +39,7 @@ class OnboardingItem extends StatelessWidget {
             child: Column(
               children: [
                 SvgPicture.asset(
-                  onboardingModel
-                      .image, 
+                  onboardingModel.image,
                   width: 320,
                   fit: BoxFit.contain,
                 ),

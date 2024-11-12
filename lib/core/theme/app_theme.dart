@@ -7,6 +7,7 @@ class AppTheme {
     final defaultTheme = ThemeData.light();
 
     return defaultTheme.copyWith(
+      scaffoldBackgroundColor: _lightAppColors.background,
       extensions: [
         _lightAppColors,
       ],
@@ -31,6 +32,7 @@ class AppTheme {
     final defaultTheme = ThemeData.dark();
 
     return defaultTheme.copyWith(
+      scaffoldBackgroundColor: _darkAppColors.background,
       extensions: [
         _darkAppColors,
       ],

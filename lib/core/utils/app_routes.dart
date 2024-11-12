@@ -1,6 +1,5 @@
-import 'package:ai_connect/features/auth/presentation/auth_screen.dart';
-import 'package:ai_connect/features/home/presentation/home_screen.dart';
-import 'package:ai_connect/features/onboarding/presentation/screen/onboarding_screen.dart';
+import 'package:ai_connect/features/auth/presentation/screen/auth_screen.dart';
+import 'package:ai_connect/features/home/presentation/views/screen/home_screen.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class AppRoutes {
@@ -15,22 +14,21 @@ abstract class AppRoutes {
         GoRoute(
           path: '/',
           builder: (context, state) {
-             return const OnboardingScreen();
+            return const HomeScreen();
           },
         ),
         GoRoute(
           path: home,
           builder: (context, state) {
-             return const HomeScreen();
+            return const HomeScreen();
           },
         ),
         GoRoute(
           path: auth,
           builder: (context, state) {
-             return const AuthScreen();
+            return const AuthScreen();
           },
         ),
-        
       ],
     );
   }
