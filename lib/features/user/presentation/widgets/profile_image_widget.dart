@@ -45,7 +45,12 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
             child: IconButton(
               style: TextButton.styleFrom(
                   backgroundColor: context.theme.appColors.surface,
-                  elevation: 0),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    side: BorderSide(
+                        color: context.theme.appColors.tertiary, width: 2),
+                  )),
               icon: Icon(
                 Icons.add_a_photo_rounded,
                 color: context.theme.appColors.onSurface,
