@@ -24,11 +24,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
-      appBar: AppBar(),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: kToolbarHeight),
             // App Icon and Name
             buildOnboardingIntro(),
             SizedBox(height: 40),
@@ -54,6 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       });
                     },
                   ),
+            SizedBox(height: 40),
           ],
         ),
       ),
@@ -67,10 +68,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
-            color: context.theme.appColors.surface,  
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [staticBoxShadow,]
-          ),
+              color: context.theme.appColors.surface,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                staticBoxShadow,
+              ]),
           child: Row(
             children: [
               Image.asset(

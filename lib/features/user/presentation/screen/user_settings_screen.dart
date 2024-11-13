@@ -1,8 +1,8 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/widgets/custom_elevated_btn.dart';
+import 'package:ai_connect/core/widgets/delete_component/clear_cache_btn.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/custom_text_input_filed.dart';
 import 'package:ai_connect/features/user/presentation/widgets/app_settings_component.dart';
-import 'package:ai_connect/features/user/presentation/widgets/clear_cache_btn.dart';
 import 'package:ai_connect/features/user/presentation/widgets/profile_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -67,7 +67,7 @@ class UserSettingsScreen extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          buildClearHistoryBtn(context),
+          DeleteComponent(),
           const SizedBox(
             height: 20,
           ),

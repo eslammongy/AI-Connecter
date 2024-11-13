@@ -20,6 +20,12 @@ abstract class AppRoutes {
           },
         ),
         GoRoute(
+          path: dashboard,
+          builder: (context, state) {
+            return const DashboardScreen();
+          },
+        ),
+        GoRoute(
           path: home,
           builder: (context, state) {
             return const HomeScreen();

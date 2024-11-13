@@ -22,7 +22,7 @@ class SocialAuthContainer extends StatelessWidget {
             if (Platform.isAndroid) ...[
               SocialAuthBtn(
                 onPressed: () {
-                  GoRouter.of(context).pushReplacement(AppRoutes.home);
+                  GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
                 },
                 iconPath: AppAssetsManager.googleIcon,
                 btnText: "Sign in with Google",
