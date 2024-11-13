@@ -1,4 +1,5 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
 
 class CustomElevatedBtn extends StatelessWidget {
@@ -17,7 +18,7 @@ class CustomElevatedBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 40),
+      padding: const EdgeInsets.only(bottom: 20),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.8,
         child: ElevatedButton(
@@ -35,14 +36,13 @@ class CustomElevatedBtn extends StatelessWidget {
             children: [
               Text(
                 text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTextStyles.styleSemiBold24(context)
+                    .copyWith(color: Colors.white),
               ),
               SizedBox(width: 10),
-             icon == null ? SizedBox.shrink() : Icon(icon, color: Colors.white),
+              icon == null
+                  ? SizedBox.shrink()
+                  : Icon(icon, color: Colors.white),
             ],
           ),
         ),

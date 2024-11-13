@@ -4,7 +4,9 @@ import 'app_colors_extension.dart';
 
 class AppTheme {
   static final light = () {
-    final defaultTheme = ThemeData.light();
+    final defaultTheme = ThemeData.light(
+      useMaterial3: true,
+    );
 
     return defaultTheme.copyWith(
       scaffoldBackgroundColor: _lightAppColors.background,
@@ -29,7 +31,9 @@ class AppTheme {
   );
 
   static final dark = () {
-    final defaultTheme = ThemeData.dark();
+    final defaultTheme = ThemeData.dark(
+      useMaterial3: true,
+    );
 
     return defaultTheme.copyWith(
       scaffoldBackgroundColor: _darkAppColors.background,

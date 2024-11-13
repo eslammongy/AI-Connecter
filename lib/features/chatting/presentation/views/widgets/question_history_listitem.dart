@@ -5,6 +5,9 @@ import 'package:ai_connect/core/utils/helper.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
+const desc =
+    "This sample of chat ai question This sample of chat ai question This sample of chat ai questionThis sample of chat ai question This sample of chat ai question This sample of chat ai question";
+
 class QuestionHistoryListItem extends StatelessWidget {
   const QuestionHistoryListItem({
     super.key,
@@ -63,7 +66,7 @@ class QuestionHistoryListItem extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "This sample of chat ai question This sample of chat ai question This sample of chat ai questionThis sample of chat ai question This sample of chat ai question This sample of chat ai question",
+                        desc,
                         maxLines: 3,
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.ellipsis,

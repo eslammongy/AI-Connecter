@@ -1,6 +1,8 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/widgets/custom_elevated_btn.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/custom_text_input_filed.dart';
+import 'package:ai_connect/features/user/presentation/widgets/app_settings_component.dart';
+import 'package:ai_connect/features/user/presentation/widgets/clear_cache_btn.dart';
 import 'package:ai_connect/features/user/presentation/widgets/profile_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,24 +20,7 @@ class UserSettingsScreen extends StatelessWidget {
           const SizedBox(
             height: kToolbarHeight,
           ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Card(
-              color: context.theme.appColors.primary,
-              margin: const EdgeInsets.all(0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(80),
-              ),
-              child: InkWell(
-                onTap: () {},
-                borderRadius: BorderRadius.circular(100),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(FontAwesomeIcons.gear),
-                ),
-              ),
-            ),
-          ),
+          AppSettingsComponent(),
           const SizedBox(
             height: kToolbarHeight,
           ),
@@ -80,7 +65,14 @@ class UserSettingsScreen extends StatelessWidget {
             prefix: const Icon(FontAwesomeIcons.phone),
           ),
           const SizedBox(
-            height: 50,
+            height: 20,
+          ),
+          buildClearHistoryBtn(context),
+          const SizedBox(
+            height: 20,
+          ),
+          const SizedBox(
+            height: 20,
           ),
           CustomElevatedBtn(
             text: "Sign out",
