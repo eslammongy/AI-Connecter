@@ -19,7 +19,7 @@ class ImagePickerButton extends StatelessWidget {
               width: 2,
             ),
           )),
-      onPressed: () {},
+      onPressed: onPressed,
       icon: Icon(
         Icons.add_a_photo_rounded,
         color: context.theme.appColors.onSurface,

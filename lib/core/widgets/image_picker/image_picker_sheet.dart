@@ -14,7 +14,12 @@ class ImagePickerBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(18.0),
+      padding: const EdgeInsets.only(
+        left: 18.0,
+        right: 18.0,
+        bottom: 15.0,
+        top: 40,
+      ),
       child: SizedBox(
         width: double.infinity,
         height: MediaQuery.of(context).size.height / 4.5,
@@ -45,7 +50,7 @@ void displayImagePickerOption(
 }) {
   final theme = context.theme;
   showModalBottomSheet(
-      backgroundColor: theme.colorScheme.surface,
+      backgroundColor: theme.appColors.surface,
       context: context,
       builder: (builder) {
         return ImagePickerBody(

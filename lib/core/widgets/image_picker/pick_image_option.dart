@@ -1,4 +1,5 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
 
 class PickImageOption extends StatelessWidget {
@@ -21,7 +22,7 @@ class PickImageOption extends StatelessWidget {
         child: Column(
           children: [
             Card(
-              color: theme.colorScheme.primary,
+              color: theme.appColors.primary,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(100),
@@ -37,7 +38,7 @@ class PickImageOption extends StatelessWidget {
             ),
             Text(
               title,
-              style: theme.textTheme.titleMedium,
+              style: AppTextStyles.styleMedium20(context),
             )
           ],
         ),

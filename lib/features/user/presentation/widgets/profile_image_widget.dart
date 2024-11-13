@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/widgets/image_picker/image_picker_button.dart';
+import 'package:ai_connect/core/widgets/image_picker/image_picker_sheet.dart';
 import 'package:flutter/material.dart';
 
 import 'network_cache_image.dart';
@@ -44,7 +45,13 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
               bottom: 5,
               right: 0,
               child: ImagePickerButton(
-                onPressed: () {},
+                onPressed: () {
+                  displayImagePickerOption(
+                    context,
+                    onGalleryTap: () {},
+                    onCameraTap: () {},
+                  );
+                },
               )),
         ],
       ),
