@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/core/widgets/image_picker/image_picker_button.dart';
 import 'package:flutter/material.dart';
 
 import 'network_cache_image.dart';
@@ -40,24 +41,11 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                   imgUrl: widget.profileImgUrl,
                 ),
           Positioned(
-            bottom: 5,
-            right: 0,
-            child: IconButton(
-              style: TextButton.styleFrom(
-                  backgroundColor: context.theme.appColors.surface,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
-                    side: BorderSide(
-                        color: context.theme.appColors.tertiary, width: 2),
-                  )),
-              icon: Icon(
-                Icons.add_a_photo_rounded,
-                color: context.theme.appColors.onSurface,
-              ),
-              onPressed: () {},
-            ),
-          ),
+              bottom: 5,
+              right: 0,
+              child: ImagePickerButton(
+                onPressed: () {},
+              )),
         ],
       ),
     );
