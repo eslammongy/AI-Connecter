@@ -1,6 +1,7 @@
 import 'package:ai_connect/features/chatting/presentation/views/screen/chatting_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:ai_connect/features/dashboard/dashboard_screen.dart';
+import 'package:ai_connect/features/onboarding/presentation/screen/onboarding_screen.dart';
 import 'package:ai_connect/features/user/presentation/screen/auth_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,7 +19,7 @@ abstract class AppRoutes {
         GoRoute(
           path: '/',
           builder: (context, state) {
-            return const ChattingScreen();
+            return const OnboardingScreen();
           },
         ),
         GoRoute(

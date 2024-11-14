@@ -5,6 +5,7 @@ import 'package:ai_connect/features/chatting/presentation/views/widgets/msg_ques
 import 'package:ai_connect/features/chatting/presentation/views/widgets/question_input_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 
 const title = "This Test Sample Title Chatting Screen more more";
 
@@ -23,7 +24,9 @@ class ChattingScreen extends StatelessWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            GoRouter.of(context).pop();
+          },
           icon: const Icon(
             Icons.arrow_back_rounded,
             color: Colors.white,

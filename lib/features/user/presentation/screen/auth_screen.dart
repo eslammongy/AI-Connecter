@@ -19,7 +19,7 @@ class AuthScreen extends StatelessWidget {
             Image.asset(
               AppAssetsManager.aiIMage,
               fit: BoxFit.contain,
-              width: 200,
+              width: 180,
             ),
             SizedBox(
               height: 20,

@@ -18,7 +18,7 @@ class SocialAuthBtn extends StatelessWidget {
   final SignInOption signInOption;
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
+    final ThemeData theme = context.theme;
     return SizedBox(
       height: 50,
       width: double.infinity,
