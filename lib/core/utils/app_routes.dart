@@ -19,7 +19,7 @@ abstract class AppRoutes {
         GoRoute(
           path: '/',
           builder: (context, state) {
-            return const OnboardingScreen();
+            return const DashboardScreen();
           },
         ),
         GoRoute(

@@ -13,7 +13,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  int currentIndex = 2;
+  int currentIndex = 0;
   final listOfScreens = [
     HomeScreen(),
     ArchivedQuestionsScreen(),

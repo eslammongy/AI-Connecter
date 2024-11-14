@@ -39,7 +39,9 @@ class SocialAuthContainer extends StatelessWidget {
               const SizedBox(height: 30),
             ] else ...[
               SocialAuthBtn(
-                onPressed: () {},
+                onPressed: () {
+                    GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
+                },
                 iconPath: AppAssetsManager.appleIcon,
                 btnText: "Sign in with Apple",
                 signInOption: SignInOption.apple,

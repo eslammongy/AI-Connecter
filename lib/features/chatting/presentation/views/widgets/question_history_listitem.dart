@@ -23,57 +23,38 @@ class QuestionHistoryListItem extends StatelessWidget {
       elevation: 2,
       margin: EdgeInsets.only(bottom: 10),
       child: InkWell(
-        onTap: () => GoRouter.of(context).pushNamed(
-          AppRoutes.chattingScreen,
-        ),
+        onTap: () {
+          GoRouter.of(context).push(
+            AppRoutes.chattingScreen,
+          );
+        },
         child: SizedBox(
           height: 150,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 10,
-            ),
-            child: Stack(
-              children: [
-                Positioned.fill(
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal:  14, vertical: 10,),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            title.substring(0, 30),
-                            textAlign: TextAlign.start,
-                            maxLines: 1,
-                            style: AppTextStyles.styleBold20(context).copyWith(
-                              fontFamily: AppAssetsManager.inter,
-                            ),
+                     
+                      Padding(
+                        padding: const EdgeInsets.only(right: 50, bottom: 8, top:5),
+                        child: Text(
+                          title,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.styleBold20(context).copyWith(
+                            fontFamily: AppAssetsManager.inter,
                           ),
-                          Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                side: BorderSide(
-                                    width: 1,
-                                    color: context.theme.appColors.tertiary)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Text(
-                                dateTimeFormatter(DateTime.now()),
-                                textAlign: TextAlign.start,
-                                style: AppTextStyles.styleSemiBold20(context),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
+                        ),
                       ),
                       Expanded(
                         child: Text(
                           desc,
-                          maxLines: 3,
+                          maxLines: 4,
                           textAlign: TextAlign.start,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.styleMedium18(context).copyWith(
@@ -84,26 +65,45 @@ class QuestionHistoryListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                Positioned(
-                    bottom: 0,
-                    right: 10,
-                    child: Card(
-                      color: context.theme.appColors.primary,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100)),
-                      child: InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(100),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(isArchived
-                              ? Icons.unarchive_rounded
-                              : Icons.archive_rounded),
-                        ),
-                      ),
-                    ))
-              ],
-            ),
+              ),
+              Positioned(
+                top: 4,
+                right: 10,
+                child: Card(
+                  color: context.theme.appColors.primary,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100)),
+                  child: InkWell(
+                    onTap: () {},
+                    borderRadius: BorderRadius.circular(100),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(isArchived
+                          ? Icons.unarchive_rounded
+                          : Icons.archive_rounded),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 10,
+                right: 10,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                          width: 1, color: context.theme.appColors.tertiary)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Text(
+                      dateTimeFormatter(DateTime.now()),
+                      textAlign: TextAlign.start,
+                      style: AppTextStyles.styleSemiBold20(context),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
