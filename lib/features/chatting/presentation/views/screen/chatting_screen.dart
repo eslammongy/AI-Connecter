@@ -1,5 +1,6 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
+import 'package:ai_connect/features/chatting/presentation/views/widgets/msg_question_bubble.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/question_input_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -37,20 +38,29 @@ class ChattingScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Container(),
+      body: Expanded(
+        child: ListView.builder(
+          reverse: true,
+          padding: EdgeInsets.only(bottom: 10, left: 0, right: 0),
+          physics: const BouncingScrollPhysics(),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return MsgQuestionBubble();
+          },
+        ),
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, bottom: 30),
         child: Row(
           children: [
-           QuestionInputBuilder(questionController: TextEditingController()),
+            QuestionInputBuilder(questionController: TextEditingController()),
             Card(
               color: context.theme.appColors.primary,
               margin: EdgeInsets.only(left: 10),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100)),
               child: InkWell(
-                onTap: () async {
-                },
+                onTap: () async {},
                 borderRadius: BorderRadius.circular(100),
                 child: const Padding(
                   padding: EdgeInsets.all(10.0),
