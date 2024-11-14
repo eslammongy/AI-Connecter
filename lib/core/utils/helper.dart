@@ -76,8 +76,8 @@ get staticBoxShadow => BoxShadow(
       offset: const Offset(1, 1), // Shadow position (x, y)
     );
 
-String datetimeFormater(DateTime datetime) {
-  final formatDT = DateFormat.MMMEd().format(datetime);
+String dateTimeFormatter(DateTime dateTime) {
+  final formatDT = DateFormat.MMMEd().format(dateTime);
   // Parse the string into a DateTime object
   return formatDT;
 }

@@ -53,7 +53,7 @@ class QuestionHistoryListItem extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Text(
-                              datetimeFormater(DateTime.now()),
+                              dateTimeFormatter(DateTime.now()),
                               textAlign: TextAlign.start,
                               style: AppTextStyles.styleSemiBold20(context),
                             ),

@@ -1,3 +1,4 @@
+import 'package:ai_connect/core/constant/fake_json.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/msg_question_bubble.dart';
@@ -40,12 +41,13 @@ class ChattingScreen extends StatelessWidget {
       ),
       body: Expanded(
         child: ListView.builder(
-          reverse: true,
           padding: EdgeInsets.only(bottom: 10, left: 0, right: 0),
           physics: const BouncingScrollPhysics(),
-          itemCount: 10,
+          itemCount: listOfQuestions.length,
           itemBuilder: (context, index) {
-            return MsgQuestionBubble();
+            return MsgQuestionBubble(
+              msgEntity: listOfQuestions[index],
+            );
           },
         ),
       ),

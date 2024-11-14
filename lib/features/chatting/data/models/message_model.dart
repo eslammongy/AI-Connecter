@@ -49,7 +49,7 @@ class MessageModel  extends MessageEntity{
       isAnswer: map['isAnswer'] as bool,
       hasImage: map['hasImage'] as bool,
       imgPath: map['imgPath'] != null ? map['imgPath'] as String : null,
-      dateTime: map['dateTime'] != null ? DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int) : null,
+      dateTime: map['dateTime'] != null ? DateTime.tryParse(map['dateTime']) : null,
     );
   }
 
