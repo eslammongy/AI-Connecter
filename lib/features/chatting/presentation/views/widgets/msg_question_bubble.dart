@@ -20,7 +20,7 @@ class MsgQuestionBubble extends StatelessWidget {
       alignment: msgEntity.isAnswer ? Alignment.topRight : Alignment.topLeft,
       child: ConstrainedBox(
         constraints: const BoxConstraints(
-          maxWidth: 260,
+          maxWidth: 280,
           minWidth: 100,
         ),
         child: Card(
