@@ -1,3 +1,4 @@
+import 'package:ai_connect/features/chatting/presentation/views/screen/chatting_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:ai_connect/features/dashboard/dashboard_screen.dart';
 import 'package:ai_connect/features/user/presentation/screen/auth_screen.dart';
@@ -7,6 +8,7 @@ abstract class AppRoutes {
   static const String onboarding = '/onboarding';
   static const String dashboard = '/dashboard';
   static const String home = '/home';
+  static const String chattingScreen = '/chattingScreen';
   static const String auth = '/auth';
   static const String search = '/search';
 
@@ -16,7 +18,7 @@ abstract class AppRoutes {
         GoRoute(
           path: '/',
           builder: (context, state) {
-            return const DashboardScreen();
+            return const ChattingScreen();
           },
         ),
         GoRoute(
@@ -35,6 +37,12 @@ abstract class AppRoutes {
           path: auth,
           builder: (context, state) {
             return const AuthScreen();
+          },
+        ),
+        GoRoute(
+          path: chattingScreen,
+          builder: (context, state) {
+            return const ChattingScreen();
           },
         ),
       ],

@@ -20,7 +20,7 @@ class CustomTextInputField extends StatelessWidget {
       this.onChange,
       this.bkColor,
       this.focusColor,
-      this.enabled = true});
+      this.enabled = true,  BorderRadius? fieldRoundedRadius});
 
   final TextEditingController textEditingController;
   final String? initText;

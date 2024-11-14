@@ -104,7 +104,6 @@ class ChatFontStyleToggles extends StatelessWidget {
           padding: const EdgeInsets.all(6),
           child: SizedBox(
             height: 25,
-            width: 110,
             child: Text(
               "sample of text",
               textAlign: TextAlign.center,
