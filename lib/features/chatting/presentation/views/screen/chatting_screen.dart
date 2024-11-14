@@ -39,17 +39,15 @@ class ChattingScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Expanded(
-        child: ListView.builder(
-          padding: EdgeInsets.only(bottom: 10, left: 0, right: 0),
-          physics: const BouncingScrollPhysics(),
-          itemCount: listOfQuestions.length,
-          itemBuilder: (context, index) {
-            return MsgQuestionBubble(
-              msgEntity: listOfQuestions[index],
-            );
-          },
-        ),
+      body: ListView.builder(
+        padding: EdgeInsets.only(bottom: 10, left: 15, right: 15),
+        physics: const BouncingScrollPhysics(),
+        itemCount: listOfQuestions.length,
+        itemBuilder: (context, index) {
+          return MsgQuestionBubble(
+            msgEntity: listOfQuestions[index],
+          );
+        },
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, bottom: 30),
