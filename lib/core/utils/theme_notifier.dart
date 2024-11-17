@@ -1,11 +1,14 @@
+import 'package:ai_connect/core/constant/app_strings.dart';
+import 'package:ai_connect/core/utils/app_storage.dart';
 import 'package:flutter/material.dart';
+
+enum ThemeModes { darkTheme, lightTheme }
 
 class ThemeNotifier extends ChangeNotifier {
   ThemeNotifier() {
-    // getAppPreferenceTheme();
+    getAppPreferenceTheme();
   }
 
-// Default theme is dark
   bool _isDarkTheme = true;
 
   bool get isDarkTheme => _isDarkTheme;
@@ -21,12 +24,12 @@ class ThemeNotifier extends ChangeNotifier {
     return _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
   }
 
-  // void getAppPreferenceTheme() {
-  //   final themeMode = SharedPref.getSelectedAppTheme();
-  //   if (themeMode == ThemeModes.darkTheme.name) {
-  //     _isDarkTheme = true;
-  //   } else {
-  //     _isDarkTheme = false;
-  //   }
-  // }
+  void getAppPreferenceTheme() async {
+    final themeMode = await AppStorage.getFromAppStorage(themeModeKey);
+    if (themeMode == ThemeModes.darkTheme.name) {
+      _isDarkTheme = true;
+    } else {
+      _isDarkTheme = false;
+    }
+  }
 }

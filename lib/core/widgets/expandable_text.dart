@@ -1,5 +1,6 @@
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
 
 class ExpendableTextWidget extends StatefulWidget {
@@ -34,13 +35,8 @@ class _ExpendableTextWidgetState extends State<ExpendableTextWidget> {
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  hiddenText ? ('$firstHalf...') : (firstHalf + secondHalf),
-                  style: msgTextFont(
-                    theme,
-                    AppAssetsManager.openSans,
-                  ),
-                ),
+                Text(hiddenText ? ('$firstHalf...') : (firstHalf + secondHalf),
+                    style: AppTextStyles.styleBold16(context)),
                 InkWell(
                   onTap: () {
                     setState(() {
@@ -51,8 +47,8 @@ class _ExpendableTextWidgetState extends State<ExpendableTextWidget> {
                     children: [
                       Text(
                         hiddenText ? 'Read More..' : 'Show less..',
-                        style: theme.textTheme.bodyLarge
-                            ?.copyWith(color: theme.colorScheme.surfaceTint),
+                        style: AppTextStyles.styleBold16(context)
+                            .copyWith(color: theme.appColors.primary),
                       ),
                       Icon(
                         hiddenText

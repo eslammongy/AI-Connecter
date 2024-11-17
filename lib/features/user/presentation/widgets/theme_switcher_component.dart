@@ -29,7 +29,9 @@ class ThemeSwitcherComponent extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
                 'Light Mode',
-                style: AppTextStyles.styleBold20(context),
+                style: AppTextStyles.styleBold20(
+                  context,
+                ),
               ),
             ),
             icon: Padding(

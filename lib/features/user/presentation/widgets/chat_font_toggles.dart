@@ -109,6 +109,7 @@ class ChatFontStyleToggles extends StatelessWidget {
               textAlign: TextAlign.center,
               style: AppTextStyles.styleMedium18(context).copyWith(
                 fontFamily: fontFamily,
+                color: isSelected ? Colors.white : theme.appColors.onSurface,
               ),
             ),
           ),

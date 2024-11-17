@@ -34,13 +34,16 @@ class QuestionHistoryListItem extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal:  14, vertical: 10,),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 10,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                     
                       Padding(
-                        padding: const EdgeInsets.only(right: 50, bottom: 8, top:5),
+                        padding:
+                            const EdgeInsets.only(right: 50, bottom: 8, top: 5),
                         child: Text(
                           title,
                           textAlign: TextAlign.start,
@@ -78,9 +81,12 @@ class QuestionHistoryListItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Icon(isArchived
-                          ? Icons.unarchive_rounded
-                          : Icons.archive_rounded),
+                      child: Icon(
+                        isArchived
+                            ? Icons.unarchive_rounded
+                            : Icons.archive_rounded,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

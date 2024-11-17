@@ -34,7 +34,9 @@ class DeleteComponent extends StatelessWidget {
             onPressed: () {
               displayConfirmationActionDialog(context, onConfirm: () {});
             },
-            icon: Icon(FontAwesomeIcons.trashCan, color: Colors.white)),
+            icon: Icon(
+              FontAwesomeIcons.trashCan,
+            )),
       ],
     );
   }

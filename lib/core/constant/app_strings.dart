@@ -11,3 +11,6 @@ abstract class AppStrings {
   static const String onboardingDesc3 =
       "Chat with the smartest AI Future Experience power of AI with us";
 }
+
+const themeModeKey = 'THEME_MODE_KEY';
+const selectedFontKey = 'SELECTED_FONT_KEY';

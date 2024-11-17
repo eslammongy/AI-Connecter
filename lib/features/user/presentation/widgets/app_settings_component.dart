@@ -24,7 +24,10 @@ class AppSettingsComponent extends StatelessWidget {
           borderRadius: BorderRadius.circular(100),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(FontAwesomeIcons.gear),
+            child: Icon(
+              FontAwesomeIcons.gear,
+              color: Colors.white,
+            ),
           ),
         ),
       ),

@@ -54,6 +54,7 @@ displayConfirmationActionDialog(
                   context,
                   btnText: "Sign out",
                   bkColor: theme.appColors.error,
+                  textColor: Colors.white,
                   onPressed: onConfirm,
                 ),
               ],
@@ -84,7 +85,7 @@ Widget buildTextBtnWidget(
     child: Text(
       btnText,
       style: AppTextStyles.styleMedium18(context).copyWith(
-        color: theme.appColors.onSurface,
+        color: textColor ?? theme.appColors.onSurface,
       ),
     ),
   );

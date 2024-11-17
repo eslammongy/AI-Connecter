@@ -51,7 +51,14 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                 onPressed: () {
                   displayImagePickerOption(
                     context,
-                    onGalleryTap: () {},
+                    onGalleryTap: () async {
+                      //* close the bottom sheet
+                      GoRouter.of(context).pop();
+                      final imgFile = await pickGalleryImage(context);
+                      if (imgFile != null) {
+                        selectedImg = File(imgFile.path);
+                      }
+                    },
                     onCameraTap: () async {
                       //* close the bottom sheet
                       GoRouter.of(context).pop();
@@ -77,9 +84,28 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
       return pickedImg;
     } on Exception catch (e) {
       if (!context.mounted) return null;
-      displaySnackBar(context, e.toString());
-      GoRouter.of(context).pop();
-      return null;
+      return handleExpState(e.toString());
     }
+  }
+
+  /// pick an image fromGallery
+  Future<XFile?> pickGalleryImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+
+    try {
+      final XFile? pickedFile =
+          await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile == null) return null;
+      return pickedFile;
+    } on Exception catch (e) {
+      if (!context.mounted) return null;
+      return handleExpState(e.toString());
+    }
+  }
+
+  Null handleExpState(String expMsg) {
+    displaySnackBar(context, expMsg);
+    GoRouter.of(context).pop();
+    return null;
   }
 }

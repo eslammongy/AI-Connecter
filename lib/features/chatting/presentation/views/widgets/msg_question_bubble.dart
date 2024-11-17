@@ -1,7 +1,6 @@
-
 import 'package:ai_connect/core/theme/app_theme.dart';
-import 'package:ai_connect/features/chatting/domain/entities/message_entity.dart';
 import 'package:ai_connect/core/widgets/expandable_text.dart';
+import 'package:ai_connect/features/chatting/domain/entities/message_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,7 +14,7 @@ class MsgQuestionBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme; 
+    final theme = context.theme;
     return Align(
       alignment: msgEntity.isAnswer ? Alignment.topRight : Alignment.topLeft,
       child: ConstrainedBox(
@@ -25,7 +24,7 @@ class MsgQuestionBubble extends StatelessWidget {
         ),
         child: Card(
           margin: const EdgeInsets.only(bottom: 15),
-          color: theme.appColors.surface, 
+          color: theme.appColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -38,14 +37,14 @@ class MsgQuestionBubble extends StatelessWidget {
                   : MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (msgEntity.hasImage && msgEntity.imgPath != null) 
+                if (msgEntity.hasImage && msgEntity.imgPath != null)
                   SvgPicture.asset(
                     msgEntity.imgPath!,
                     width: 240,
                   ),
                 ExpendableTextWidget(
                   expendedText: msgEntity.text ?? "",
-                  textColor: Colors.white,
+                  textColor: context.theme.appColors.onSurface,
                 ),
               ],
             ),

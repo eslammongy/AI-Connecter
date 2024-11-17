@@ -1,3 +1,4 @@
+import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:ai_connect/features/chatting/domain/entities/menu_item.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class ChattingScreenAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: context.theme.scaffoldBackgroundColor,
       title: Text(
         title,
         maxLines: 1,

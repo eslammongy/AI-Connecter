@@ -34,10 +34,7 @@ class PickImageOption extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Icon(
-                  icon,
-                  size: 50,
-                ),
+                child: Icon(icon, size: 50, color: Colors.white),
               ),
             ),
             Text(
