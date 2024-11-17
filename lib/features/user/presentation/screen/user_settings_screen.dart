@@ -1,6 +1,7 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/widgets/custom_elevated_btn.dart';
 import 'package:ai_connect/core/widgets/delete_component/clear_cache_btn.dart';
+import 'package:ai_connect/core/widgets/delete_component/confirm_delete_action.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/custom_text_input_filed.dart';
 import 'package:ai_connect/features/user/presentation/widgets/app_settings_component.dart';
 import 'package:ai_connect/features/user/presentation/widgets/profile_image_widget.dart';
@@ -78,7 +79,14 @@ class UserSettingsScreen extends StatelessWidget {
             text: "Sign out",
             bkColor: context.theme.appColors.error,
             icon: null,
-            onPressed: () {},
+            onPressed: () {
+              displayConfirmationActionDialog(
+                context,
+                title: "Sign out",
+                description: "Are you sure you want to sign out",
+                onConfirm: () {},
+              );
+            },
           ),
         ],
       ),

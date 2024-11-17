@@ -3,51 +3,64 @@ import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-confirmDeleteAction(BuildContext context, {required Function() userLogout}) {
+displayConfirmationActionDialog(
+  BuildContext context, {
+  required Function() onConfirm,
+  String title = "Delete",
+  String description = "Are you sure you want to confirm delete?",
+}) async {
   final theme = context.theme;
-  return AlertDialog(
-      backgroundColor: theme.appColors.surface,
-      elevation: 3,
-      titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      title: Row(
-        children: [
-          Icon(Icons.info, color: theme.appColors.error),
-          const SizedBox(
-            width: 6,
+  await showDialog(
+    context: context,
+    barrierDismissible: false,
+    barrierColor: Theme.of(context).colorScheme.surface.withOpacity(0.6),
+    builder: (context) {
+      return AlertDialog(
+          backgroundColor: theme.appColors.surface,
+          elevation: 3,
+          titlePadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          title: Row(
+            children: [
+              Icon(Icons.info, color: theme.appColors.error),
+              const SizedBox(
+                width: 6,
+              ),
+              Text(
+                title,
+                style: AppTextStyles.styleSemiBold24(context),
+              ),
+            ],
           ),
-          Text(
-            "Sign out",
-            style: AppTextStyles.styleSemiBold24(context),
+          content: Text(
+            description,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.styleMedium20(context),
           ),
-        ],
-      ),
-      content: Text(
-        "Are you sure you want to confirm delete?",
-        textAlign: TextAlign.center,
-        style: AppTextStyles.styleMedium20(context),
-      ),
-      actionsPadding: const EdgeInsets.symmetric(vertical: 15),
-      actions: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            buildTextBtnWidget(
-              context,
-              btnText: "Cancel",
-              hasBorderSide: true,
-              onPressed: () {
-                GoRouter.of(context).pop();
-              },
-            ),
-            buildTextBtnWidget(
-              context,
-              btnText: "Sign out",
-              bkColor: theme.appColors.error,
-              onPressed: userLogout,
-            ),
-          ],
-        )
-      ]);
+          actionsPadding: const EdgeInsets.symmetric(vertical: 15),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                buildTextBtnWidget(
+                  context,
+                  btnText: "Cancel",
+                  hasBorderSide: true,
+                  onPressed: () {
+                    GoRouter.of(context).pop();
+                  },
+                ),
+                buildTextBtnWidget(
+                  context,
+                  btnText: "Sign out",
+                  bkColor: theme.appColors.error,
+                  onPressed: onConfirm,
+                ),
+              ],
+            )
+          ]);
+    },
+  );
 }
 
 Widget buildTextBtnWidget(

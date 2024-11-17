@@ -1,3 +1,4 @@
+import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -80,4 +81,28 @@ String dateTimeFormatter(DateTime dateTime) {
   final formatDT = DateFormat.MMMEd().format(dateTime);
   // Parse the string into a DateTime object
   return formatDT;
+}
+
+/// displaying a customized snackbar
+void displaySnackBar(BuildContext context, String msg,
+    {bool isFailState = true}) {
+  final theme = Theme.of(context);
+  final snackBar = SnackBar(
+    content: Center(
+      child: Text(
+        msg,
+        style: theme.textTheme.bodyLarge,
+      ),
+    ),
+    margin: const EdgeInsets.only(
+      right: 20,
+      left: 20,
+    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    backgroundColor:
+        isFailState ? theme.appColors.error : theme.colorScheme.primary,
+    duration: const Duration(milliseconds: 2000),
+    behavior: SnackBarBehavior.floating,
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

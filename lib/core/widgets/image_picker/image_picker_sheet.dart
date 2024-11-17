@@ -25,6 +25,8 @@ class ImagePickerBody extends StatelessWidget {
         height: MediaQuery.of(context).size.height / 4.5,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.min,
           children: [
             PickImageOption(
               title: "Gallery",

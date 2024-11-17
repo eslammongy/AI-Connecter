@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/core/utils/helper.dart';
 import 'package:ai_connect/core/widgets/image_picker/image_picker_button.dart';
 import 'package:ai_connect/core/widgets/image_picker/image_picker_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'network_cache_image.dart';
 
@@ -49,12 +52,34 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                   displayImagePickerOption(
                     context,
                     onGalleryTap: () {},
-                    onCameraTap: () {},
+                    onCameraTap: () async {
+                      //* close the bottom sheet
+                      GoRouter.of(context).pop();
+                      final imgFile = await pickImageFromCamera(context);
+                      if (imgFile != null) {
+                        selectedImg = File(imgFile.path);
+                      }
+                    },
                   );
                 },
               )),
         ],
       ),
     );
+  }
+
+  /// pick an image from camera
+  Future<XFile?> pickImageFromCamera(BuildContext context) async {
+    try {
+      final imagePicker = ImagePicker();
+      final pickedImg = await imagePicker.pickImage(source: ImageSource.camera);
+      if (pickedImg == null) return null;
+      return pickedImg;
+    } on Exception catch (e) {
+      if (!context.mounted) return null;
+      displaySnackBar(context, e.toString());
+      GoRouter.of(context).pop();
+      return null;
+    }
   }
 }

@@ -32,23 +32,10 @@ class DeleteComponent extends StatelessWidget {
                   )),
             ),
             onPressed: () {
-              _displayDeleteConfirmation(context);
+              displayConfirmationActionDialog(context, onConfirm: () {});
             },
             icon: Icon(FontAwesomeIcons.trashCan, color: Colors.white)),
       ],
-    );
-  }
-
-  Future<void> _displayDeleteConfirmation(
-    BuildContext context,
-  ) async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Theme.of(context).colorScheme.surface.withOpacity(0.6),
-      builder: (context) {
-        return confirmDeleteAction(context, userLogout: () async {});
-      },
     );
   }
 }

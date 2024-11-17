@@ -16,10 +16,14 @@ class PickImageOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-    return Expanded(
-      child: InkWell(
-        onTap: onTap,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: SizedBox(
+        height: 130,
+        width: 100,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Card(
               color: theme.appColors.primary,
