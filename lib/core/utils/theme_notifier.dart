@@ -21,7 +21,7 @@ class ThemeNotifier extends ChangeNotifier {
 
 // Get the current theme
   ThemeMode get themeMode {
-    return _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
+    return _isDarkTheme ? ThemeMode.dark : ThemeMode.dark;
   }
 
   void getAppPreferenceTheme() async {
