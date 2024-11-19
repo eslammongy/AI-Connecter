@@ -2,7 +2,7 @@ import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum SignInOption { google, phone, apple }
+enum AuthOption { google, phone, apple }
 
 class SocialAuthBtn extends StatelessWidget {
   const SocialAuthBtn({
@@ -15,7 +15,7 @@ class SocialAuthBtn extends StatelessWidget {
   final Function() onPressed;
   final String iconPath;
   final String btnText;
-  final SignInOption signInOption;
+  final AuthOption signInOption;
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = context.theme;
@@ -24,9 +24,9 @@ class SocialAuthBtn extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
+        style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 14),
-        backgroundColor: handleBtnBkColor(signInOption, context),
+          backgroundColor: handleBtnBkColor(signInOption, context),
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
@@ -43,10 +43,11 @@ class SocialAuthBtn extends StatelessWidget {
               Text(
                 btnText,
                 style: theme.textTheme.titleMedium?.copyWith(
-                    color: signInOption == SignInOption.google
-                        ? context.theme.appColors.surface
-                        : Colors.white,
-                    fontWeight: FontWeight.w700,),
+                  color: signInOption == AuthOption.google
+                      ? context.theme.appColors.surface
+                      : Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               const SizedBox(
                 width: 10,
@@ -55,7 +56,9 @@ class SocialAuthBtn extends StatelessWidget {
                 iconPath,
                 width: 28,
                 fit: BoxFit.contain,
-                colorFilter:signInOption != SignInOption.google ? ColorFilter.mode(Colors.white, BlendMode.srcIn): null,
+                colorFilter: signInOption != AuthOption.google
+                    ? ColorFilter.mode(Colors.white, BlendMode.srcIn)
+                    : null,
               ),
             ],
           ),
@@ -64,14 +67,14 @@ class SocialAuthBtn extends StatelessWidget {
     );
   }
 
-  Color handleBtnBkColor(SignInOption signInOption, BuildContext context) {
+  Color handleBtnBkColor(AuthOption signInOption, BuildContext context) {
     switch (signInOption) {
-      case SignInOption.google:
+      case AuthOption.google:
         return context.theme.appColors.onSurface;
-      case SignInOption.phone:
-         return context.theme.appColors.primary;
-      case SignInOption.apple:
-         return context.theme.appColors.surface;
+      case AuthOption.phone:
+        return context.theme.appColors.primary;
+      case AuthOption.apple:
+        return context.theme.appColors.surface;
     }
- }
+  }
 }

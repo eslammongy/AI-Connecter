@@ -3,14 +3,16 @@ import 'package:ai_connect/core/constant/fake_json.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/app_storage.dart';
+import 'package:ai_connect/features/user/data/datasource/supabase_client.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/utils/theme_notifier.dart';
 
-void main() {
+Future<void> main() async {
   fillQuestionList();
   AppStorage.init();
+  await AppSupabaseClient.initialize();
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeNotifier(),
