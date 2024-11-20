@@ -39,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             currentIndex == 2
                 ? CustomElevatedBtn(
-                    text: "Get Started",
+                    text: AppStrings.getStarted,
                     bkColor: context.theme.appColors.primary,
                     icon: null,
                     onPressed: () {
@@ -47,7 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     },
                   )
                 : CustomElevatedBtn(
-                    text: "Next",
+                    text: AppStrings.next,
                     onPressed: () {
                       setState(() {
                         currentIndex++;

@@ -10,7 +10,15 @@ abstract class AppStrings {
       "Chat with the smartest AI Future Experience power of AI with us";
   static const String onboardingDesc3 =
       "Chat with the smartest AI Future Experience power of AI with us";
-}
 
-const themeModeKey = 'THEME_MODE_KEY';
-const selectedFontKey = 'SELECTED_FONT_KEY';
+  static const String getStarted = "Get Started";
+  static const String next = "Next";
+  static const String failureAuthMsg =
+      "Sorry, we have get an error in authentication, please try again";
+  static const String defLoadingMsg = "Please Loading...";
+  static const String signInWithGoogle = "Sign in with Google";
+  static const String signInWithApple = "Sign in with Apple";
+  static const String signInWithPhone = "Sign in with Phone";
+  static const String signInWithPhoneHint = "Enter your phone number";
+  static const String signInWithPhoneVerify = "Verify";
+}

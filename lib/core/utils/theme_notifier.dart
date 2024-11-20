@@ -1,4 +1,4 @@
-import 'package:ai_connect/core/constant/app_strings.dart';
+import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/utils/app_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +25,8 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   void getAppPreferenceTheme() async {
-    final themeMode = await AppStorage.getFromAppStorage(themeModeKey);
+    final themeMode =
+        await AppStorage.getFromAppStorage(AppConstants.themeModeKey);
     if (themeMode == ThemeModes.darkTheme.name) {
       _isDarkTheme = true;
     } else {

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
+import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/helper.dart';
@@ -35,7 +36,7 @@ class SocialAuthContainer extends StatelessWidget {
                   authBloc.add(AuthWithGoogleEvent());
                 },
                 iconPath: AppAssetsManager.googleIcon,
-                btnText: "Sign in with Google",
+                btnText: AppStrings.signInWithGoogle,
                 signInOption: AuthOption.google,
               ),
               const SizedBox(height: 30),
@@ -45,7 +46,7 @@ class SocialAuthContainer extends StatelessWidget {
                   authBloc.add(AuthWithAppleEvent());
                 },
                 iconPath: AppAssetsManager.appleIcon,
-                btnText: "Sign in with Apple",
+                btnText: AppStrings.signInWithApple,
                 signInOption: AuthOption.apple,
               ),
               const SizedBox(height: 30),
@@ -55,7 +56,7 @@ class SocialAuthContainer extends StatelessWidget {
                 GoRouter.of(context).push(AppRoutes.phoneAuthScreen);
               },
               iconPath: AppAssetsManager.phoneIcon,
-              btnText: "Sign in with Phone",
+              btnText: AppStrings.signInWithPhone,
               signInOption: AuthOption.phone,
             ),
           ],
