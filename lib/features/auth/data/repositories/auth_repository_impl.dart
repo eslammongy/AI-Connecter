@@ -1,9 +1,9 @@
 import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/error/api_failure.dart';
-import 'package:ai_connect/features/user/data/datasource/supabase_client.dart';
-import 'package:ai_connect/features/user/data/models/user_model.dart';
-import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
-import 'package:ai_connect/features/user/domain/repositories/auth_repository.dart';
+import 'package:ai_connect/features/auth/data/datasource/supabase_client.dart';
+import 'package:ai_connect/features/auth/data/models/user_model.dart';
+import 'package:ai_connect/features/auth/domain/entities/user_entity.dart';
+import 'package:ai_connect/features/auth/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,17 +15,15 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required this.supabaseClient});
 
   @override
-  Future<Either<Failure, UserEntity>> signInWithAppleAccount(
-      {required String email}) {
+  Future<Either<Failure, UserEntity>> signInWithAppleAccount() {
     // TODO: implement signInWithAppleAccount
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signInWithGoogleAccount(
-      {required String email}) async {
+  Future<Either<Failure, UserEntity>> signInWithGoogleAccount() async {
     try {
-      final authToken = await _googleSignIne(email: email);
+      final authToken = await _googleSignIne();
       if (authToken == null) {
         return Left(ServerFailure(message: 'No Access Token found.'));
       }
@@ -47,7 +45,7 @@ class AuthRepositoryImpl implements AuthRepository {
     return Right(UserModel.fromMap(metaData!));
   }
 
-  Future<String?> _googleSignIne({required String email}) async {
+  Future<String?> _googleSignIne() async {
     final webClientId = dotenv.get(AppConstants.googleWebClientId);
     final iosClientId = dotenv.get(AppConstants.appleWebClientId);
 

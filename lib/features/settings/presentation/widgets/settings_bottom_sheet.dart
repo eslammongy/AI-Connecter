@@ -1,10 +1,10 @@
 import 'package:ai_connect/core/theme/text_style.dart';
-import 'package:ai_connect/features/user/presentation/widgets/theme_switcher_component.dart';
+import 'package:ai_connect/features/settings/presentation/widgets/theme_switcher_component.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-import 'chat_font_toggles.dart';
+import '../../../auth/presentation/widgets/chat_font_toggles.dart';
 
 class SettingsBottomSheet extends StatelessWidget {
   const SettingsBottomSheet({super.key});

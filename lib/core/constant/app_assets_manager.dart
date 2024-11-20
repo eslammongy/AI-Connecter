@@ -13,6 +13,8 @@ abstract class AppAssetsManager {
   static const String chatGptIcon = 'assets/svg/chatgpt_icon.svg';
   static const String geminiIcon = 'assets/svg/gemini_icon.svg';
 
+  static const String animatedLoadingLottie =
+      "assets/json/animated_loading.json";
 
   static const String chakraPetch = 'ChakraPetch';
   static const String indieFlower = 'IndieFlower';

@@ -1,4 +1,4 @@
-import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
+import 'package:ai_connect/features/auth/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
   UserModel({

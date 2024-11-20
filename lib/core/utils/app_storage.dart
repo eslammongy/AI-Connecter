@@ -10,7 +10,7 @@ abstract class AppStorage {
     );
   }
 
-  static Future setInAppStorage(String key, String value) async {
+  static Future putInAppStorage(String key, String value) async {
     await appStorage.write(key: key, value: value);
   }
 
@@ -18,7 +18,7 @@ abstract class AppStorage {
     return await appStorage.read(key: key);
   }
 
-  Future deleteSecureStorage(String key) async {
+  Future deleteFromAppStorage(String key) async {
     await appStorage.delete(key: key);
   }
 }

@@ -2,14 +2,14 @@ import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/widgets/custom_elevated_btn.dart';
 import 'package:ai_connect/core/widgets/delete_component/clear_cache_btn.dart';
 import 'package:ai_connect/core/widgets/delete_component/confirm_delete_action.dart';
+import 'package:ai_connect/features/auth/presentation/widgets/profile_image_widget.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/custom_text_input_filed.dart';
-import 'package:ai_connect/features/user/presentation/widgets/app_settings_component.dart';
-import 'package:ai_connect/features/user/presentation/widgets/profile_image_widget.dart';
+import 'package:ai_connect/features/settings/presentation/widgets/app_settings_component.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class UserSettingsScreen extends StatelessWidget {
-  const UserSettingsScreen({super.key});
+class UserProfileScreen extends StatelessWidget {
+  const UserProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

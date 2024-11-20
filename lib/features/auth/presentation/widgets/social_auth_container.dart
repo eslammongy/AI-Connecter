@@ -2,18 +2,20 @@ import 'dart:io';
 
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/helper.dart';
-import 'package:ai_connect/features/user/data/datasource/supabase_client.dart';
-import 'package:ai_connect/features/user/data/repositories/auth_repository_impl.dart';
-import 'package:ai_connect/features/user/domain/usecases/auth_with_phone_ucase.dart';
-import 'package:ai_connect/features/user/presentation/widgets/social_auth_btn.dart';
+import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:ai_connect/features/auth/presentation/bloc/auth_events.dart';
+import 'package:ai_connect/features/auth/presentation/widgets/social_auth_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SocialAuthContainer extends StatelessWidget {
   const SocialAuthContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final authBloc = AuthBloc.get(context);
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -29,8 +31,8 @@ class SocialAuthContainer extends StatelessWidget {
           children: [
             if (Platform.isAndroid) ...[
               SocialAuthBtn(
-                onPressed: () async {
-                  //GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
+                onPressed: () {
+                  authBloc.add(AuthWithGoogleEvent());
                 },
                 iconPath: AppAssetsManager.googleIcon,
                 btnText: "Sign in with Google",
@@ -40,7 +42,7 @@ class SocialAuthContainer extends StatelessWidget {
             ] else ...[
               SocialAuthBtn(
                 onPressed: () {
-                  //GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
+                  authBloc.add(AuthWithAppleEvent());
                 },
                 iconPath: AppAssetsManager.appleIcon,
                 btnText: "Sign in with Apple",
@@ -50,12 +52,7 @@ class SocialAuthContainer extends StatelessWidget {
             ],
             SocialAuthBtn(
               onPressed: () async {
-                final supabaseClient = AppSupabaseClient();
-                final authRepository =
-                    AuthRepositoryImpl(supabaseClient: supabaseClient);
-                final authPhone =
-                    AuthWithPhoneUCase(authRepository: authRepository);
-                await authPhone.call(phone: "201009370521");
+                GoRouter.of(context).push(AppRoutes.phoneAuthScreen);
               },
               iconPath: AppAssetsManager.phoneIcon,
               btnText: "Sign in with Phone",
