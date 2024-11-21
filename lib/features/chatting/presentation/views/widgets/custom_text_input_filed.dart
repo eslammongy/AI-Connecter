@@ -3,24 +3,26 @@ import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextInputField extends StatelessWidget {
-  const CustomTextInputField(
-      {super.key,
-      required this.textEditingController,
-      this.hint,
-      this.prefix,
-      this.autoFocus = false,
-      this.textInputType = TextInputType.text,
-      this.maxLines = 1,
-      this.isTextPassword = false,
-      this.textColor,
-      this.suffix,
-      this.initText,
-      this.height = 55.0,
-      this.onSubmitted,
-      this.onChange,
-      this.bkColor,
-      this.focusColor,
-      this.enabled = true,  BorderRadius? fieldRoundedRadius});
+  const CustomTextInputField({
+    super.key,
+    required this.textEditingController,
+    this.hint,
+    this.prefix,
+    this.autoFocus = false,
+    this.textInputType = TextInputType.text,
+    this.maxLines = 1,
+    this.isTextPassword = false,
+    this.textColor,
+    this.suffix,
+    this.initText,
+    this.height = 55.0,
+    this.onSubmitted,
+    this.onChange,
+    this.bkColor,
+    this.focusColor,
+    this.enabled = true,
+    this.fieldRoundedRadius,
+  });
 
   final TextEditingController textEditingController;
   final String? initText;
@@ -38,6 +40,7 @@ class CustomTextInputField extends StatelessWidget {
   final Color? bkColor;
   final Color? focusColor;
   final bool enabled;
+  final BorderRadius? fieldRoundedRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,9 @@ class CustomTextInputField extends StatelessWidget {
       height: height,
       child: Card(
         color: bkColor ?? theme.appColors.surface,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: fieldRoundedRadius ?? BorderRadius.circular(12),
+        ),
         margin: EdgeInsets.zero,
         elevation: 0,
         child: TextFormField(
@@ -63,7 +68,7 @@ class CustomTextInputField extends StatelessWidget {
                 .copyWith(color: theme.appColors.tertiary),
             focusColor: theme.appColors.primary,
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: fieldRoundedRadius ?? BorderRadius.circular(10),
               borderSide: BorderSide(
                 color: focusColor ?? theme.appColors.primary,
                 width: 1,
