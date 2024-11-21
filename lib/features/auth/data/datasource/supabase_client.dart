@@ -35,7 +35,11 @@ class AppSupabaseClient {
   }
 
   Future<void> signInWithOtp({required String phone}) async {
-    await _instance.auth.signInWithOtp(phone: phone, channel: OtpChannel.sms);
+    await _instance.auth.signInWithOtp(
+      phone: phone,
+      channel: OtpChannel.sms,
+      shouldCreateUser: true,
+    );
   }
 
   Future<AuthResponse> verifyOtp({

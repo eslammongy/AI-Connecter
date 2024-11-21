@@ -4,6 +4,7 @@ import 'package:ai_connect/features/auth/domain/usecases/auth_with_phone_ucase.d
 import 'package:ai_connect/features/auth/domain/usecases/sign_out_ucase.dart';
 import 'package:ai_connect/features/auth/domain/usecases/verify_phone_otp_ucase.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_status.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'auth_events.dart';
@@ -66,14 +67,15 @@ class AuthBloc extends Bloc<AuthEvents, AuthStatus> {
     Emitter<AuthStatus> emit,
   ) async {
     emit(AuthStatusLoading());
-    final phone = event.phone.trim();
-    final result = await authWithPhoneUCase.call(phone: phone);
+    final phoneNum = event.phone.substring(1, event.phone.length);
+    debugPrint("Phone::$phoneNum");
+    final result = await authWithPhoneUCase.call(phone: phoneNum);
     result.fold(
       (errMessage) {
         emit(AuthStatusFailure(message: errMessage.message));
       },
       (_) {
-        emit(AuthStatusPhoneSignedSuccess());
+        emit(AuthStatusPhoneSignedSuccess(phone: phoneNum));
       },
     );
   }

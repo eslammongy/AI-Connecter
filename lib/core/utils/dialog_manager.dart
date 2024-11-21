@@ -20,6 +20,7 @@ class LoadingDialogManager {
   void displayDialog({
     String? message = "Please waiting...",
   }) {
+    if (_context == null) return;
     showDialog(
       context: _context!,
       barrierDismissible: false, // Prevents dismissing the dialog

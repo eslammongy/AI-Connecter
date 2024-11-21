@@ -13,6 +13,8 @@ abstract class AppStrings {
 
   static const String getStarted = "Get Started";
   static const String next = "Next";
+  static const String sendOtpCode = "Send Otp Code";
+
   static const String failureAuthMsg =
       "Sorry, we have get an error in authentication, please try again";
   static const String defLoadingMsg = "Please Loading...";
@@ -23,4 +25,9 @@ abstract class AppStrings {
   static const String signInWithPhoneVerify = "Verify";
 
   static const String phoneAuthentication = "Phone Authentication";
+
+  static const String invalidPhoneNumberMsg =
+      'Please enter a valid phone number.';
+  static const String otpVerificationMsg =
+      "please enter the otp code sent to your phone";
 }

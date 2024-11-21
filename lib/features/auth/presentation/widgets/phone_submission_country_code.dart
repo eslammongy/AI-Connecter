@@ -5,48 +5,60 @@ import 'package:ai_connect/features/chatting/presentation/views/widgets/custom_t
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 
+typedef SetCountryCode = void Function(String code);
+
 class PhoneSubmissionCountryCode extends StatelessWidget {
-  const PhoneSubmissionCountryCode({super.key});
+  const PhoneSubmissionCountryCode({
+    super.key,
+    required this.phoneNumController,
+    required this.setCountryCode,
+  });
+  final TextEditingController phoneNumController;
+  final SetCountryCode setCountryCode;
 
   @override
   Widget build(BuildContext context) {
-    final phoneNumController = TextEditingController();
     final theme = context.theme;
 
-    return Row(
+    return Column(
       children: [
-        Card(
-          margin: EdgeInsets.zero,
-          elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: roundedRectangleBorder),
-          child: CountryCodePicker(
-            initialSelection: 'EG',
-            favorite: const ['+20', 'EG'],
-            showCountryOnly: false,
-            padding: EdgeInsets.all(10),
-            dialogBackgroundColor: theme.appColors.surface,
-            showOnlyCountryWhenClosed: false,
-            dialogTextStyle: AppTextStyles.styleMedium16(context),
-            textStyle: AppTextStyles.styleMedium16(context),
-            barrierColor: theme.appColors.surface.withOpacity(0.4),
-            alignLeft: false,
-            dialogSize: Size(300, 360),
-            onChanged: (value) {
-              //countryCode = value.dialCode!.trim();
-            },
-          ),
-        ),
-        Expanded(
-          child: CustomTextInputField(
-            textEditingController: phoneNumController,
-            fieldRoundedRadius: roundedRectangleBorder1,
-            hint: AppStrings.signInWithPhoneHint,
-            textInputType: TextInputType.phone,
-            isTextPassword: false,
-            autoFocus: false,
-            maxLines: 1,
-            prefix: const SizedBox(),
-          ),
+        Row(
+          children: [
+            Card(
+              margin: EdgeInsets.zero,
+              elevation: 0,
+              shape:
+                  RoundedRectangleBorder(borderRadius: roundedRectangleBorder),
+              child: CountryCodePicker(
+                initialSelection: 'EG',
+                favorite: const ['+20', 'EG'],
+                showCountryOnly: false,
+                padding: EdgeInsets.all(10),
+                dialogBackgroundColor: theme.appColors.surface,
+                showOnlyCountryWhenClosed: false,
+                dialogTextStyle: AppTextStyles.styleMedium16(context),
+                textStyle: AppTextStyles.styleMedium16(context),
+                barrierColor: theme.appColors.surface.withOpacity(0.4),
+                alignLeft: false,
+                dialogSize: Size(300, 360),
+                onChanged: (value) {
+                  setCountryCode(value.dialCode!.trim());
+                },
+              ),
+            ),
+            Expanded(
+              child: CustomTextInputField(
+                textEditingController: phoneNumController,
+                fieldRoundedRadius: roundedRectangleBorder1,
+                hint: AppStrings.signInWithPhoneHint,
+                textInputType: TextInputType.phone,
+                isTextPassword: false,
+                autoFocus: false,
+                maxLines: 1,
+                prefix: const SizedBox(),
+              ),
+            ),
+          ],
         ),
       ],
     );

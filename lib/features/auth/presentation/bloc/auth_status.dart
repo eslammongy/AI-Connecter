@@ -25,7 +25,11 @@ class AuthStatusGoogleSignedSuccess extends AuthStatus {
   List<Object?> get props => [user];
 }
 
-class AuthStatusPhoneSignedSuccess extends AuthStatus {}
+class AuthStatusPhoneSignedSuccess extends AuthStatus {
+  final String phone;
+
+  AuthStatusPhoneSignedSuccess({required this.phone});
+}
 
 class AuthStatusOtpVerifiedSuccess extends AuthStatus {
   final UserEntity user;

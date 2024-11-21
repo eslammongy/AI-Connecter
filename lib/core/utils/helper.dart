@@ -94,15 +94,22 @@ void displaySnackBar(BuildContext context, String msg,
         style: theme.textTheme.bodyLarge,
       ),
     ),
-    margin: const EdgeInsets.only(
-      right: 20,
-      left: 20,
-    ),
+    margin: const EdgeInsets.only(right: 20, left: 20, bottom: 40),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     backgroundColor:
         isFailState ? theme.appColors.error : theme.colorScheme.primary,
-    duration: const Duration(milliseconds: 2000),
+    duration: const Duration(milliseconds: 1500),
     behavior: SnackBarBehavior.floating,
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+/// The phone number must:
+/// - Contain only digits, optional '+' at the start.
+/// - Be between 10 and 15 characters in length.
+bool isValidPhoneNumber(String phoneNumber) {
+  // Regex for validating phone numbers
+  final regex = RegExp(r'^\+?[0-9]{10,15}$');
+  // Check if the phone number matches the regex
+  return regex.hasMatch(phoneNumber);
 }

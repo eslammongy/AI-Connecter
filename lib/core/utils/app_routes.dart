@@ -7,6 +7,7 @@ import 'package:ai_connect/features/chatting/presentation/views/screen/chat_hist
 import 'package:ai_connect/features/chatting/presentation/views/screen/chatting_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:ai_connect/features/dashboard/dashboard_screen.dart';
+import 'package:ai_connect/features/onboarding/presentation/screen/onboarding_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,7 +28,7 @@ abstract class AppRoutes {
         GoRoute(
           path: '/',
           builder: (context, state) {
-            return const PhoneAuthScreen();
+            return const OnboardingScreen();
           },
         ),
         GoRoute(
@@ -54,13 +55,22 @@ abstract class AppRoutes {
         GoRoute(
           path: phoneAuthScreen,
           builder: (context, state) {
-            return const PhoneAuthScreen();
+            return BlocProvider(
+              create: (context) => getIt<AuthBloc>(),
+              child: const PhoneAuthScreen(),
+            );
           },
         ),
         GoRoute(
           path: otpVerificationScreen,
           builder: (context, state) {
-            return const OtpVerificationScreen();
+            final phone = state.extra as String;
+            return BlocProvider(
+              create: (context) => getIt<AuthBloc>(),
+              child: OtpVerificationScreen(
+                phoneNum: phone,
+              ),
+            );
           },
         ),
         GoRoute(
