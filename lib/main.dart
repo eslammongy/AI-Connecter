@@ -3,7 +3,13 @@ import 'package:ai_connect/core/constant/fake_json.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/service_locator.dart';
+import 'package:ai_connect/features/settings/domain/usecases/change_chatting_font_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/keep_user_logged_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/reset_user_session_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/set_app_theme_uc.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_events.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,15 +27,29 @@ class AIConnector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<SettingsBloc>()..onGetAppTheme,
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: AppStrings.appName,
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: getIt<SettingsBloc>().theme,
-        routerConfig: AppRoutes.initRoutes(),
+      create: (context) => getSettingsBloc(),
+      child: BlocBuilder<SettingsBloc, SettingStatus>(
+        builder: (context, state) {
+          final appTheme = SettingsBloc.get(context).theme;
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: AppStrings.appName,
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: appTheme,
+            routerConfig: AppRoutes.initRoutes(),
+          );
+        },
       ),
     );
+  }
+
+  SettingsBloc getSettingsBloc() {
+    return SettingsBloc(
+      keepUserLoggedUCase: getIt<KeepUserLoggedUCase>(),
+      switchAppThemeUCase: getIt<SetAppThemeUCase>(),
+      changeChattingFontUCase: getIt<ChangeChattingFontUCase>(),
+      resetUserSessionUCase: getIt<ResetUserSessionUCase>(),
+    )..add(SettingGetAppThemeEvent());
   }
 }

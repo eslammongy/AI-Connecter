@@ -1,67 +1,84 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_events.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_status.dart';
 import 'package:flutter/material.dart';
-
-enum ThemeMode {
-  lightMode,
-  darkMode,
-}
-
-final selections = {
-  ThemeMode.lightMode,
-};
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ThemeSwitcherComponent extends StatelessWidget {
   const ThemeSwitcherComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.theme;
-    return Material(
-      color: Colors.transparent,
-      child: SegmentedButton<ThemeMode>(
-        showSelectedIcon: false,
-        style: buildButtonStyle(theme),
-        segments: <ButtonSegment<ThemeMode>>[
-          ButtonSegment<ThemeMode>(
-            value: ThemeMode.lightMode,
-            label: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
+    final settingsBloc = SettingsBloc.get(context);
+    return BlocBuilder<SettingsBloc, SettingStatus>(
+      builder: (context, state) {
+        final theme = context.theme;
+        return Material(
+          color: Colors.transparent,
+          child: SegmentedButton<ThemeMode>(
+            showSelectedIcon: false,
+            style: buildButtonStyle(context, theme),
+            segments: <ButtonSegment<ThemeMode>>[
+              buildButtonSegment(
+                context,
                 'Light Mode',
-                style: AppTextStyles.styleBold20(
-                  context,
-                ),
+                ThemeMode.light,
+                isActive: settingsBloc.theme == ThemeMode.light,
               ),
-            ),
-            icon: Padding(
-              padding: EdgeInsets.only(right: 8.0),
-              child: Icon(Icons.light_mode),
-            ),
-          ),
-          ButtonSegment<ThemeMode>(
-            value: ThemeMode.darkMode,
-            label: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
+              buildButtonSegment(
+                context,
                 'Dark Mode',
-                style: AppTextStyles.styleBold20(context),
+                ThemeMode.dark,
+                isActive: settingsBloc.theme == ThemeMode.dark,
               ),
-            ),
-            icon: Padding(
-              padding: EdgeInsets.only(right: 8.0),
-              child: Icon(Icons.dark_mode_rounded),
-            ),
+            ],
+            selected: <ThemeMode>{settingsBloc.theme},
+            onSelectionChanged: (Set<ThemeMode> selection) {
+              settingsBloc.add(
+                SettingSwitchThemeEvent(theme: selection.first),
+              );
+              GoRouter.of(context).pop();
+            },
+            multiSelectionEnabled: false,
           ),
-        ],
-        selected: <ThemeMode>{ThemeMode.lightMode},
-        onSelectionChanged: (Set<ThemeMode> newSelection) {},
-        multiSelectionEnabled: false,
+        );
+      },
+    );
+  }
+
+  ButtonSegment<ThemeMode> buildButtonSegment(
+    BuildContext context,
+    String label,
+    ThemeMode value, {
+    bool isActive = false,
+  }) {
+    return ButtonSegment<ThemeMode>(
+      value: value,
+      label: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Text(
+          label,
+          style: AppTextStyles.styleBold20(
+            context,
+          ).copyWith(
+            color: isActive ? Colors.white : context.theme.appColors.onSurface,
+          ),
+        ),
+      ),
+      icon: Padding(
+        padding: EdgeInsets.only(right: 8.0),
+        child: Icon(
+          Icons.light_mode,
+          color: isActive ? Colors.white : context.theme.appColors.onSurface,
+        ),
       ),
     );
   }
 
-  ButtonStyle buildButtonStyle(ThemeData theme) {
+  ButtonStyle buildButtonStyle(BuildContext context, ThemeData theme) {
     return ButtonStyle(
       fixedSize: WidgetStateProperty.all<Size>(Size.fromHeight(60.0)),
       side: WidgetStateProperty.resolveWith<BorderSide>(

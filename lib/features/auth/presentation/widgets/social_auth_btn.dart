@@ -40,6 +40,17 @@ class SocialAuthBtn extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SvgPicture.asset(
+                iconPath,
+                width: 28,
+                fit: BoxFit.contain,
+                colorFilter: signInOption != AuthOption.google
+                    ? ColorFilter.mode(Colors.white, BlendMode.srcIn)
+                    : null,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
               Text(
                 btnText,
                 style: theme.textTheme.titleMedium?.copyWith(
@@ -48,17 +59,6 @@ class SocialAuthBtn extends StatelessWidget {
                       : Colors.white,
                   fontWeight: FontWeight.w700,
                 ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              SvgPicture.asset(
-                iconPath,
-                width: 28,
-                fit: BoxFit.contain,
-                colorFilter: signInOption != AuthOption.google
-                    ? ColorFilter.mode(Colors.white, BlendMode.srcIn)
-                    : null,
               ),
             ],
           ),

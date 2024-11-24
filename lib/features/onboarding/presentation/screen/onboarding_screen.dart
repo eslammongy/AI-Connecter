@@ -48,6 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   )
                 : CustomElevatedBtn(
                     text: AppStrings.next,
+                    bkColor: context.theme.appColors.primary,
                     onPressed: () {
                       setState(() {
                         currentIndex++;

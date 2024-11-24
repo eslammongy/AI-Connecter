@@ -3,6 +3,7 @@ import 'package:ai_connect/core/error/api_failure.dart';
 import 'package:ai_connect/features/settings/data/datasource/app_storage.dart';
 import 'package:ai_connect/features/settings/domain/repository/settings_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
   final AppStorage appStorage;
@@ -43,13 +44,13 @@ class SettingsRepositoryImpl implements SettingsRepository {
   }
 
   @override
-  Future<Either<Failure, ThemeModes>> setAppThemeMode({
-    required ThemeModes mode,
+  Future<Either<Failure, ThemeMode>> setAppThemeMode({
+    required ThemeMode mode,
   }) async {
     try {
       await appStorage.putInAppStorage(
         AppConstants.selectedThemeModeKey,
-        mode.value,
+        mode.name,
       );
       return Right(mode);
     } catch (e) {
@@ -58,12 +59,12 @@ class SettingsRepositoryImpl implements SettingsRepository {
   }
 
   @override
-  Future<Either<Failure, ThemeModes>> getAppTheme() async {
+  Future<Either<Failure, ThemeMode>> getAppTheme() async {
     try {
       final result = await appStorage.getFromAppStorage(
         AppConstants.selectedThemeModeKey,
       );
-      final theme = ThemeModes.values.byName(result!);
+      final theme = ThemeMode.values.byName(result!);
       return Right(theme);
     } catch (e) {
       return Left(LocalFailure(message: e.toString()));

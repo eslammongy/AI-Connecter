@@ -1,5 +1,4 @@
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
-import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/error/api_failure.dart';
 import 'package:ai_connect/features/settings/domain/usecases/change_chatting_font_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/get_app_theme_uc.dart';
@@ -18,6 +17,7 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
   final ChangeChattingFontUCase changeChattingFontUCase;
   final ResetUserSessionUCase resetUserSessionUCase;
 
+  static SettingsBloc get(context) => BlocProvider.of(context);
   SettingsBloc({
     required this.keepUserLoggedUCase,
     required this.switchAppThemeUCase,
@@ -28,6 +28,8 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
     on<SettingResetUserSessionEvent>(onResetUserSession);
     on<SettingSwitchThemeEvent>(onSwitchAppTheme);
     on<SettingChangeChattingFontEvent>(onChangeChattingFont);
+    on<SettingGetAppThemeEvent>(onGetAppTheme);
+    on<SettingGetChattingFontEvent>(onGetChattingFont);
   }
 
   String chattingFont = AppAssetsManager.inter;
@@ -62,12 +64,13 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
     SettingSwitchThemeEvent event,
     Emitter<SettingStatus> emit,
   ) async {
+    theme = event.theme;
     final result = await switchAppThemeUCase.call(mode: event.theme);
     result.fold((exception) {
       final error = LocalFailure.handleError(exception);
       emit(SettingFailureState(message: error.message));
-    }, (theme) {
-      this.theme = ThemeMode.values.byName(theme.value);
+    }, (themMode) {
+      debugPrint("Selected: ${theme.name}");
       emit(SettingSwitchThemeState(mode: theme));
     });
   }
@@ -86,19 +89,24 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
   }
 
   onGetAppTheme(
+    SettingGetAppThemeEvent event,
     Emitter<SettingStatus> emit,
   ) async {
+    debugPrint("Selected: The Function get Called");
     final result = await GetAppThemeUCase.call();
     result.fold((exception) {
       final error = LocalFailure.handleError(exception);
       emit(SettingFailureState(message: error.message));
     }, (theme) {
-      this.theme = ThemeMode.values.byName(theme.value);
+      this.theme = ThemeMode.values.byName(theme.name);
+
+      debugPrint("Selected: ${this.theme.name}");
       emit(SettingSwitchThemeState(mode: theme));
     });
   }
 
   onGetChattingFont(
+    SettingGetChattingFontEvent event,
     Emitter<SettingStatus> emit,
   ) async {
     final result = await GetChattingFontUCase.call();
