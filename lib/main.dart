@@ -4,21 +4,12 @@ import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/service_locator.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'core/utils/theme_notifier.dart';
-
-// Create a global key for the Navigator
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   fillQuestionList();
   await initServiceLocator();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeNotifier(),
-      child: const AIConnector(),
-    ),
+    const AIConnector(),
   );
 }
 
@@ -27,19 +18,13 @@ class AIConnector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeNotifier>(builder: (
-      context,
-      themeNotifier,
-      child,
-    ) {
-      return MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: AppStrings.appName,
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        themeMode: themeNotifier.themeMode,
-        routerConfig: AppRoutes.initRoutes(),
-      );
-    });
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: AppStrings.appName,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: ThemeMode.dark,
+      routerConfig: AppRoutes.initRoutes(),
+    );
   }
 }

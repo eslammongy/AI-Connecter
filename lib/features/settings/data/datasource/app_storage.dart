@@ -1,24 +1,27 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-abstract class AppStorage {
-  static late FlutterSecureStorage appStorage;
+class AppStorage {
+  late final FlutterSecureStorage appStorage;
 
-  static Future init() async {
+  AppStorage() {
+    _init();
+  }
+  Future _init() async {
     appStorage = FlutterSecureStorage(
       iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
       aOptions: AndroidOptions(encryptedSharedPreferences: true),
     );
   }
 
-  static Future putInAppStorage(String key, String value) async {
+  Future putInAppStorage(String key, String? value) async {
     await appStorage.write(key: key, value: value);
   }
 
-  static Future<String?> getFromAppStorage(String key) async {
+  Future<String?> getFromAppStorage(String key) async {
     return await appStorage.read(key: key);
   }
 
-  Future deleteFromAppStorage(String key) async {
+  deleteFromAppStorage(String key) async {
     await appStorage.delete(key: key);
   }
 }

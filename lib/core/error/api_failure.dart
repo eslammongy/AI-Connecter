@@ -26,7 +26,7 @@ class ServerFailure extends Failure {
     switch (type) {
       case DioExceptionType.badResponse:
         return ServerFailure(
-          exceptionType: DioExceptionType.badCertificate,
+          exceptionType: DioExceptionType.badResponse,
           statusCode: statusCode,
           message: _handleBadResponseExpMsg(statusCode ?? 404),
         );
@@ -34,7 +34,7 @@ class ServerFailure extends Failure {
         return ServerFailure(
           exceptionType: DioExceptionType.cancel,
           statusCode: statusCode,
-          message: badResponseError,
+          message: badCertificateError,
         );
       case DioExceptionType.receiveTimeout:
         return ServerFailure(
@@ -102,6 +102,10 @@ class ServerFailure extends Failure {
   }
 }
 
-class DBFailure extends Failure {
-  DBFailure({super.message});
+class LocalFailure extends Failure {
+  LocalFailure({super.message});
+
+  factory LocalFailure.handleError(Failure failure) {
+    return LocalFailure(message: failure.message);
+  }
 }

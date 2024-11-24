@@ -50,11 +50,9 @@ class PinPutOtpVerification extends StatelessWidget {
       ),
       submittedPinTheme: defaultPinTheme(theme).copyWith(
         decoration: defaultPinTheme(theme).decoration!.copyWith(
-              color: theme.appColors.secondary,
-              borderRadius: BorderRadius.circular(19),
-              border: Border.all(
-                color: Colors.white,
-              ),
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey.shade300, width: 2),
             ),
       ),
       errorPinTheme: defaultPinTheme(theme).copyBorderWith(

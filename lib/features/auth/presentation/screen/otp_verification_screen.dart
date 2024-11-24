@@ -15,6 +15,7 @@ import 'package:go_router/go_router.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
   const OtpVerificationScreen({super.key, required this.phoneNum});
+
   final String phoneNum;
 
   @override
