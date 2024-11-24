@@ -12,5 +12,5 @@ abstract class SettingsRepository {
   Future<Either<Failure, FontFamily>> changeChattingFontStyle({
     required FontFamily font,
   });
-  Future<Either<Failure, bool>> resetUserSession();
+  Future<Either<Failure, void>> resetUserSession();
 }

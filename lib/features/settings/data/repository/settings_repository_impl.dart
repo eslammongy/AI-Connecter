@@ -33,10 +33,10 @@ class SettingsRepositoryImpl implements SettingsRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> resetUserSession() async {
+  Future<Either<Failure, void>> resetUserSession() async {
     try {
       await appStorage.putInAppStorage(AppConstants.keepUserLoggedKey, null);
-      return const Right(false);
+      return Right(null);
     } catch (e) {
       return Left(LocalFailure(message: e.toString()));
     }

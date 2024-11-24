@@ -10,13 +10,17 @@ import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ai_connect/features/settings/data/datasource/app_storage.dart';
 import 'package:ai_connect/features/settings/data/repository/settings_repository_impl.dart';
 import 'package:ai_connect/features/settings/domain/repository/settings_repository.dart';
+import 'package:ai_connect/features/settings/domain/usecases/change_chatting_font_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/keep_user_logged_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/reset_user_session_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/switch_app_theme_uc.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
 
 Future<void> initServiceLocator() async {
-  final appStorage = AppStorage();
-  getIt.registerSingleton<AppStorage>(appStorage);
+  await initSettingsModule();
   // Supabase Client Dependency
   final supabaseClient = AppSupabaseClient();
   getIt.registerLazySingleton<AppSupabaseClient>(() => supabaseClient);
@@ -29,6 +33,36 @@ Future<void> initSettingsModule() async {
   getIt.registerSingleton<AppStorage>(appStorage);
   getIt.registerLazySingleton<SettingsRepository>(
       () => SettingsRepositoryImpl(appStorage: appStorage));
+
+  getIt.registerLazySingleton<KeepUserLoggedUCase>(
+    () => KeepUserLoggedUCase(
+      settingsRepository: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<ResetUserSessionUCase>(
+    () => ResetUserSessionUCase(
+      settingsRepository: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<SwitchAppThemeUCase>(
+    () => SwitchAppThemeUCase(
+      settingsRepository: getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<ChangeChattingFontUCase>(
+    () => ChangeChattingFontUCase(
+      settingsRepository: getIt(),
+    ),
+  );
+
+  getIt.registerFactory(
+    () => SettingsBloc(
+      keepUserLoggedUCase: getIt<KeepUserLoggedUCase>(),
+      switchAppThemeUCase: getIt<SwitchAppThemeUCase>(),
+      changeChattingFontUCase: getIt<ChangeChattingFontUCase>(),
+      resetUserSessionUCase: getIt<ResetUserSessionUCase>(),
+    ),
+  );
 }
 
 Future<void> initAuthModule({required AppSupabaseClient supabaseClient}) async {

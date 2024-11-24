@@ -6,7 +6,7 @@ class ResetUserSessionUCase {
   final SettingsRepository settingsRepository;
   const ResetUserSessionUCase({required this.settingsRepository});
 
-  Future<Either<Failure, bool>> call() async {
+  Future<Either<Failure, void>> call() async {
     return await settingsRepository.resetUserSession();
   }
 }
