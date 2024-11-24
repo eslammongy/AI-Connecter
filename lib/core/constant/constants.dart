@@ -9,7 +9,7 @@ abstract class AppConstants {
   static const String selectedThemeModeKey = 'SELECTED_THEME_MODE_KEY';
 }
 
-enum ThemeModes { darkTheme, lightTheme }
+enum ThemeModes { dark, light }
 
 extension ThemeModesExtension on ThemeModes {
   String get value => name.replaceAll('ThemeModes.', '');

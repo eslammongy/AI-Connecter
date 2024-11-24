@@ -13,7 +13,7 @@ import 'package:ai_connect/features/settings/domain/repository/settings_reposito
 import 'package:ai_connect/features/settings/domain/usecases/change_chatting_font_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/keep_user_logged_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/reset_user_session_uc.dart';
-import 'package:ai_connect/features/settings/domain/usecases/switch_app_theme_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/set_app_theme_uc.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -44,8 +44,8 @@ Future<void> initSettingsModule() async {
       settingsRepository: getIt(),
     ),
   );
-  getIt.registerLazySingleton<SwitchAppThemeUCase>(
-    () => SwitchAppThemeUCase(
+  getIt.registerLazySingleton<SetAppThemeUCase>(
+    () => SetAppThemeUCase(
       settingsRepository: getIt(),
     ),
   );
@@ -58,7 +58,7 @@ Future<void> initSettingsModule() async {
   getIt.registerFactory(
     () => SettingsBloc(
       keepUserLoggedUCase: getIt<KeepUserLoggedUCase>(),
-      switchAppThemeUCase: getIt<SwitchAppThemeUCase>(),
+      switchAppThemeUCase: getIt<SetAppThemeUCase>(),
       changeChattingFontUCase: getIt<ChangeChattingFontUCase>(),
       resetUserSessionUCase: getIt<ResetUserSessionUCase>(),
     ),

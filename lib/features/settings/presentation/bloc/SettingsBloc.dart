@@ -1,15 +1,20 @@
+import 'package:ai_connect/core/constant/app_assets_manager.dart';
+import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/error/api_failure.dart';
 import 'package:ai_connect/features/settings/domain/usecases/change_chatting_font_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/get_app_theme_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/get_chatting_font_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/keep_user_logged_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/reset_user_session_uc.dart';
-import 'package:ai_connect/features/settings/domain/usecases/switch_app_theme_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/set_app_theme_uc.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/settings_events.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/settings_status.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
   final KeepUserLoggedUCase keepUserLoggedUCase;
-  final SwitchAppThemeUCase switchAppThemeUCase;
+  final SetAppThemeUCase switchAppThemeUCase;
   final ChangeChattingFontUCase changeChattingFontUCase;
   final ResetUserSessionUCase resetUserSessionUCase;
 
@@ -18,8 +23,15 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
     required this.switchAppThemeUCase,
     required this.changeChattingFontUCase,
     required this.resetUserSessionUCase,
-  }) : super(SettingInitialState()) {}
+  }) : super(SettingInitialState()) {
+    on<SettingKeepUserLoggedEvent>(onKeepUserLogged);
+    on<SettingResetUserSessionEvent>(onResetUserSession);
+    on<SettingSwitchThemeEvent>(onSwitchAppTheme);
+    on<SettingChangeChattingFontEvent>(onChangeChattingFont);
+  }
 
+  String chattingFont = AppAssetsManager.inter;
+  ThemeMode theme = ThemeMode.dark;
   onKeepUserLogged(
     SettingKeepUserLoggedEvent event,
     Emitter<SettingStatus> emit,
@@ -55,6 +67,7 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
       final error = LocalFailure.handleError(exception);
       emit(SettingFailureState(message: error.message));
     }, (theme) {
+      this.theme = ThemeMode.values.byName(theme.value);
       emit(SettingSwitchThemeState(mode: theme));
     });
   }
@@ -64,6 +77,31 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
     Emitter<SettingStatus> emit,
   ) async {
     final result = await changeChattingFontUCase.call(font: event.font);
+    result.fold((exception) {
+      final error = LocalFailure.handleError(exception);
+      emit(SettingFailureState(message: error.message));
+    }, (font) {
+      emit(SettingChangeChattingFontState(font: font));
+    });
+  }
+
+  onGetAppTheme(
+    Emitter<SettingStatus> emit,
+  ) async {
+    final result = await GetAppThemeUCase.call();
+    result.fold((exception) {
+      final error = LocalFailure.handleError(exception);
+      emit(SettingFailureState(message: error.message));
+    }, (theme) {
+      this.theme = ThemeMode.values.byName(theme.value);
+      emit(SettingSwitchThemeState(mode: theme));
+    });
+  }
+
+  onGetChattingFont(
+    Emitter<SettingStatus> emit,
+  ) async {
+    final result = await GetChattingFontUCase.call();
     result.fold((exception) {
       final error = LocalFailure.handleError(exception);
       emit(SettingFailureState(message: error.message));

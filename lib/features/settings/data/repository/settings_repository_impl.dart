@@ -43,7 +43,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
   }
 
   @override
-  Future<Either<Failure, ThemeModes>> switchAppThemeMode({
+  Future<Either<Failure, ThemeModes>> setAppThemeMode({
     required ThemeModes mode,
   }) async {
     try {
@@ -52,6 +52,32 @@ class SettingsRepositoryImpl implements SettingsRepository {
         mode.value,
       );
       return Right(mode);
+    } catch (e) {
+      return Left(LocalFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ThemeModes>> getAppTheme() async {
+    try {
+      final result = await appStorage.getFromAppStorage(
+        AppConstants.selectedThemeModeKey,
+      );
+      final theme = ThemeModes.values.byName(result!);
+      return Right(theme);
+    } catch (e) {
+      return Left(LocalFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, FontFamily>> getChattingFont() async {
+    try {
+      final result = await appStorage.getFromAppStorage(
+        AppConstants.selectedChattingFontKey,
+      );
+      final font = FontFamily.values.byName(result!);
+      return Right(font);
     } catch (e) {
       return Left(LocalFailure(message: e.toString()));
     }
