@@ -94,6 +94,7 @@ void displaySnackBar(BuildContext context, String msg,
     content: Center(
       child: Text(
         msg,
+        maxLines: 3,
         style: theme.textTheme.bodyLarge,
       ),
     ),
