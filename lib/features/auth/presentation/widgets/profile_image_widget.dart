@@ -23,9 +23,6 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
 
   @override
   Widget build(BuildContext context) {
-    final roundedShape = RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(80),
-        side: const BorderSide(width: 2, color: Colors.white));
     return SizedBox(
       height: 160,
       child: Stack(
@@ -56,7 +53,7 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                       GoRouter.of(context).pop();
                       final imgFile = await pickGalleryImage(context);
                       if (imgFile != null) {
-                        selectedImg = File(imgFile.path);
+                        updateProfileImage(imgFile);
                       }
                     },
                     onCameraTap: () async {
@@ -64,7 +61,7 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                       GoRouter.of(context).pop();
                       final imgFile = await pickImageFromCamera(context);
                       if (imgFile != null) {
-                        selectedImg = File(imgFile.path);
+                        updateProfileImage(imgFile);
                       }
                     },
                   );
@@ -74,6 +71,15 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
       ),
     );
   }
+
+  final roundedShape = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(80),
+    side: const BorderSide(width: 2, color: Colors.white),
+  );
+
+  updateProfileImage(XFile imgFile) => setState(() {
+        selectedImg = File(imgFile.path);
+      });
 
   /// pick an image from camera
   Future<XFile?> pickImageFromCamera(BuildContext context) async {
