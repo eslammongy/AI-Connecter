@@ -15,7 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   fillQuestionList();
-  await initServiceLocator();
+  await initAppDependencies();
   runApp(
     const AIConnector(),
   );

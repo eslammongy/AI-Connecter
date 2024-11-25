@@ -7,6 +7,7 @@ abstract class AppConstants {
   static const String userTokenKey = 'USER_TOKEN_KEY';
   static const String selectedChattingFontKey = 'SELECTED_CHATTING_FONT_KEY';
   static const String selectedThemeModeKey = 'SELECTED_THEME_MODE_KEY';
+  static const String googleGeminiAPIKey = 'GOOGLE_GEMINI_API_KEY';
 }
 
 enum FontFamily {

@@ -13,7 +13,6 @@ class AppSupabaseClient {
 
   /// Initialize the Supabase client. This should be called once during app startup.
   static Future<void> initialize() async {
-    await dotenv.load(fileName: ".env");
     final baseUrl = dotenv.get('REST_APP_SUPABASE_URL');
     final apiKey = dotenv.get('REST_APP_SUPABASE_API_KEY');
 

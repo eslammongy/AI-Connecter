@@ -1,3 +1,4 @@
+import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/features/auth/data/datasource/supabase_client.dart';
 import 'package:ai_connect/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:ai_connect/features/auth/domain/repositories/auth_repository.dart';
@@ -15,11 +16,22 @@ import 'package:ai_connect/features/settings/domain/usecases/keep_user_logged_uc
 import 'package:ai_connect/features/settings/domain/usecases/reset_user_session_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/set_app_theme_uc.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> initServiceLocator() async {
+GenerativeModel initGoogleGeminiAI() {
+  return GenerativeModel(
+    model: 'gemini-1.5-flash-latest',
+    apiKey: dotenv.get(AppConstants.googleGeminiAPIKey),
+  );
+}
+
+Future<void> initAppDependencies() async {
+  await dotenv.load(fileName: ".env");
+  getIt.registerLazySingleton<GenerativeModel>(() => initGoogleGeminiAI());
   await initSettingsModule();
   // Supabase Client Dependency
   final supabaseClient = AppSupabaseClient();
