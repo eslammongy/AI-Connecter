@@ -83,4 +83,17 @@ class SettingsRepositoryImpl implements SettingsRepository {
       return Left(LocalFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> checkIsUserSigned() async {
+    try {
+      final token = await appStorage.getFromAppStorage(
+        AppConstants.keepUserLoggedKey,
+      );
+      final isUserSigned = token == null ? false : true;
+      return Right(isUserSigned);
+    } catch (e) {
+      return Left(LocalFailure(message: e.toString()));
+    }
+  }
 }

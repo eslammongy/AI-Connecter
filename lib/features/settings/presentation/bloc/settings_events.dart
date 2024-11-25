@@ -21,6 +21,8 @@ class SettingGetAppThemeEvent extends SettingEvents {}
 
 class SettingGetChattingFontEvent extends SettingEvents {}
 
+class SettingCheckIsUserSignedEvent extends SettingEvents {}
+
 class SettingSwitchThemeEvent extends SettingEvents {
   final ThemeMode theme;
   SettingSwitchThemeEvent({required this.theme});

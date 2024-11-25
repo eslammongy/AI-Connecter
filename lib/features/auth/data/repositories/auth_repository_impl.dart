@@ -5,6 +5,7 @@ import 'package:ai_connect/features/auth/data/models/user_model.dart';
 import 'package:ai_connect/features/auth/domain/entities/user_entity.dart';
 import 'package:ai_connect/features/auth/domain/repositories/auth_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -42,7 +43,10 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(ServerFailure(message: 'No User found.'));
     }
     final metaData = response.user?.appMetadata;
-    return Right(UserModel.fromMap(metaData!));
+    final accessToken = response.session?.accessToken;
+    debugPrint("The User token: $accessToken");
+    metaData!['token'] = accessToken;
+    return Right(UserModel.fromMap(metaData));
   }
 
   Future<String?> _googleSignIne() async {

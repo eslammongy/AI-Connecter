@@ -41,7 +41,9 @@ class AuthBloc extends Bloc<AuthEvents, AuthStatus> {
         emit(AuthStatusFailure(message: errMessage.message));
       },
       (signedUser) {
-        emit(AuthStatusGoogleSignedSuccess(user: signedUser));
+        emit(AuthStatusGoogleSignedSuccess(
+          user: signedUser,
+        ));
       },
     );
   }

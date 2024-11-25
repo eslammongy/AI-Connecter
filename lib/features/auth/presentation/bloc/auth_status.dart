@@ -12,15 +12,18 @@ class AuthStatusLoading extends AuthStatus {}
 
 class AuthStatusAppleSignedSuccess extends AuthStatus {
   final UserEntity user;
-  AuthStatusAppleSignedSuccess({required this.user});
-
+  AuthStatusAppleSignedSuccess({
+    required this.user,
+  });
   @override
   List<Object?> get props => [user];
 }
 
 class AuthStatusGoogleSignedSuccess extends AuthStatus {
   final UserEntity user;
-  AuthStatusGoogleSignedSuccess({required this.user});
+  AuthStatusGoogleSignedSuccess({
+    required this.user,
+  });
   @override
   List<Object?> get props => [user];
 }
@@ -33,7 +36,9 @@ class AuthStatusPhoneSignedSuccess extends AuthStatus {
 
 class AuthStatusOtpVerifiedSuccess extends AuthStatus {
   final UserEntity user;
-  AuthStatusOtpVerifiedSuccess({required this.user});
+  AuthStatusOtpVerifiedSuccess({
+    required this.user,
+  });
   @override
   List<Object?> get props => [user];
 }

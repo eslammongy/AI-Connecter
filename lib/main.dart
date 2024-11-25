@@ -27,17 +27,22 @@ class AIConnector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getSettingsBloc(),
+      create: (context) => getSettingsBloc()
+        ..add(SettingCheckIsUserSignedEvent())
+        ..add(SettingGetAppThemeEvent()),
       child: BlocBuilder<SettingsBloc, SettingStatus>(
         builder: (context, state) {
           final appTheme = SettingsBloc.get(context).theme;
+          final isUserSigned = SettingsBloc.get(context).isUserSigned;
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             title: AppStrings.appName,
             theme: AppTheme.light,
             darkTheme: AppTheme.dark,
             themeMode: appTheme,
-            routerConfig: AppRoutes.initRoutes(),
+            routerConfig: AppRoutes.initRoutes(
+              isSignedIn: isUserSigned,
+            ),
           );
         },
       ),
@@ -50,6 +55,6 @@ class AIConnector extends StatelessWidget {
       switchAppThemeUCase: getIt<SetAppThemeUCase>(),
       changeChattingFontUCase: getIt<ChangeChattingFontUCase>(),
       resetUserSessionUCase: getIt<ResetUserSessionUCase>(),
-    )..add(SettingGetAppThemeEvent());
+    );
   }
 }

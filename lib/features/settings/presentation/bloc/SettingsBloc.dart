@@ -1,6 +1,7 @@
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/error/api_failure.dart';
 import 'package:ai_connect/features/settings/domain/usecases/change_chatting_font_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/check_is_user_signed.dart';
 import 'package:ai_connect/features/settings/domain/usecases/get_app_theme_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/get_chatting_font_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/keep_user_logged_uc.dart';
@@ -30,10 +31,13 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
     on<SettingChangeChattingFontEvent>(onChangeChattingFont);
     on<SettingGetAppThemeEvent>(onGetAppTheme);
     on<SettingGetChattingFontEvent>(onGetChattingFont);
+    on<SettingCheckIsUserSignedEvent>(onCheckIsUserSignedIn);
   }
 
   String chattingFont = AppAssetsManager.inter;
   ThemeMode theme = ThemeMode.dark;
+  bool isUserSigned = false;
+
   onKeepUserLogged(
     SettingKeepUserLoggedEvent event,
     Emitter<SettingStatus> emit,
@@ -42,8 +46,10 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
     result.fold((exception) {
       final error = LocalFailure.handleError(exception);
       emit(SettingFailureState(message: error.message));
-    }, (_) {
-      emit(SettingKeepLoggedState());
+    }, (isUserSigned) {
+      emit(SettingKeepLoggedState(
+        isUserSigned: this.isUserSigned = isUserSigned,
+      ));
     });
   }
 
@@ -115,6 +121,24 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
       emit(SettingFailureState(message: error.message));
     }, (font) {
       emit(SettingChangeChattingFontState(font: font));
+    });
+  }
+
+  onCheckIsUserSignedIn(
+    SettingCheckIsUserSignedEvent event,
+    Emitter<SettingStatus> emit,
+  ) async {
+    final result = await CheckIsUserSignedUCase.call();
+    result.fold((exception) {
+      final error = LocalFailure.handleError(exception);
+      emit(SettingFailureState(message: error.message));
+    }, (isUserSigned) {
+      debugPrint("isUserSigned: $isUserSigned");
+      emit(
+        SettingKeepLoggedState(
+          isUserSigned: this.isUserSigned = isUserSigned,
+        ),
+      );
     });
   }
 }

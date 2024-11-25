@@ -1,5 +1,8 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
+import 'package:ai_connect/features/auth/presentation/bloc/auth_status.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_events.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -112,4 +115,25 @@ bool isValidPhoneNumber(String phoneNumber) {
   final regex = RegExp(r'^\+?[0-9]{10,15}$');
   // Check if the phone number matches the regex
   return regex.hasMatch(phoneNumber);
+}
+
+/// This method is used to keep the user signed in weather the auth method.
+/// the user used is `google` or `apple`, `phone`.
+// File: lib/helpers/auth_helpers.dart
+
+void keepUserSignedIn(
+  BuildContext context,
+  AuthStatus state,
+) {
+  final settingsBloc = SettingsBloc.get(context);
+  if (state is AuthStatusGoogleSignedSuccess && state.user.token != null) {
+    settingsBloc.add(SettingKeepUserLoggedEvent(token: state.user.token!));
+  }
+  if (state is AuthStatusAppleSignedSuccess && state.user.token != null) {
+    settingsBloc.add(SettingKeepUserLoggedEvent(token: state.user.token!));
+  }
+  if (state is AuthStatusOtpVerifiedSuccess && state.user.token != null) {
+    settingsBloc.add(SettingKeepUserLoggedEvent(token: state.user.token!));
+  }
+  //GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
 }

@@ -11,7 +11,12 @@ abstract class SettingStatus extends Equatable {
 
 class SettingInitialState extends SettingStatus {}
 
-class SettingKeepLoggedState extends SettingStatus {}
+class SettingKeepLoggedState extends SettingStatus {
+  final bool isUserSigned;
+  const SettingKeepLoggedState({required this.isUserSigned});
+  @override
+  List<Object> get props => [isUserSigned];
+}
 
 class SettingResetSessionState extends SettingStatus {}
 

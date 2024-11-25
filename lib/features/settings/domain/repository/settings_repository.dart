@@ -7,6 +7,9 @@ abstract class SettingsRepository {
   Future<Either<Failure, bool>> keepUserLogged({
     required String value,
   });
+
+  Future<Either<Failure, bool>> checkIsUserSigned();
+
   Future<Either<Failure, ThemeMode>> setAppThemeMode({
     required ThemeMode mode,
   });

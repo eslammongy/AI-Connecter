@@ -7,6 +7,7 @@ class UserModel extends UserEntity {
     super.email,
     super.photoUrl,
     super.phone,
+    super.token,
   });
   UserEntity copyWith({
     String? id,
@@ -16,12 +17,11 @@ class UserModel extends UserEntity {
     String? phone,
   }) {
     return UserEntity(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      photoUrl: photoUrl ?? this.photoUrl,
-      phone: phone ?? this.phone,
-    );
+        id: id ?? this.id,
+        name: name ?? this.name,
+        email: email ?? this.email,
+        photoUrl: photoUrl ?? this.photoUrl,
+        phone: phone ?? this.phone);
   }
 
   Map<String, dynamic> toMap() {
@@ -41,6 +41,7 @@ class UserModel extends UserEntity {
       email: map['email'] != null ? map['email'] as String : null,
       photoUrl: map['photoUrl'] != null ? map['photoUrl'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
+      token: map['token'] != null ? map['token'] as String : null,
     );
   }
 

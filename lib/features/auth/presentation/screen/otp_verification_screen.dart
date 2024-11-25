@@ -2,7 +2,6 @@ import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
-import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/dialog_manager.dart';
 import 'package:ai_connect/core/utils/helper.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
@@ -11,7 +10,6 @@ import 'package:ai_connect/features/auth/presentation/widgets/pinput_otp_verific
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
   const OtpVerificationScreen({super.key, required this.phoneNum});
@@ -38,8 +36,7 @@ class OtpVerificationScreen extends StatelessWidget {
             LoadingDialogManager.of(context).displayDialog();
           }
           if (state is AuthStatusOtpVerifiedSuccess) {
-            LoadingDialogManager.closeDialog();
-            GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
+            keepUserSignedIn(context, state);
           }
           if (state is AuthStatusFailure) {
             LoadingDialogManager.closeDialog();

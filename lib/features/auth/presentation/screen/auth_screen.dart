@@ -1,7 +1,6 @@
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
-import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/dialog_manager.dart';
 import 'package:ai_connect/core/utils/helper.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
@@ -9,7 +8,6 @@ import 'package:ai_connect/features/auth/presentation/bloc/auth_status.dart';
 import 'package:ai_connect/features/auth/presentation/widgets/social_auth_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -22,9 +20,11 @@ class AuthScreen extends StatelessWidget {
           if (state is AuthStatusLoading) {
             LoadingDialogManager.of(context).displayDialog();
           }
-          if (state is AuthStatusGoogleSignedSuccess ||
-              state is AuthStatusAppleSignedSuccess) {
-            GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
+          if (state is AuthStatusGoogleSignedSuccess) {
+            keepUserSignedIn(context, state);
+          }
+          if (state is AuthStatusAppleSignedSuccess) {
+            keepUserSignedIn(context, state);
           }
           if (state is AuthStatusFailure) {
             LoadingDialogManager.closeDialog();
