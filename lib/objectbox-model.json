@@ -1,0 +1,116 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6515688378268207506",
+      "lastPropertyId": "7:5332370516383242632",
+      "name": "AnswerEntity",
+      "properties": [
+        {
+          "id": "1:5779473724287387539",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7569942083014185250",
+          "name": "text",
+          "type": 9
+        },
+        {
+          "id": "3:3179838622352396168",
+          "name": "isAnswer",
+          "type": 1
+        },
+        {
+          "id": "4:1347857066603865505",
+          "name": "hasFile",
+          "type": 1
+        },
+        {
+          "id": "5:4504866068858501021",
+          "name": "filePath",
+          "type": 9
+        },
+        {
+          "id": "6:5496864970093132583",
+          "name": "dateTime",
+          "type": 10
+        },
+        {
+          "id": "7:5332370516383242632",
+          "name": "answerId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:8526333955756560926",
+          "relationTarget": "QuestionEntity"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:1506482876871564116",
+      "lastPropertyId": "2:7128184729520767554",
+      "name": "ChatEntity",
+      "properties": [
+        {
+          "id": "1:166065103600434097",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:7128184729520767554",
+          "name": "title",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:3621640250726286046",
+      "lastPropertyId": "4:6614795561698561119",
+      "name": "QuestionEntity",
+      "properties": [
+        {
+          "id": "1:3242274416983178702",
+          "name": "id",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:8678288974386550561",
+          "name": "question",
+          "type": 9
+        },
+        {
+          "id": "3:8968133585935378034",
+          "name": "hasFile",
+          "type": 1
+        },
+        {
+          "id": "4:6614795561698561119",
+          "name": "questionDataId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:313957387510079314",
+          "relationTarget": "ChatEntity"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:3621640250726286046",
+  "lastIndexId": "2:313957387510079314",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
