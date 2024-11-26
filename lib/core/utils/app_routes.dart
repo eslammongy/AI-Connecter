@@ -1,4 +1,3 @@
-import 'package:ai_connect/core/utils/service_locator.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ai_connect/features/auth/presentation/screen/auth_screen.dart';
 import 'package:ai_connect/features/auth/presentation/screen/otp_verification_screen.dart';
@@ -8,6 +7,7 @@ import 'package:ai_connect/features/chatting/presentation/views/screen/chatting_
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:ai_connect/features/dashboard/dashboard_screen.dart';
 import 'package:ai_connect/features/onboarding/presentation/screen/onboarding_screen.dart';
+import 'package:ai_connect/service_locator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 

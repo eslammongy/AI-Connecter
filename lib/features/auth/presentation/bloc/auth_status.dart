@@ -1,4 +1,4 @@
-import 'package:ai_connect/features/auth/domain/entities/user_entity.dart';
+import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AuthStatus extends Equatable {
@@ -6,46 +6,58 @@ abstract class AuthStatus extends Equatable {
   List<Object?> get props => [];
 }
 
-class AuthStatusInitial extends AuthStatus {}
+class AuthInitialState extends AuthStatus {}
 
-class AuthStatusLoading extends AuthStatus {}
+class AuthLoadingState extends AuthStatus {}
 
-class AuthStatusAppleSignedSuccess extends AuthStatus {
+class AuthAppleSignedState extends AuthStatus {
   final UserEntity user;
-  AuthStatusAppleSignedSuccess({
+  AuthAppleSignedState({
     required this.user,
   });
   @override
   List<Object?> get props => [user];
 }
 
-class AuthStatusGoogleSignedSuccess extends AuthStatus {
+class AuthGoogleSignedState extends AuthStatus {
   final UserEntity user;
-  AuthStatusGoogleSignedSuccess({
+  AuthGoogleSignedState({
     required this.user,
   });
   @override
   List<Object?> get props => [user];
 }
 
-class AuthStatusPhoneSignedSuccess extends AuthStatus {
+class AuthPhoneSignedState extends AuthStatus {
   final String phone;
+  AuthPhoneSignedState({required this.phone});
 
-  AuthStatusPhoneSignedSuccess({required this.phone});
+  @override
+  List<Object?> get props => [phone];
 }
 
-class AuthStatusOtpVerifiedSuccess extends AuthStatus {
+class AuthOtpVerifiedState extends AuthStatus {
   final UserEntity user;
-  AuthStatusOtpVerifiedSuccess({
+  AuthOtpVerifiedState({
     required this.user,
   });
   @override
   List<Object?> get props => [user];
 }
 
-class AuthStatusSignOut extends AuthStatus {}
+class AuthSignOutState extends AuthStatus {}
 
-class AuthStatusFailure extends AuthStatus {
+class AuthKeepUserSignedInState extends AuthStatus {
+  final String? token;
+  AuthKeepUserSignedInState({this.token});
+  @override
+  List<Object?> get props => [token];
+}
+
+class AuthFailureState extends AuthStatus {
   final String? message;
-  AuthStatusFailure({this.message});
+  AuthFailureState({this.message});
+
+  @override
+  List<Object?> get props => [message];
 }

@@ -3,6 +3,7 @@ import 'package:ai_connect/features/auth/presentation/screen/user_profile_screen
 import 'package:ai_connect/features/chatting/presentation/views/screen/archived_questions_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/custom_appbar.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -13,7 +14,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  int currentIndex = 0;
   final listOfScreens = [
     HomeScreen(),
     ArchivedQuestionsScreen(),
@@ -22,19 +22,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsBloc = SettingsBloc.get(context);
     return Scaffold(
-      appBar: currentIndex == 2
+      appBar: settingsBloc.indexOfCurrScreen == 2
           ? null
           : CustomAppbar(
-              index: currentIndex,
+              index: settingsBloc.indexOfCurrScreen,
             ),
       extendBody: true,
-      body: listOfScreens[currentIndex],
+      body: listOfScreens[settingsBloc.indexOfCurrScreen],
       bottomNavigationBar: FloatingBottomNavBar(
-        currentIndex: currentIndex,
+        currentIndex: settingsBloc.indexOfCurrScreen,
         getCurrentIndex: (int index) {
           setState(() {
-            currentIndex = index;
+            settingsBloc.indexOfCurrScreen = index;
           });
         },
       ),

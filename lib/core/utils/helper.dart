@@ -1,8 +1,18 @@
+import 'package:ai_connect/core/constant/constants.dart';
+import 'package:ai_connect/core/datasource/app_storage.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
-import 'package:ai_connect/features/auth/presentation/bloc/auth_status.dart';
-import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
-import 'package:ai_connect/features/settings/presentation/bloc/settings_events.dart';
+import 'package:ai_connect/features/auth/domain/usecases/auth_with_apple_ucase.dart';
+import 'package:ai_connect/features/auth/domain/usecases/auth_with_google_ucase.dart';
+import 'package:ai_connect/features/auth/domain/usecases/auth_with_phone_ucase.dart';
+import 'package:ai_connect/features/auth/domain/usecases/keep_user_logged_uc.dart';
+import 'package:ai_connect/features/auth/domain/usecases/sign_out_ucase.dart';
+import 'package:ai_connect/features/auth/domain/usecases/verify_phone_otp_ucase.dart';
+import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/change_chatting_font_uc.dart';
+import 'package:ai_connect/features/settings/domain/usecases/set_app_theme_uc.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:ai_connect/service_locator.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -118,23 +128,30 @@ bool isValidPhoneNumber(String phoneNumber) {
   return regex.hasMatch(phoneNumber);
 }
 
-/// This method is used to keep the user signed in weather the auth method.
-/// the user used is `google` or `apple`, `phone`.
-// File: lib/helpers/auth_helpers.dart
+SettingsBloc get getSettingsBloc => SettingsBloc(
+      switchAppThemeUCase: getIt<SetAppThemeUCase>(),
+      changeChattingFontUCase: getIt<ChangeChattingFontUCase>(),
+    );
 
-void keepUserSignedIn(
-  BuildContext context,
-  AuthStatus state,
-) {
-  final settingsBloc = SettingsBloc.get(context);
-  if (state is AuthStatusGoogleSignedSuccess && state.user.token != null) {
-    settingsBloc.add(SettingKeepUserLoggedEvent(token: state.user.token!));
+AuthBloc get getAuthBloc => AuthBloc(
+      keepUserSignedInUCase: getIt<KeepUserSignedInUCase>(),
+      authWithGoogleUCase: getIt<AuthWithGoogleUCase>(),
+      authWithAppleUCase: getIt<AuthWithAppleUCase>(),
+      authWithPhoneUCase: getIt<AuthWithPhoneUCase>(),
+      verifyPhoneOtpUCase: getIt<VerifyPhoneOtpUCase>(),
+      signOutUCase: getIt<SignOutUCase>(),
+    );
+
+@override
+Future<bool> checkIsUserSigned() async {
+  final appStorage = getIt<AppStorage>();
+  try {
+    final token = await appStorage.getFromAppStorage(
+      AppConstants.keepUserLoggedKey,
+    );
+
+    return token == null ? false : true;
+  } catch (e) {
+    return false;
   }
-  if (state is AuthStatusAppleSignedSuccess && state.user.token != null) {
-    settingsBloc.add(SettingKeepUserLoggedEvent(token: state.user.token!));
-  }
-  if (state is AuthStatusOtpVerifiedSuccess && state.user.token != null) {
-    settingsBloc.add(SettingKeepUserLoggedEvent(token: state.user.token!));
-  }
-  //GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
 }

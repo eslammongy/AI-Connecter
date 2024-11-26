@@ -2,14 +2,17 @@ import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
+import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/dialog_manager.dart';
 import 'package:ai_connect/core/utils/helper.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:ai_connect/features/auth/presentation/bloc/auth_events.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_status.dart';
 import 'package:ai_connect/features/auth/presentation/widgets/pinput_otp_verification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class OtpVerificationScreen extends StatelessWidget {
   const OtpVerificationScreen({super.key, required this.phoneNum});
@@ -32,13 +35,18 @@ class OtpVerificationScreen extends StatelessWidget {
       ),
       body: BlocConsumer<AuthBloc, AuthStatus>(
         listener: (context, state) {
-          if (state is AuthStatusLoading) {
+          if (state is AuthLoadingState) {
             LoadingDialogManager.of(context).displayDialog();
           }
-          if (state is AuthStatusOtpVerifiedSuccess) {
-            keepUserSignedIn(context, state);
+          if (state is AuthOtpVerifiedState) {
+            AuthBloc.get(context).add(AuthKeepUserSignedInEvent(
+              token: state.user.token,
+            ));
           }
-          if (state is AuthStatusFailure) {
+          if (state is AuthKeepUserSignedInState) {
+            GoRouter.of(context).pushReplacement(AppRoutes.dashboard);
+          }
+          if (state is AuthFailureState) {
             LoadingDialogManager.closeDialog();
             debugPrint("PhoneErrorMsg: ${state.message}");
             displaySnackBar(context, state.message ?? "");

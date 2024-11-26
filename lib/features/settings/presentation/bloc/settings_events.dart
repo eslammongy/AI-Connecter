@@ -7,21 +7,9 @@ abstract class SettingEvents extends Equatable {
   List<Object?> get props => [];
 }
 
-class SettingKeepUserLoggedEvent extends SettingEvents {
-  final String token;
-  SettingKeepUserLoggedEvent({required this.token});
-
-  @override
-  List<Object?> get props => [token];
-}
-
-class SettingResetUserSessionEvent extends SettingEvents {}
-
 class SettingGetAppThemeEvent extends SettingEvents {}
 
 class SettingGetChattingFontEvent extends SettingEvents {}
-
-class SettingCheckIsUserSignedEvent extends SettingEvents {}
 
 class SettingSwitchThemeEvent extends SettingEvents {
   final ThemeMode theme;

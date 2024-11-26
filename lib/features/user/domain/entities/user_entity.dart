@@ -4,6 +4,7 @@ class UserEntity {
   final String? email;
   final String? photoUrl;
   final String? phone;
+  final DateTime? createdAt;
   final String? token;
 
   UserEntity({
@@ -12,6 +13,7 @@ class UserEntity {
     this.email,
     this.photoUrl,
     this.phone,
+    this.createdAt,
     this.token,
   });
 }

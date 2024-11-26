@@ -2,7 +2,7 @@ import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
-import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/settings_status.dart';
 import 'package:ai_connect/features/settings/presentation/widgets/font_style_badge.dart';
 import 'package:flutter/material.dart';
@@ -44,18 +44,15 @@ class ChatFontStyleToggles extends StatelessWidget {
               children: [
                 FontStyleBadge(
                   fontFamily: AppAssetsManager.openSans,
-                  isSelected:
-                      settingsBloc.chattingFont == FontFamily.openSans.value,
+                  isSelected: settingsBloc.chattingFont == FontFamily.openSans,
                 ),
                 FontStyleBadge(
                   fontFamily: AppAssetsManager.roboto,
-                  isSelected:
-                      settingsBloc.chattingFont == FontFamily.roboto.value,
+                  isSelected: settingsBloc.chattingFont == FontFamily.roboto,
                 ),
                 FontStyleBadge(
                   fontFamily: AppAssetsManager.inter,
-                  isSelected:
-                      settingsBloc.chattingFont == FontFamily.inter.value,
+                  isSelected: settingsBloc.chattingFont == FontFamily.inter,
                 ),
               ],
             ),
@@ -68,17 +65,16 @@ class ChatFontStyleToggles extends StatelessWidget {
                 FontStyleBadge(
                   fontFamily: AppAssetsManager.chakraPetch,
                   isSelected:
-                      settingsBloc.chattingFont == FontFamily.chakraPetch.value,
+                      settingsBloc.chattingFont == FontFamily.chakraPetch,
                 ),
                 FontStyleBadge(
                   fontFamily: AppAssetsManager.indieFlower,
                   isSelected:
-                      settingsBloc.chattingFont == FontFamily.indieFlower.value,
+                      settingsBloc.chattingFont == FontFamily.indieFlower,
                 ),
                 FontStyleBadge(
                   fontFamily: AppAssetsManager.teko,
-                  isSelected:
-                      settingsBloc.chattingFont == FontFamily.teko.value,
+                  isSelected: settingsBloc.chattingFont == FontFamily.teko,
                 ),
               ],
             ),

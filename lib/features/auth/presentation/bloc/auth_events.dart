@@ -50,4 +50,11 @@ class AuthUpdateUserEvent extends AuthEvents {
   List<Object?> get props => [userId, data];
 }
 
+class AuthKeepUserSignedInEvent extends AuthEvents {
+  final String? token;
+  AuthKeepUserSignedInEvent({required this.token});
+  @override
+  List<Object?> get props => [token];
+}
+
 class AuthSignOutEvent extends AuthEvents {}

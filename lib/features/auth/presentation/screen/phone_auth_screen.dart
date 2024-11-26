@@ -36,17 +36,17 @@ class PhoneAuthScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: BlocConsumer<AuthBloc, AuthStatus>(
             listener: (context, state) {
-              if (state is AuthStatusLoading) {
+              if (state is AuthLoadingState) {
                 LoadingDialogManager.of(context).displayDialog();
               }
-              if (state is AuthStatusPhoneSignedSuccess) {
+              if (state is AuthPhoneSignedState) {
                 LoadingDialogManager.closeDialog();
                 GoRouter.of(context).push(
                   AppRoutes.otpVerificationScreen,
                   extra: state.phone,
                 );
               }
-              if (state is AuthStatusFailure) {
+              if (state is AuthFailureState) {
                 LoadingDialogManager.closeDialog();
                 debugPrint("PhoneErrorMsg: ${state.message}");
                 displaySnackBar(context, state.message ?? "");

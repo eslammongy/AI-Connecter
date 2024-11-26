@@ -1,9 +1,10 @@
 import 'package:ai_connect/core/constant/constants.dart';
+import 'package:ai_connect/core/datasource/app_storage.dart';
 import 'package:ai_connect/core/error/api_failure.dart';
-import 'package:ai_connect/features/auth/data/datasource/supabase_client.dart';
-import 'package:ai_connect/features/auth/data/models/user_model.dart';
-import 'package:ai_connect/features/auth/domain/entities/user_entity.dart';
+import 'package:ai_connect/features/auth/data/datasource/auth_service.dart';
 import 'package:ai_connect/features/auth/domain/repositories/auth_repository.dart';
+import 'package:ai_connect/features/user/data/models/user_model.dart';
+import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,9 +12,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final AppSupabaseClient supabaseClient;
+  final AuthService authService;
+  final AppStorage appStorage;
 
-  AuthRepositoryImpl({required this.supabaseClient});
+  AuthRepositoryImpl({
+    required this.authService,
+    required this.appStorage,
+  });
 
   @override
   Future<Either<Failure, UserEntity>> signInWithAppleAccount() {
@@ -28,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (authToken == null) {
         return Left(ServerFailure(message: 'No Access Token found.'));
       }
-      final response = await supabaseClient.signInWithIdToken(
+      final response = await authService.signInWithIdToken(
         idToken: authToken,
         provider: OAuthProvider.google,
       );
@@ -67,17 +72,11 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, bool>> signInWithPhoneOtp(
       {required String phone}) async {
     try {
-      await supabaseClient.signInWithOtp(phone: phone);
+      await authService.signInWithOtp(phone: phone);
       return const Right(true);
     } on Exception catch (e) {
       return Left(ServerFailure(message: e.toString()));
     }
-  }
-
-  @override
-  Future<Either<Failure, bool>> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
   }
 
   @override
@@ -86,13 +85,35 @@ class AuthRepositoryImpl implements AuthRepository {
     required String otp,
   }) async {
     try {
-      final response = await supabaseClient.verifyOtp(
+      final response = await authService.verifyOtp(
         phone: phone,
         otp: otp,
       );
       return userMetaDataExtractor(response);
     } on Exception catch (e) {
       return Left(ServerFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String?>> keepUserSignedIn({
+    String? token,
+  }) async {
+    try {
+      await appStorage.putInAppStorage(AppConstants.keepUserLoggedKey, token);
+      return Right(token);
+    } catch (e) {
+      return Left(LocalFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> signOut() async {
+    try {
+      await authService.signOut();
+      return const Right(null);
+    } catch (e) {
+      return Left(LocalFailure(message: e.toString()));
     }
   }
 }

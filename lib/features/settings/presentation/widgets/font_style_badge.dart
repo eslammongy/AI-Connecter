@@ -1,7 +1,7 @@
 import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
-import 'package:ai_connect/features/settings/presentation/bloc/SettingsBloc.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/settings_events.dart';
 import 'package:flutter/material.dart';
 

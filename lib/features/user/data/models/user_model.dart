@@ -1,4 +1,4 @@
-import 'package:ai_connect/features/auth/domain/entities/user_entity.dart';
+import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
 
 class UserModel extends UserEntity {
   UserModel({
@@ -7,6 +7,7 @@ class UserModel extends UserEntity {
     super.email,
     super.photoUrl,
     super.phone,
+    super.createdAt,
     super.token,
   });
   UserEntity copyWith({
@@ -15,22 +16,26 @@ class UserModel extends UserEntity {
     String? email,
     String? photoUrl,
     String? phone,
+    DateTime? createdAt,
   }) {
     return UserEntity(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        photoUrl: photoUrl ?? this.photoUrl,
-        phone: phone ?? this.phone);
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      photoUrl: photoUrl ?? this.photoUrl,
+      phone: phone ?? this.phone,
+      createdAt: createdAt ?? this.createdAt,
+    );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'name': name,
+      'username': name,
       'email': email,
-      'photoUrl': photoUrl,
+      'photo_url': photoUrl,
       'phone': phone,
+      'created_at': createdAt,
     };
   }
 
@@ -42,6 +47,9 @@ class UserModel extends UserEntity {
       photoUrl: map['photoUrl'] != null ? map['photoUrl'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
       token: map['token'] != null ? map['token'] as String : null,
+      createdAt: map['created_at'] != null
+          ? DateTime.parse(map['created_at'] as String)
+          : null,
     );
   }
 
@@ -58,6 +66,7 @@ class UserModel extends UserEntity {
         other.name == name &&
         other.email == email &&
         other.photoUrl == photoUrl &&
+        other.createdAt == createdAt &&
         other.phone == phone;
   }
 
@@ -67,6 +76,7 @@ class UserModel extends UserEntity {
         name.hashCode ^
         email.hashCode ^
         photoUrl.hashCode ^
+        createdAt.hashCode ^
         phone.hashCode;
   }
 }

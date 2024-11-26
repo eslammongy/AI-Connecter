@@ -1,13 +1,15 @@
 import 'package:ai_connect/core/constant/constants.dart';
+import 'package:ai_connect/core/datasource/app_storage.dart';
 import 'package:ai_connect/core/error/api_failure.dart';
-import 'package:ai_connect/features/settings/data/datasource/app_storage.dart';
 import 'package:ai_connect/features/settings/domain/repository/settings_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
   final AppStorage appStorage;
+
   SettingsRepositoryImpl({required this.appStorage});
+
   @override
   Future<Either<Failure, FontFamily>> changeChattingFontStyle({
     required FontFamily font,
@@ -18,16 +20,6 @@ class SettingsRepositoryImpl implements SettingsRepository {
         font.value,
       );
       return Right(font);
-    } catch (e) {
-      return Left(LocalFailure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> keepUserLogged({required String value}) async {
-    try {
-      await appStorage.putInAppStorage(AppConstants.keepUserLoggedKey, value);
-      return const Right(true);
     } catch (e) {
       return Left(LocalFailure(message: e.toString()));
     }
@@ -79,19 +71,6 @@ class SettingsRepositoryImpl implements SettingsRepository {
       );
       final font = FontFamily.values.byName(result!);
       return Right(font);
-    } catch (e) {
-      return Left(LocalFailure(message: e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> checkIsUserSigned() async {
-    try {
-      final token = await appStorage.getFromAppStorage(
-        AppConstants.keepUserLoggedKey,
-      );
-      final isUserSigned = token == null ? false : true;
-      return Right(isUserSigned);
     } catch (e) {
       return Left(LocalFailure(message: e.toString()));
     }
