@@ -22,64 +22,64 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(1, 6515688378268207506),
+      id: const obx_int.IdUid(1, 3699295683555704535),
       name: 'AnswerEntity',
-      lastPropertyId: const obx_int.IdUid(7, 5332370516383242632),
+      lastPropertyId: const obx_int.IdUid(7, 6701635854394249877),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 5779473724287387539),
+            id: const obx_int.IdUid(1, 4875770531630963642),
             name: 'id',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 7569942083014185250),
+            id: const obx_int.IdUid(2, 7570656634633151491),
             name: 'text',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 3179838622352396168),
+            id: const obx_int.IdUid(3, 3597503333711375445),
             name: 'isAnswer',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 1347857066603865505),
+            id: const obx_int.IdUid(4, 3144465794846129876),
             name: 'hasFile',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 4504866068858501021),
+            id: const obx_int.IdUid(5, 8617014170746875722),
             name: 'filePath',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 5496864970093132583),
+            id: const obx_int.IdUid(6, 6509421349888709252),
             name: 'dateTime',
             type: 10,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(7, 5332370516383242632),
+            id: const obx_int.IdUid(7, 6701635854394249877),
             name: 'answerId',
             type: 11,
             flags: 520,
-            indexId: const obx_int.IdUid(1, 8526333955756560926),
+            indexId: const obx_int.IdUid(1, 4140350963706860971),
             relationTarget: 'QuestionEntity')
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(2, 1506482876871564116),
+      id: const obx_int.IdUid(2, 8248337740717628147),
       name: 'ChatEntity',
-      lastPropertyId: const obx_int.IdUid(2, 7128184729520767554),
+      lastPropertyId: const obx_int.IdUid(2, 1205280911085146653),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 166065103600434097),
+            id: const obx_int.IdUid(1, 6094765016040820112),
             name: 'id',
             type: 6,
             flags: 129),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 7128184729520767554),
+            id: const obx_int.IdUid(2, 1205280911085146653),
             name: 'title',
             type: 9,
             flags: 0)
@@ -90,32 +90,32 @@ final _entities = <obx_int.ModelEntity>[
             name: 'dbQuestions', srcEntity: 'QuestionEntity', srcField: '')
       ]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(3, 3621640250726286046),
+      id: const obx_int.IdUid(3, 1532487961949111136),
       name: 'QuestionEntity',
-      lastPropertyId: const obx_int.IdUid(4, 6614795561698561119),
+      lastPropertyId: const obx_int.IdUid(4, 5675783507523042832),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 3242274416983178702),
+            id: const obx_int.IdUid(1, 5671687554709857855),
             name: 'id',
             type: 6,
             flags: 129),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 8678288974386550561),
+            id: const obx_int.IdUid(2, 9027601501842539231),
             name: 'question',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 8968133585935378034),
+            id: const obx_int.IdUid(3, 1661602670834294493),
             name: 'hasFile',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 6614795561698561119),
+            id: const obx_int.IdUid(4, 5675783507523042832),
             name: 'questionDataId',
             type: 11,
             flags: 520,
-            indexId: const obx_int.IdUid(2, 313957387510079314),
+            indexId: const obx_int.IdUid(2, 8532574418299267819),
             relationTarget: 'ChatEntity')
       ],
       relations: <obx_int.ModelRelation>[],
@@ -160,8 +160,8 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(3, 3621640250726286046),
-      lastIndexId: const obx_int.IdUid(2, 313957387510079314),
+      lastEntityId: const obx_int.IdUid(3, 1532487961949111136),
+      lastIndexId: const obx_int.IdUid(2, 8532574418299267819),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
