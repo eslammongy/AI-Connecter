@@ -1,75 +1,59 @@
-import 'package:ai_connect/features/chatting/domain/entities/answer_entity.dart';
+import 'package:ai_connect/features/chatting/domain/entities/message_entity.dart';
 
-class AnswerModel extends AnswerEntity {
-  AnswerModel({
+class MessageModel extends MessageEntity {
+  MessageModel({
+    super.id,
     super.text,
-    super.isAnswer,
-    super.hasFile,
+    super.rule,
     super.filePath,
-    super.dateTime,
+    super.sentAt,
+    super.fileBytes,
   });
 
-  AnswerEntity copyWith({
-    String? text,
-    bool? isAnswer,
-    bool? hasFile,
-    String? filePath,
-    DateTime? dateTime,
-  }) {
-    return AnswerEntity(
-      text: text ?? this.text,
-      isAnswer: isAnswer ?? this.isAnswer,
-      hasFile: hasFile ?? this.hasFile,
-      filePath: filePath ?? this.filePath,
-      dateTime: dateTime ?? this.dateTime,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+  Map<String, dynamic> toJson() {
+    return {
       'text': text,
-      'isAnswer': isAnswer,
-      'hasFile': hasFile,
       'filePath': filePath,
-      'dateTime': dateTime?.millisecondsSinceEpoch,
+      'rule': rule,
+      'sentAt': sentAt?.millisecondsSinceEpoch,
+      'fileBytes': fileBytes,
     };
   }
 
-  factory AnswerModel.fromMap(Map<String, dynamic> map) {
-    return AnswerModel(
+  factory MessageModel.fromJson(Map<String, dynamic> map) {
+    return MessageModel(
+      id: map['id'] as int,
       text: map['text'] != null ? map['text'] as String : null,
-      isAnswer: map['isAnswer'] as bool,
-      hasFile: map['hasImage'] as bool,
-      filePath: map['imgPath'] != null ? map['imgPath'] as String : null,
-      dateTime:
-          map['dateTime'] != null ? DateTime.tryParse(map['dateTime']) : null,
+      filePath: map['filePath'] != null ? map['filePath'] as String : null,
+      rule: map['rule'] != null ? map['rule'] as String : MsgRules.user.name,
+      sentAt: map['sentAt'] != null ? DateTime.tryParse(map['sentAt']) : null,
+      fileBytes: map['fileBytes'] != null ? map['fileBytes'] as Uri : null,
     );
   }
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MessageEntity &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          text == other.text &&
+          filePath == other.filePath &&
+          rule == other.rule &&
+          sentAt == other.sentAt &&
+          fileBytes == other.fileBytes;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      text.hashCode ^
+      filePath.hashCode ^
+      rule.hashCode ^
+      sentAt.hashCode ^
+      fileBytes.hashCode;
+
+  @override
   String toString() {
-    return 'MessageEntity(id: $id, text: $text, isAnswer: $isAnswer, hasImage: $hasFile, imgPath: $filePath, dateTime: $dateTime)';
-  }
-
-  @override
-  bool operator ==(covariant AnswerEntity other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.text == text &&
-        other.isAnswer == isAnswer &&
-        other.hasFile == hasFile &&
-        other.filePath == filePath &&
-        other.dateTime == dateTime;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        text.hashCode ^
-        isAnswer.hashCode ^
-        hasFile.hashCode ^
-        filePath.hashCode ^
-        dateTime.hashCode;
+    return 'MessageEntity{id: $id, text: $text, filePath: $filePath, rule: $rule, sentAt: $sentAt, fileBytes: $fileBytes, chat: $chat}';
   }
 }
