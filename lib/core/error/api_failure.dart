@@ -1,104 +1,93 @@
-import 'package:dio/dio.dart';
-
-import 'api_error_msg.dart';
+import 'package:ai_connect/core/error/api_error_msg.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class Failure {
-  final DioExceptionType? exceptionType;
-  final int? statusCode;
+  final SupabaseErrorCode? errorCode;
   final String? message;
+
   const Failure({
-    this.exceptionType,
-    this.statusCode,
+    this.errorCode,
     this.message,
   });
 }
 
-class ServerFailure extends Failure {
-  ServerFailure({
-    super.exceptionType,
-    super.statusCode,
+/// Error handler class for Supabase exceptions
+class SupabaseExceptionHandler extends Failure {
+  SupabaseExceptionHandler({
+    super.errorCode,
     super.message,
   });
 
-  factory ServerFailure.handleError(DioException exception) {
-    final type = exception.type;
-    final statusCode = exception.response?.statusCode;
-    switch (type) {
-      case DioExceptionType.badResponse:
-        return ServerFailure(
-          exceptionType: DioExceptionType.badResponse,
-          statusCode: statusCode,
-          message: _handleBadResponseExpMsg(statusCode ?? 404),
+  /// Handles exceptions from auth operations
+  factory SupabaseExceptionHandler.authError({required AuthException exp}) {
+    final statusCode = SupabaseErrorCode.values.byName(exp.statusCode!);
+    return _supabaseExceptionHandler(
+        code: statusCode, errors: authErrorMessages);
+  }
+
+  /// Handles exceptions from storage operations
+  factory SupabaseExceptionHandler.storageError(StorageException exp) {
+    final statusCode = SupabaseErrorCode.values.byName(exp.statusCode!);
+    return _supabaseExceptionHandler(
+        code: statusCode, errors: storageErrorMessages);
+  }
+
+  /// Handles exceptions from database operations
+  factory SupabaseExceptionHandler.databaseException(PostgrestException exp) {
+    switch (exp.code) {
+      case 'PGRST116':
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.tableNotFound,
         );
-      case DioExceptionType.badCertificate:
-        return ServerFailure(
-          exceptionType: DioExceptionType.cancel,
-          statusCode: statusCode,
-          message: badCertificateError,
+      case 'PGRST117':
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.columnNotFound,
         );
-      case DioExceptionType.receiveTimeout:
-        return ServerFailure(
-          exceptionType: DioExceptionType.receiveTimeout,
-          statusCode: statusCode,
-          message: receivingTimeout,
+      case '23505':
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.duplicateRow,
         );
-      case DioExceptionType.sendTimeout:
-        return ServerFailure(
-          exceptionType: DioExceptionType.sendTimeout,
-          statusCode: statusCode,
-          message: sendingTimeout,
-        );
-      case DioExceptionType.connectionTimeout:
-        return ServerFailure(
-          exceptionType: DioExceptionType.connectionTimeout,
-          statusCode: statusCode,
-          message: connectionTimeout,
-        );
-      case DioExceptionType.cancel:
-        return ServerFailure(
-          exceptionType: DioExceptionType.cancel,
-          statusCode: statusCode,
-          message: cancelError,
-        );
-      case DioExceptionType.connectionError:
-        return ServerFailure(
-          exceptionType: DioExceptionType.connectionError,
-          statusCode: statusCode,
-          message: connectionError,
+      case '23503':
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.constraintViolation,
         );
 
+      case '22000':
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.invalidInputSyntax,
+        );
+
+      case '57014':
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.databaseTimeout,
+        );
+
+      case '40001':
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.transactionFailed,
+        );
+
+      case '42501':
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.insufficientPermissions,
+        );
       default:
-        return ServerFailure(
-          exceptionType: DioExceptionType.unknown,
-          statusCode: statusCode,
-          message: defaultError,
+        return _supabaseExceptionHandler(
+          code: SupabaseErrorCode.unexpectedDatabaseError,
         );
     }
   }
 
-  static String _handleBadResponseExpMsg(int statusCode) {
-    final String message;
-    if (statusCode >= 100 && statusCode < 200) {
-      message =
-          'This is an informational response - the request was received, continuing processing';
-    } else if (statusCode >= 200 && statusCode < 300) {
-      message =
-          'The request was successfully received, understood, and accepted';
-    } else if (statusCode >= 300 && statusCode < 400) {
-      message =
-          'Redirection: further action needs to be taken in order to complete the request';
-    } else if (statusCode >= 400 && statusCode < 500) {
-      message =
-          'Client error - the request contains bad syntax or cannot be fulfilled';
-    } else if (statusCode >= 500 && statusCode < 600) {
-      message =
-          'Server error - the server failed to fulfil an apparently valid request';
-    } else {
-      message =
-          'A response with a status code that is not within the range of inclusive 100 to exclusive 600'
-          'is a non-standard response, possibly due to the server\'s software';
-    }
-    return message;
+  /// Creates a SupabaseExceptionHandler instance based on the provided error code and flag. The error message is determined by the flag value:
+  /// - If flag is 0, the error message is retrieved from [storageErrorMessages]. - Otherwise, the error message is retrieved from [authErrorMessages].
+  static SupabaseExceptionHandler _supabaseExceptionHandler({
+    required SupabaseErrorCode code,
+    Map errors = dbErrorMessages,
+  }) {
+    return SupabaseExceptionHandler(
+      errorCode: code,
+      message: errors[code],
+    );
   }
 }
 

@@ -1,12 +1,12 @@
 import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/datasource/app_storage.dart';
+import 'package:ai_connect/core/error/api_error_msg.dart';
 import 'package:ai_connect/core/error/api_failure.dart';
 import 'package:ai_connect/features/auth/data/datasource/auth_service.dart';
 import 'package:ai_connect/features/auth/domain/repositories/auth_repository.dart';
 import 'package:ai_connect/features/user/data/models/user_model.dart';
 import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -31,25 +31,37 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final authToken = await _googleSignIne();
       if (authToken == null) {
-        return Left(ServerFailure(message: 'No Access Token found.'));
+        return Left(catchAuthExp());
       }
       final response = await authService.signInWithIdToken(
         idToken: authToken,
         provider: OAuthProvider.google,
       );
       return userMetaDataExtractor(response);
-    } on Exception catch (e) {
-      return Left(ServerFailure(message: e.toString()));
+    } on Exception catch (ex) {
+      return Left(catchAuthExp(ex: ex));
     }
+  }
+
+  SupabaseExceptionHandler catchAuthExp({Exception? ex}) {
+    if (ex != null && ex is AuthException) {
+      return SupabaseExceptionHandler.authError(exp: ex);
+    }
+    ex = AuthException("", statusCode: 'unknownError');
+    return SupabaseExceptionHandler.authError(exp: ex);
   }
 
   Either<Failure, UserEntity> userMetaDataExtractor(AuthResponse response) {
     if (response.user == null || response.user?.appMetadata == null) {
-      return Left(ServerFailure(message: 'No User found.'));
+      return Left(
+        catchAuthExp(
+          ex: AuthException("",
+              statusCode: SupabaseErrorCode.userNotFound.name),
+        ),
+      );
     }
     final metaData = response.user?.appMetadata;
     final accessToken = response.session?.accessToken;
-    debugPrint("The User token: $accessToken");
     metaData!['token'] = accessToken;
     return Right(UserModel.fromMap(metaData));
   }
@@ -74,8 +86,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await authService.signInWithOtp(phone: phone);
       return const Right(true);
-    } on Exception catch (e) {
-      return Left(ServerFailure(message: e.toString()));
+    } on Exception catch (ex) {
+      return Left(catchAuthExp(ex: ex));
     }
   }
 
@@ -90,8 +102,8 @@ class AuthRepositoryImpl implements AuthRepository {
         otp: otp,
       );
       return userMetaDataExtractor(response);
-    } on Exception catch (e) {
-      return Left(ServerFailure(message: e.toString()));
+    } on Exception catch (ex) {
+      return Left(catchAuthExp(ex: ex));
     }
   }
 

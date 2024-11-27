@@ -1,7 +1,7 @@
 import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/constant/fake_json.dart';
+import 'package:ai_connect/core/routes/app_routes.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
-import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/settings_events.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/settings_status.dart';

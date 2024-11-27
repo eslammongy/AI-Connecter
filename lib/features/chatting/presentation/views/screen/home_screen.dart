@@ -1,6 +1,6 @@
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
+import 'package:ai_connect/core/routes/app_routes.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
-import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/ai_tool_box.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/questions_history_header.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/questions_history_list.dart';

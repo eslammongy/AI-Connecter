@@ -1,8 +1,8 @@
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/constant/app_strings.dart';
+import 'package:ai_connect/core/routes/app_routes.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
-import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:ai_connect/core/constant/app_assets_manager.dart';
 import 'package:ai_connect/core/constant/app_strings.dart';
+import 'package:ai_connect/core/routes/app_routes.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
-import 'package:ai_connect/core/utils/app_routes.dart';
 import 'package:ai_connect/core/utils/helper.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_events.dart';
