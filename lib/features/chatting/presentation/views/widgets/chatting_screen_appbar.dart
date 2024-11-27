@@ -1,6 +1,8 @@
+import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:ai_connect/features/chatting/domain/entities/menu_item.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,12 +19,12 @@ class ChattingScreenAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: context.theme.scaffoldBackgroundColor,
-      title: Text(
-        title,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.styleBold30(context),
-      ),
+      title: Text(title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.styleBold30(context).copyWith(
+            fontFamily: SettingsBloc.get(context).chattingFont.fontName,
+          )),
       centerTitle: true,
       leading: IconButton(
         onPressed: () {

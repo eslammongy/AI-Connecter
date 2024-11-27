@@ -23,3 +23,11 @@ enum FontFamily {
 extension FontFamilyExtension on FontFamily {
   String get value => name.replaceAll('FontFamily.', '');
 }
+
+extension FontFamilyNameExtension on FontFamily {
+  String get fontName {
+    final enumName = name.replaceAll('FontFamily.', '');
+    final formattedName = enumName[0].toUpperCase() + enumName.substring(1);
+    return formattedName;
+  }
+}

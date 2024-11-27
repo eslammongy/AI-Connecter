@@ -1,6 +1,7 @@
-import 'package:ai_connect/core/constant/app_assets_manager.dart';
+import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
+import 'package:ai_connect/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
 
 class ExpendableTextWidget extends StatefulWidget {
@@ -23,20 +24,23 @@ class _ExpendableTextWidgetState extends State<ExpendableTextWidget> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
-
+    final fontFamily = SettingsBloc.get(context).chattingFont;
+    debugPrint("Formatted Font Name: ${fontFamily.fontName}");
     setExpandedTestLen();
     return Container(
       child: secondHalf.isEmpty
-          ? Text(
-              firstHalf,
+          ? Text(firstHalf,
               maxLines: 3,
-              style: msgTextFont(theme, AppAssetsManager.openSans),
-            )
+              style: AppTextStyles.styleBold16(context).copyWith(
+                fontFamily: fontFamily.fontName,
+              ))
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(hiddenText ? ('$firstHalf...') : (firstHalf + secondHalf),
-                    style: AppTextStyles.styleBold16(context)),
+                    style: AppTextStyles.styleBold16(context).copyWith(
+                      fontFamily: fontFamily.fontName,
+                    )),
                 InkWell(
                   onTap: () {
                     setState(() {

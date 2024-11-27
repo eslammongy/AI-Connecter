@@ -82,7 +82,7 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
       final error = LocalFailure.handleError(exception);
       emit(SettingFailureState(message: error.message));
     }, (font) {
-      emit(SettingChangeChattingFontState(font: font));
+      emit(SettingChangeChattingFontState(font: chattingFont = font));
     });
   }
 }
