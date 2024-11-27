@@ -58,7 +58,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                 ),
         ],
       ),
-      actions: index == 1 ? [] : [buildActionButton(context)],
+      //  actions: index == 1 ? [] : [buildActionButton(context)],
     );
   }
 

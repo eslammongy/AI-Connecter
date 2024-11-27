@@ -43,7 +43,7 @@ class QuestionHistoryListItem extends StatelessWidget {
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsets.only(right: 50, bottom: 8, top: 5),
+                            const EdgeInsets.only(right: 70, bottom: 8, top: 5),
                         child: Text(
                           title,
                           textAlign: TextAlign.start,
