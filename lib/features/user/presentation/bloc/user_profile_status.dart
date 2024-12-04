@@ -14,7 +14,7 @@ class UserProfileLoadingState extends UserProfileStatus {}
 class UserProfileCreateState extends UserProfileStatus {
   final UserEntity user;
 
-  const UserProfileCreateState(this.user);
+  const UserProfileCreateState({required this.user});
   @override
   List<Object?> get props => [user];
 }
@@ -22,7 +22,7 @@ class UserProfileCreateState extends UserProfileStatus {
 class UserProfileUpdateState extends UserProfileStatus {
   final UserEntity user;
 
-  const UserProfileUpdateState(this.user);
+  const UserProfileUpdateState({required this.user});
   @override
   List<Object?> get props => [user];
 }
@@ -30,10 +30,12 @@ class UserProfileUpdateState extends UserProfileStatus {
 class UserProfileFetchState extends UserProfileStatus {
   final UserEntity user;
 
-  const UserProfileFetchState(this.user);
+  const UserProfileFetchState({required this.user});
   @override
   List<Object?> get props => [user];
 }
+
+class UserProfileSetImgState extends UserProfileStatus {}
 
 class UserProfileFailureState extends UserProfileStatus {
   final String? errorMsg;

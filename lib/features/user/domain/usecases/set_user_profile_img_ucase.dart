@@ -8,8 +8,8 @@ class SetUserProfileImgUcase {
   final UserProfileRepository userProfileRepository;
   const SetUserProfileImgUcase({required this.userProfileRepository});
 
-  Future<Either<Failure, String>> call({
-    required File imgFile,
-  }) =>
-      userProfileRepository.setUserProfileImg(imgFile: imgFile);
+  Future<Either<Failure, String>> call(
+          {required File imgFile, required String userName}) =>
+      userProfileRepository.setUserProfileImg(
+          imgFile: imgFile, userName: userName);
 }

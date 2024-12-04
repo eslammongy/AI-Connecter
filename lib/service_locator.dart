@@ -15,6 +15,14 @@ import 'package:ai_connect/features/settings/domain/repository/settings_reposito
 import 'package:ai_connect/features/settings/domain/usecases/change_chatting_font_uc.dart';
 import 'package:ai_connect/features/settings/domain/usecases/set_app_theme_uc.dart';
 import 'package:ai_connect/features/settings/presentation/bloc/settings_bloc.dart';
+import 'package:ai_connect/features/user/data/datasource/db_datasource.dart';
+import 'package:ai_connect/features/user/data/repositories/user_profile_repository_impl.dart';
+import 'package:ai_connect/features/user/domain/repositories/user_profile_repository.dart';
+import 'package:ai_connect/features/user/domain/usecases/create_user_profile_ucase.dart';
+import 'package:ai_connect/features/user/domain/usecases/fetch_user_profile_ucase.dart';
+import 'package:ai_connect/features/user/domain/usecases/set_user_profile_img_ucase.dart';
+import 'package:ai_connect/features/user/domain/usecases/update_user_profile_ucase.dart';
+import 'package:ai_connect/features/user/presentation/bloc/user_profile_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -31,6 +39,40 @@ Future<void> initAppDependencies() async {
   // Supabase Client Dependency
   AppSupabaseClient supabaseClient = await initSupabaseClient();
   await initAuthModule(supabaseClient: supabaseClient, appStorage: appStorage);
+  await initUserProfileModule(supabaseClient);
+}
+
+Future<void> initUserProfileModule(AppSupabaseClient supabaseClient) async {
+  getIt.registerLazySingleton<DbDataSource>(
+      () => DbDataSource(supabaseClient: supabaseClient));
+  getIt.registerLazySingleton<UserProfileRepository>(
+      () => UserProfileRepositoryImpl(dataSource: getIt<DbDataSource>()));
+
+  getIt.registerLazySingleton<CreateUserProfileUCase>(
+    () => CreateUserProfileUCase(
+        userProfileRepository: getIt<UserProfileRepository>()),
+  );
+  getIt.registerLazySingleton<UpdateUserProfileUcase>(
+    () => UpdateUserProfileUcase(
+        userProfileRepository: getIt<UserProfileRepository>()),
+  );
+  getIt.registerLazySingleton<FetchUserProfileUcase>(
+    () => FetchUserProfileUcase(
+        userProfileRepository: getIt<UserProfileRepository>()),
+  );
+  getIt.registerLazySingleton<SetUserProfileImgUcase>(
+    () => SetUserProfileImgUcase(
+        userProfileRepository: getIt<UserProfileRepository>()),
+  );
+  // Bloc Dependency
+  getIt.registerFactory<UserProfileBloc>(
+    () => UserProfileBloc(
+      createUserProfileUCase: getIt(),
+      updateUserProfileUcase: getIt(),
+      fetchUserProfileUcase: getIt(),
+      setUserProfileImgUcase: getIt(),
+    ),
+  );
 }
 
 Future<AppSupabaseClient> initSupabaseClient() async {

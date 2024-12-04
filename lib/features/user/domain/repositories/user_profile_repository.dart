@@ -14,5 +14,6 @@ abstract class UserProfileRepository {
   Future<Either<Failure, UserEntity>> fetchUserProfile(
       {required String userId});
 
-  Future<Either<Failure, String>> setUserProfileImg({required File imgFile});
+  Future<Either<Failure, String>> setUserProfileImg(
+      {required File imgFile, required String userName});
 }
