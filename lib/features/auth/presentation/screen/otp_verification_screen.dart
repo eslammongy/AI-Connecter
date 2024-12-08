@@ -33,6 +33,7 @@ class OtpVerificationScreen extends StatelessWidget {
         }
         if (state is AuthOtpVerifiedState) {
           // start creating user profile
+          LoadingDialogManager.closeDialog();
           UserProfileBloc.get(context)
               .add(UserProfileCreateEvent(user: state.user!));
         }

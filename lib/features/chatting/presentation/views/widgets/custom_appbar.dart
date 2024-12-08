@@ -3,6 +3,7 @@ import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/routes/app_routes.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
+import 'package:ai_connect/features/settings/presentation/widgets/app_settings_component.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -27,38 +28,48 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       leadingWidth: 30,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(
-            AppAssetsManager.aiIMage,
-            width: 30,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          index != 0
-              ? Expanded(
-                  child: CustomTextInputField(
-                    textEditingController: searchController,
-                    height: 50,
-                    hint: "search for city by name...",
-                    bkColor: context.theme.appColors.surface,
-                    focusColor: context.theme.appColors.primary,
-                    prefix: const Icon(FontAwesomeIcons.magnifyingGlass),
-                    onSubmitted: (text) {},
-                  ),
-                )
-              : Text(
-                  AppStrings.appName,
-                  style: AppTextStyles.styleSemiBold24(context).copyWith(
-                    fontFamily: AppAssetsManager.inter,
-                  ),
+      title: buildTitleRow(context, index, searchController),
+      actions: [
+        AppSettingsComponent(),
+      ],
+    );
+  }
+
+  Widget buildTitleRow(
+    BuildContext context,
+    int index,
+    TextEditingController searchController,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.asset(
+          AppAssetsManager.aiIMage,
+          width: 30,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        index == 1
+            ? Expanded(
+                child: CustomTextInputField(
+                  textEditingController: searchController,
+                  height: 50,
+                  hint: "search for city by name...",
+                  bkColor: context.theme.appColors.surface,
+                  focusColor: context.theme.appColors.primary,
+                  prefix: const Icon(FontAwesomeIcons.magnifyingGlass),
+                  onSubmitted: (text) {},
                 ),
-        ],
-      ),
-      //  actions: index == 1 ? [] : [buildActionButton(context)],
+              )
+            : Text(
+                AppStrings.appName,
+                style: AppTextStyles.styleSemiBold24(context).copyWith(
+                  fontFamily: AppAssetsManager.inter,
+                ),
+              ),
+      ],
     );
   }
 

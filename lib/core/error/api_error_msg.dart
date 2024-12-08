@@ -64,6 +64,8 @@ const Map<SupabaseErrorCode, String> authErrorMessages = {
   SupabaseErrorCode.userNotFound: 'No account found with the provided details.',
   SupabaseErrorCode.userBanned:
       'Your account has been banned. Contact support for help.',
+  SupabaseErrorCode.unknownError:
+      'An unknown error occurred. Please try again later.',
 };
 
 /// Mapping of Supabase error codes to user-friendly messages
@@ -110,3 +112,5 @@ const Map<SupabaseErrorCode, String> storageErrorMessages = {
   SupabaseErrorCode.unknownError:
       'An unknown error occurred. Please try again later.',
 };
+
+const String connectionFailureMsg = "Please check your internet connection.";

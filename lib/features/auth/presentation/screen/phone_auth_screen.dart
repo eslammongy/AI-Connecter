@@ -22,74 +22,72 @@ class PhoneAuthScreen extends StatelessWidget {
     final theme = context.theme;
     String countryCode = "+20";
     final phoneNumController = TextEditingController();
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        centerTitle: true,
-        title: Text(
-          AppStrings.phoneAuthentication,
-          style: AppTextStyles.styleBold20(context),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: BlocConsumer<AuthBloc, AuthStatus>(
-            listener: (context, state) {
-              if (state is AuthLoadingState) {
-                LoadingDialogManager.of(context).displayDialog();
-              }
-              if (state is AuthPhoneSignedState) {
-                LoadingDialogManager.closeDialog();
-                GoRouter.of(context).push(
-                  AppRoutes.otpVerificationScreen,
-                  extra: state.phone,
-                );
-              }
-              if (state is AuthFailureState) {
-                LoadingDialogManager.closeDialog();
-                debugPrint("PhoneErrorMsg: ${state.message}");
-                displaySnackBar(context, state.message ?? "");
-              }
-            },
-            builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  Image.asset(
-                    AppAssetsManager.submitPhoneNumberImg,
-                    width: 260,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  PhoneSubmissionCountryCode(
-                    phoneNumController: phoneNumController,
-                    setCountryCode: (code) {
-                      countryCode = code;
-                    },
-                  ),
-                  SizedBox(
-                    height: 60,
-                  ),
-                  CustomElevatedBtn(
-                    bkColor: theme.appColors.primary,
-                    text: AppStrings.sendOtpCode,
-                    onPressed: () {
-                      final phoneNum = phoneNumController.text.trim();
-                      _handleSubmitUserPhone(phoneNum, context, countryCode);
-                    },
-                  ),
-                ],
-              );
-            },
+    return BlocConsumer<AuthBloc, AuthStatus>(
+      listener: (context, state) {
+        if (state is AuthLoadingState) {
+          LoadingDialogManager.of(context).displayDialog();
+        }
+        if (state is AuthPhoneSignedState) {
+          LoadingDialogManager.closeDialog();
+          GoRouter.of(context).push(
+            AppRoutes.otpVerificationScreen,
+            extra: state.phone,
+          );
+        }
+        if (state is AuthFailureState) {
+          LoadingDialogManager.closeDialog();
+          displaySnackBar(context, state.message ?? "");
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: theme.scaffoldBackgroundColor,
+            centerTitle: true,
+            title: Text(
+              AppStrings.phoneAuthentication,
+              style: AppTextStyles.styleBold20(context),
+            ),
           ),
-        ),
-      ),
+          body: SingleChildScrollView(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 60,
+                ),
+                Image.asset(
+                  AppAssetsManager.submitPhoneNumberImg,
+                  width: 260,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                PhoneSubmissionCountryCode(
+                  phoneNumController: phoneNumController,
+                  setCountryCode: (code) {
+                    countryCode = code;
+                  },
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                CustomElevatedBtn(
+                  bkColor: theme.appColors.primary,
+                  text: AppStrings.sendOtpCode,
+                  onPressed: () {
+                    final phoneNum = phoneNumController.text.trim();
+                    _handleSubmitUserPhone(phoneNum, context, countryCode);
+                  },
+                ),
+              ],
+            ),
+          )),
+        );
+      },
     );
   }
 

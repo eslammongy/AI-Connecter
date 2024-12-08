@@ -10,10 +10,10 @@ class AppSettingsComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.topRight,
+      alignment: Alignment.centerRight,
       child: Card(
         color: context.theme.appColors.primary,
-        margin: const EdgeInsets.all(0),
+        margin: const EdgeInsets.only(right: 10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(80),
         ),

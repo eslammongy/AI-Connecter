@@ -1,70 +1,58 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class InternetConnectivityChecker {
-  static final InternetConnectivityChecker _instance =
-      InternetConnectivityChecker._internal();
-  static bool hasConnection = false;
-  static StreamSubscription<InternetStatus>? subscription;
+  static final InternetConnection _internetConnection = InternetConnection();
+  static bool _hasConnection = false;
+  static StreamSubscription<InternetStatus>? _subscription;
 
-  InternetConnectivityChecker._internal() {
-    checkInitialConnection();
-  }
+  /// Whether there is an active internet connection
+  static bool get hasConnection => _hasConnection;
 
-  factory InternetConnectivityChecker.init() {
-    return _instance;
-  }
-
-  checkInitialConnection() async => hasConnection =
-      await InternetConnection().internetStatus == InternetStatus.connected;
-
-  static void startListening({
-    required Function(
-      StreamSubscription<InternetStatus>? subscription,
-    ) initSubscription,
+  /// Initialize the connectivity checker with optional callbacks
+  static Future<void> initialize({
+    VoidCallback? onConnectionRestored,
+    VoidCallback? onConnectionLost,
   }) async {
-    initSubscription(subscription);
-    // Lifecycle management for pausing and resuming the subscription
-    AppLifecycleListener(
-      onResume: () => subscription?.resume(),
-      onHide: () => subscription?.pause(),
-      onPause: () => subscription?.pause(),
-    );
+    // Check initial connection status
+    _hasConnection =
+        await _internetConnection.internetStatus == InternetStatus.connected;
+    debugPrint("Connectivity Status: $_hasConnection");
+    // Listen for connection status changes
+    _subscription?.cancel(); // Prevent duplicate subscriptions
+    _subscription = _internetConnection.onStatusChange.listen((status) {
+      _hasConnection = status == InternetStatus.connected;
+      if (_hasConnection) {
+        onConnectionRestored?.call();
+      } else {
+        onConnectionLost?.call();
+      }
+    });
+
+    // Register as a lifecycle observer
+    WidgetsBinding.instance.addObserver(_LifecycleObserver());
   }
 
+  /// Clean up resources when no longer needed
   static void dispose() {
-    // Cancel subscription when it's no longer needed
-    subscription?.cancel();
-    subscription = null;
+    _subscription?.cancel();
+    _subscription = null;
   }
 }
 
-class AppLifecycleListener extends WidgetsBindingObserver {
-  final VoidCallback onResume;
-  final VoidCallback onPause;
-  final VoidCallback onHide;
-
-  AppLifecycleListener({
-    required this.onResume,
-    required this.onPause,
-    required this.onHide,
-  }) {
-    WidgetsBinding.instance.addObserver(this);
-  }
-
+class _LifecycleObserver extends WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
-        onResume();
+        InternetConnectivityChecker._subscription?.resume();
         break;
-      case AppLifecycleState.inactive:
       case AppLifecycleState.paused:
-        onPause();
-        break;
+      case AppLifecycleState.inactive:
       case AppLifecycleState.detached:
-        onHide();
+        InternetConnectivityChecker._subscription?.pause();
         break;
       default:
         break;

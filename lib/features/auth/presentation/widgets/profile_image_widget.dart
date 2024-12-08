@@ -12,7 +12,7 @@ import 'network_cache_image.dart';
 
 class ProfileImageSection extends StatefulWidget {
   const ProfileImageSection({super.key, required this.profileImgUrl});
-  final String profileImgUrl;
+  final String? profileImgUrl;
 
   @override
   State<ProfileImageSection> createState() => _ProfileImageSectionState();
@@ -39,7 +39,7 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                   ),
                 )
               : CacheNetworkProfileImg(
-                  imgUrl: widget.profileImgUrl,
+                  imgUrl: widget.profileImgUrl ?? "https://i.pravatar.cc/300",
                 ),
           Positioned(
               bottom: 5,

@@ -1,3 +1,4 @@
+import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
 import 'package:ai_connect/features/user/domain/usecases/create_user_profile_ucase.dart';
 import 'package:ai_connect/features/user/domain/usecases/fetch_user_profile_ucase.dart';
 import 'package:ai_connect/features/user/domain/usecases/set_user_profile_img_ucase.dart';
@@ -17,9 +18,14 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
     required this.fetchUserProfileUcase,
     required this.setUserProfileImgUcase,
     required this.updateUserProfileUcase,
-  }) : super(UserProfileInitialState());
+  }) : super(UserProfileInitialState()) {
+    on<UserProfileCreateEvent>(onCreateUserProfileEvent);
+    on<UserProfileFetchEvent>(onFetchUserProfileEvent);
+    on<UserProfileUpdateEvent>(onUpdateUserProfileEvent);
+    on<UserProfileSetImgEvent>(onSetUserProfileImgEvent);
+  }
   static UserProfileBloc get(context) => BlocProvider.of(context);
-
+  UserEntity user = UserEntity();
   onCreateUserProfileEvent(
     UserProfileCreateEvent event,
     Emitter<UserProfileStatus> emit,
@@ -30,6 +36,7 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
       final errorMsg = error.message;
       emit(UserProfileFailureState(errorMsg: errorMsg));
     }, (user) {
+      this.user = user;
       emit(UserProfileCreateState(user: user));
     });
   }
@@ -39,11 +46,12 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
     Emitter<UserProfileStatus> emit,
   ) async {
     emit(UserProfileLoadingState());
-    final result = await fetchUserProfileUcase.call(userId: event.userId);
+    final result = await fetchUserProfileUcase.call();
     result.fold((error) {
       final errorMsg = error.message;
       emit(UserProfileFailureState(errorMsg: errorMsg));
     }, (user) {
+      this.user = user;
       emit(UserProfileFetchState(user: user));
     });
   }
@@ -58,6 +66,7 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
       final errorMsg = error.message;
       emit(UserProfileFailureState(errorMsg: errorMsg));
     }, (user) {
+      this.user = user;
       emit(UserProfileUpdateState(user: user));
     });
   }

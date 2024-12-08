@@ -35,7 +35,6 @@ class UserModel extends UserEntity {
       'email': email,
       'photo_url': photoUrl,
       'phone': phone,
-      'created_at': createdAt,
     };
   }
 
@@ -47,9 +46,7 @@ class UserModel extends UserEntity {
       photoUrl: map['photoUrl'] != null ? map['photoUrl'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
       token: map['token'] != null ? map['token'] as String : null,
-      createdAt: map['created_at'] != null
-          ? DateTime.parse(map['created_at'] as String)
-          : null,
+      createdAt: map['createdAt'],
     );
   }
 

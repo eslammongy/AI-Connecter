@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserProfileListener extends StatelessWidget {
   const UserProfileListener({super.key, required this.child});
+
   final Widget child;
 
   @override

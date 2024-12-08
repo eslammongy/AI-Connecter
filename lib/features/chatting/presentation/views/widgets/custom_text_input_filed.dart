@@ -62,7 +62,8 @@ class CustomTextInputField extends StatelessWidget {
           textAlign: TextAlign.start,
           textAlignVertical: TextAlignVertical.center,
           controller: textEditingController,
-          style: AppTextStyles.styleMedium20(context),
+          style:
+              AppTextStyles.styleSemiBold18(context).copyWith(color: textColor),
           decoration: InputDecoration(
             hintStyle: AppTextStyles.styleRegular16(context)
                 .copyWith(color: theme.appColors.tertiary),
@@ -77,12 +78,12 @@ class CustomTextInputField extends StatelessWidget {
             isDense: false,
             isCollapsed: true,
             contentPadding: const EdgeInsets.only(
-                bottom: 22, top: 16, left: 10.0, right: 10),
+                bottom: 20, top: 16, left: 10.0, right: 10),
             hintText: hint,
             border: InputBorder.none,
             prefixIcon: prefix,
             suffixIcon: suffix,
-            prefixIconColor: textColor ?? theme.appColors.tertiary,
+            prefixIconColor: theme.appColors.tertiary,
           ),
           cursorColor: theme.appColors.primary,
           keyboardType: textInputType,

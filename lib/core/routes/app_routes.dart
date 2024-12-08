@@ -1,3 +1,4 @@
+import 'package:ai_connect/core/widgets/adaptive_home/adaptive_home_layout.dart';
 import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ai_connect/features/auth/presentation/screen/auth_screen.dart';
 import 'package:ai_connect/features/auth/presentation/screen/otp_verification_screen.dart';
@@ -7,7 +8,9 @@ import 'package:ai_connect/features/chatting/presentation/views/screen/chatting_
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:ai_connect/features/dashboard/dashboard_screen.dart';
 import 'package:ai_connect/features/onboarding/presentation/screen/onboarding_screen.dart';
+import 'package:ai_connect/features/user/presentation/bloc/user_profile_bloc.dart';
 import 'package:ai_connect/service_locator.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,14 +31,22 @@ abstract class AppRoutes {
         GoRoute(
           path: '/',
           builder: (context, state) {
-            if (isSignedIn) return const DashboardScreen();
+            return AdaptiveHomeLayout(isSignedIn: isSignedIn);
+          },
+        ),
+        GoRoute(
+          path: onboarding,
+          builder: (context, state) {
             return const OnboardingScreen();
           },
         ),
         GoRoute(
           path: dashboard,
           builder: (context, state) {
-            return const DashboardScreen();
+            return BlocProvider(
+              create: (context) => profileBlocProviderBuilder(),
+              child: DashboardScreen(),
+            );
           },
         ),
         GoRoute(
@@ -47,17 +58,13 @@ abstract class AppRoutes {
         GoRoute(
           path: auth,
           builder: (context, state) {
-            return BlocProvider(
-              create: (context) => getIt<AuthBloc>(),
-              child: const AuthScreen(),
-            );
+            return authMultiBlocProviderWrapper(child: const AuthScreen());
           },
         ),
         GoRoute(
           path: phoneAuthScreen,
           builder: (context, state) {
-            return BlocProvider(
-              create: (context) => getIt<AuthBloc>(),
+            return authMultiBlocProviderWrapper(
               child: const PhoneAuthScreen(),
             );
           },
@@ -66,8 +73,7 @@ abstract class AppRoutes {
           path: otpVerificationScreen,
           builder: (context, state) {
             final phone = state.extra as String;
-            return BlocProvider(
-              create: (context) => getIt<AuthBloc>(),
+            return authMultiBlocProviderWrapper(
               child: OtpVerificationScreen(
                 phoneNum: phone,
               ),
@@ -89,4 +95,28 @@ abstract class AppRoutes {
       ],
     );
   }
+
+  static MultiBlocProvider authMultiBlocProviderWrapper(
+      {required Widget child}) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<AuthBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => profileBlocProviderBuilder(),
+        ),
+      ],
+      child: child,
+    );
+  }
+}
+
+UserProfileBloc profileBlocProviderBuilder() {
+  return UserProfileBloc(
+    createUserProfileUCase: getIt(),
+    fetchUserProfileUcase: getIt(),
+    setUserProfileImgUcase: getIt(),
+    updateUserProfileUcase: getIt(),
+  );
 }

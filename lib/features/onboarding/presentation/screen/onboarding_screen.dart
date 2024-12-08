@@ -4,7 +4,6 @@ import 'package:ai_connect/core/routes/app_routes.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:ai_connect/core/utils/helper.dart';
-import 'package:ai_connect/core/utils/size_config.dart';
 import 'package:ai_connect/core/widgets/custom_elevated_btn.dart';
 import 'package:ai_connect/features/onboarding/model/onboarding_model.dart';
 import 'package:ai_connect/features/onboarding/presentation/widgets/onboarding_item.dart';
@@ -20,9 +19,9 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    SizeConfig.init(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -43,7 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     bkColor: context.theme.appColors.primary,
                     icon: null,
                     onPressed: () {
-                      GoRouter.of(context).go(AppRoutes.auth);
+                      GoRouter.of(context).pushReplacement(AppRoutes.auth);
                     },
                   )
                 : CustomElevatedBtn(

@@ -38,7 +38,6 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
       final error = LocalFailure.handleError(exception);
       emit(SettingFailureState(message: error.message));
     }, (themMode) {
-      debugPrint("Selected: ${theme.name}");
       emit(SettingSwitchThemeState(mode: theme));
     });
   }
@@ -60,15 +59,12 @@ class SettingsBloc extends Bloc<SettingEvents, SettingStatus> {
     SettingGetAppThemeEvent event,
     Emitter<SettingStatus> emit,
   ) async {
-    debugPrint("Selected: The Function get Called");
     final result = await GetAppThemeUCase.call();
     result.fold((exception) {
       final error = LocalFailure.handleError(exception);
       emit(SettingFailureState(message: error.message));
     }, (theme) {
       this.theme = ThemeMode.values.byName(theme.name);
-
-      debugPrint("Selected: ${this.theme.name}");
       emit(SettingSwitchThemeState(mode: theme));
     });
   }

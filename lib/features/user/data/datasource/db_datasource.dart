@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ai_connect/core/datasource/supabase_client.dart';
 import 'package:ai_connect/features/user/data/models/user_model.dart';
 import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 const String tblName = "profiles";
@@ -14,26 +15,36 @@ class DbDataSource {
 
   Future<void> createUserProfile({required UserEntity user}) async {
     final userJson = (user as UserModel).toMap();
-    return await supabaseClient.instance.from(tblName).insert(userJson);
+    debugPrint("User JsonInfo: $userJson");
+    return await supabaseClient.instance
+        .from(tblName)
+        .insert(userJson)
+        .then((_) {
+      debugPrint("User JsonInfo1: $userJson");
+    });
   }
 
   Future<void> updateUserProfile({required UserEntity user}) async {
-    final userJson = (user as UserModel).toMap();
+    final userJson = user.toModel.toMap() as Map;
+    final userId = userJson.remove('id');
+
+    debugPrint("User JsonInfo: $userJson");
     return await supabaseClient.instance
         .from(tblName)
         .update(userJson)
-        .eq('uuid', user.id!);
+        .eq('id', userId);
   }
 
-  Future<PostgrestResponse<PostgrestList>> fetchUserProfile({
-    required String userId,
-  }) async {
+  Future<PostgrestResponse<PostgrestList>> fetchUserProfile() async {
+    final userId = currentSession!.user.id;
     return await supabaseClient.instance
         .from(tblName)
         .select()
-        .eq('uuid', userId)
+        .eq('id', userId)
         .count(CountOption.exact);
   }
+
+  Session? get currentSession => supabaseClient.instance.auth.currentSession;
 
   Future<String> setUserProfileImg(
       {required File imgFile, required String userName}) async {

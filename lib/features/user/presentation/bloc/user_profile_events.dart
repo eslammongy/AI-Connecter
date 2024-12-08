@@ -9,25 +9,23 @@ abstract class UserProfileEvents {
 class UserProfileCreateEvent extends UserProfileEvents {
   final UserEntity user;
 
-  UserProfileCreateEvent({required this.user});
+  const UserProfileCreateEvent({required this.user});
 }
 
 class UserProfileUpdateEvent extends UserProfileEvents {
   final UserEntity user;
 
-  UserProfileUpdateEvent({required this.user});
+  const UserProfileUpdateEvent({required this.user});
 }
 
 class UserProfileFetchEvent extends UserProfileEvents {
-  final String userId;
-
-  UserProfileFetchEvent({required this.userId});
+  const UserProfileFetchEvent();
 }
 
 class UserProfileSetImgEvent extends UserProfileEvents {
   final File imgFile;
   final String userName;
-  UserProfileSetImgEvent({
+  const UserProfileSetImgEvent({
     required this.imgFile,
     required this.userName,
   });

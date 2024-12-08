@@ -1,3 +1,5 @@
+import 'package:ai_connect/features/user/data/models/user_model.dart';
+
 class UserEntity {
   final String? id;
   final String? name;
@@ -16,4 +18,12 @@ class UserEntity {
     this.createdAt,
     this.token,
   });
+
+  get toModel => UserModel(
+      id: id,
+      name: name,
+      email: email,
+      photoUrl: photoUrl,
+      phone: phone,
+      createdAt: createdAt);
 }

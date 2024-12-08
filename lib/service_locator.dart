@@ -1,6 +1,7 @@
 import 'package:ai_connect/core/constant/constants.dart';
 import 'package:ai_connect/core/datasource/app_storage.dart';
 import 'package:ai_connect/core/datasource/supabase_client.dart';
+import 'package:ai_connect/core/utils/internet_checker_service.dart';
 import 'package:ai_connect/features/auth/data/datasource/auth_service.dart';
 import 'package:ai_connect/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:ai_connect/features/auth/domain/repositories/auth_repository.dart';
@@ -33,11 +34,14 @@ final getIt = GetIt.instance;
 
 Future<void> initAppDependencies() async {
   await dotenv.load(fileName: ".env");
+  // Supabase Client Dependency
+  AppSupabaseClient supabaseClient = await initSupabaseClient();
+  InternetConnectivityChecker.initialize();
+
   await initGoogleGeminiAI();
   AppStorage appStorage = initAppStorage();
   await initSettingsModule(appStorage: appStorage);
-  // Supabase Client Dependency
-  AppSupabaseClient supabaseClient = await initSupabaseClient();
+
   await initAuthModule(supabaseClient: supabaseClient, appStorage: appStorage);
   await initUserProfileModule(supabaseClient);
 }
@@ -77,7 +81,6 @@ Future<void> initUserProfileModule(AppSupabaseClient supabaseClient) async {
 
 Future<AppSupabaseClient> initSupabaseClient() async {
   final supabaseClient = AppSupabaseClient();
-  await AppSupabaseClient.initialize();
   getIt.registerLazySingleton<AppSupabaseClient>(() => supabaseClient);
   return supabaseClient;
 }

@@ -21,7 +21,7 @@ abstract class AppStrings {
   static const String signInWithGoogle = "Sign in with Google";
   static const String signInWithApple = "Sign in with Apple";
   static const String signInWithPhone = "Sign in with Phone";
-  static const String signInWithPhoneHint = "Enter your phone number";
+  static const String signInWithPhoneHint = "1030909009";
   static const String signInWithPhoneVerify = "Verify";
 
   static const String phoneAuthentication = "Phone Authentication";
