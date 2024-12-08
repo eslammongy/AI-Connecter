@@ -82,8 +82,8 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
     result.fold((error) {
       final errorMsg = error.message;
       emit(UserProfileFailureState(errorMsg: errorMsg));
-    }, (user) {
-      emit(UserProfileSetImgState());
+    }, (url) {
+      emit(UserProfileSetImgState(imgUrl: url));
     });
   }
 }

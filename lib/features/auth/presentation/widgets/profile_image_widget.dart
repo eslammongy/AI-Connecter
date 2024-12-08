@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:ai_connect/core/theme/app_theme.dart';
-import 'package:ai_connect/core/utils/helper.dart';
+import 'package:ai_connect/core/utils/image_picker.dart';
 import 'package:ai_connect/core/widgets/image_picker/image_picker_button.dart';
 import 'package:ai_connect/core/widgets/image_picker/image_picker_sheet.dart';
 import 'package:ai_connect/features/user/presentation/bloc/user_profile_bloc.dart';
@@ -22,6 +22,7 @@ class ProfileImageSection extends StatefulWidget {
 
 class _ProfileImageSectionState extends State<ProfileImageSection> {
   File? selectedImg;
+  final imagePicker = ImagePickerUtility();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,8 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                   ),
                 )
               : CacheNetworkProfileImg(
-                  imgUrl: widget.profileImgUrl ?? "https://i.pravatar.cc/300",
+                  imgUrl:
+                      "https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 ),
           Positioned(
               bottom: 5,
@@ -54,7 +56,8 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                     onGalleryTap: () async {
                       //* close the bottom sheet
                       GoRouter.of(context).pop();
-                      final imgFile = await pickGalleryImage(context);
+                      final imgFile =
+                          await imagePicker.pickGalleryImage(context);
                       if (imgFile != null) {
                         updateProfileImage(userBloc, imgFile);
                       }
@@ -62,7 +65,8 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                     onCameraTap: () async {
                       //* close the bottom sheet
                       GoRouter.of(context).pop();
-                      final imgFile = await pickImageFromCamera(context);
+                      final imgFile =
+                          await imagePicker.pickImageFromCamera(context);
                       if (imgFile != null) {
                         updateProfileImage(userBloc, imgFile);
                       }
@@ -85,40 +89,5 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
       UserProfileSetImgEvent(imgFile: imgFile),
     );
     setState(() => selectedImg = File(imgFile.path));
-  }
-
-  /// pick an image from camera
-  Future<XFile?> pickImageFromCamera(BuildContext context) async {
-    try {
-      final imagePicker = ImagePicker();
-      final pickedImg = await imagePicker.pickImage(source: ImageSource.camera);
-
-      if (pickedImg == null) return null;
-      return pickedImg;
-    } on Exception catch (e) {
-      if (!context.mounted) return null;
-      return handleExpState(e.toString());
-    }
-  }
-
-  /// pick an image fromGallery
-  Future<XFile?> pickGalleryImage(BuildContext context) async {
-    final ImagePicker picker = ImagePicker();
-
-    try {
-      final XFile? pickedFile =
-          await picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile == null) return null;
-      return pickedFile;
-    } on Exception catch (e) {
-      if (!context.mounted) return null;
-      return handleExpState(e.toString());
-    }
-  }
-
-  Null handleExpState(String expMsg) {
-    displaySnackBar(context, expMsg);
-    GoRouter.of(context).pop();
-    return null;
   }
 }

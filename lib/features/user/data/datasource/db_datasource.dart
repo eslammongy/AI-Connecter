@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ai_connect/core/datasource/supabase_client.dart';
 import 'package:ai_connect/features/user/data/models/user_model.dart';
 import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
@@ -26,8 +28,6 @@ class DbDataSource {
   Future<void> updateUserProfile({required UserEntity user}) async {
     final userJson = user.toModel.toMap() as Map;
     final userId = userJson.remove('id');
-
-    debugPrint("User JsonInfo: $userJson");
     return await supabaseClient.instance
         .from(tblName)
         .update(userJson)
@@ -43,24 +43,31 @@ class DbDataSource {
         .count(CountOption.exact);
   }
 
+  String retrieveProfileImgUrl(String url) {
+    return supabaseClient.instance.storage
+        .from('profile_images')
+        .getPublicUrl("c732f09d-d9c9-4766-9ec8-1336cfff9d43/profile");
+  }
+
   Session? get currentSession => supabaseClient.instance.auth.currentSession;
+
   Future<String> setUserProfileImg({
     required XFile imgFile,
   }) async {
     final userId = currentSession!.user.id;
-
     final String uploadPath = '/$userId/profile';
     final imgExtension = imgFile.path.split('.').last.toLowerCase();
     final imgBytes = await imgFile.readAsBytes();
-    return await supabaseClient.instance.storage
-        .from('profile_images')
-        .uploadBinary(
+    final fileOptions = FileOptions(
+      cacheControl: '3600',
+      upsert: true,
+      contentType: 'image/$imgExtension',
+    );
+    return await supabaseClient.instance.storage.from('profile_images').upload(
           uploadPath,
-          imgBytes,
-          fileOptions: FileOptions(
-              cacheControl: '3600',
-              upsert: true,
-              contentType: 'image/$imgExtension'),
+          File(imgFile.path),
+          fileOptions: fileOptions,
         );
   }
 }
+//

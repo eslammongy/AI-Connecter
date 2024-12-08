@@ -35,7 +35,13 @@ class UserProfileFetchState extends UserProfileStatus {
   List<Object?> get props => [user];
 }
 
-class UserProfileSetImgState extends UserProfileStatus {}
+class UserProfileSetImgState extends UserProfileStatus {
+  final String imgUrl;
+
+  const UserProfileSetImgState({required this.imgUrl});
+  @override
+  List<Object?> get props => [imgUrl];
+}
 
 class UserProfileFailureState extends UserProfileStatus {
   final String? errorMsg;

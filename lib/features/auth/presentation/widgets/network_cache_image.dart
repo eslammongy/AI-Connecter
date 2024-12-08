@@ -18,6 +18,7 @@ class CacheNetworkProfileImg extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imgUrl,
       fadeInCurve: Curves.bounceInOut,
+      fit: BoxFit.contain,
       imageBuilder: (context, imageProvider) => _buildImageRoundedCard(
         imgUrl,
         theme,
@@ -25,6 +26,7 @@ class CacheNetworkProfileImg extends StatelessWidget {
       placeholder: (context, url) => _buildImageRoundedCard(
         imgUrl,
         theme,
+        isLoading: true,
       ),
       errorWidget: (context, url, error) => _buildImageRoundedCard(
         imgUrl,
@@ -33,7 +35,8 @@ class CacheNetworkProfileImg extends StatelessWidget {
     );
   }
 
-  _buildImageRoundedCard(String imgUrl, ThemeData theme) {
+  _buildImageRoundedCard(String imgUrl, ThemeData theme,
+      {bool isLoading = false}) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(100),
@@ -48,10 +51,14 @@ class CacheNetworkProfileImg extends StatelessWidget {
         // backgroundImage: AssetImage(AppAssetsManager.aiIMage),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Image.asset(
-            AppAssetsManager.softwareAgent,
-            fit: BoxFit.contain,
-          ),
+          child: isLoading
+              ? CircularProgressIndicator(
+                  color: theme.appColors.primary,
+                )
+              : Image.asset(
+                  AppAssetsManager.softwareAgent,
+                  fit: BoxFit.contain,
+                ),
         ),
       ),
     );

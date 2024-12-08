@@ -34,7 +34,6 @@ class ProfileScreenBody extends StatelessWidget {
       bloc: UserProfileBloc.get(context)..add(UserProfileFetchEvent()),
       listener: (context, state) {
         if (state is UserProfileFailureState) {
-          _updateUserData(userBloc.user);
           displaySnackBar(context, state.errorMsg ?? "");
         }
         if (state is UserProfileFetchState) {
@@ -42,6 +41,12 @@ class ProfileScreenBody extends StatelessWidget {
         }
         if (state is UserProfileUpdateState) {
           _updateUserData(state.user);
+        }
+        if (state is UserProfileSetImgState) {
+          debugPrint("Image Url: ${state.imgUrl}");
+          userBloc.user =
+              userBloc.user.toModel.copyWith(photoUrl: state.imgUrl);
+          userBloc.add(UserProfileUpdateEvent(user: userBloc.user));
         }
       },
       builder: (context, state) {
@@ -84,8 +89,8 @@ class ProfileScreenBody extends StatelessWidget {
                   focusColor: context.theme.appColors.primary,
                   prefix: const Icon(FontAwesomeIcons.userLarge),
                   onSubmitted: (value) {
-                    final user = userBloc.user.toModel.copyWith(name: value);
-                    userBloc.add(UserProfileUpdateEvent(user: user));
+                    userBloc.add(UserProfileUpdateEvent(
+                        user: userBloc.user.toModel.copyWith(name: value)));
                   },
                 ),
                 const SizedBox(
@@ -101,8 +106,8 @@ class ProfileScreenBody extends StatelessWidget {
                   focusColor: context.theme.appColors.primary,
                   prefix: const Icon(FontAwesomeIcons.solidEnvelope),
                   onSubmitted: (value) {
-                    final user = userBloc.user.toModel.copyWith(email: value);
-                    userBloc.add(UserProfileUpdateEvent(user: user));
+                    userBloc.add(UserProfileUpdateEvent(
+                        user: userBloc.user.toModel.copyWith(email: value)));
                   },
                 ),
                 const SizedBox(

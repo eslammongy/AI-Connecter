@@ -19,7 +19,7 @@ class UserEntity {
     this.token,
   });
 
-  get toModel => UserModel(
+  UserModel get toModel => UserModel(
       id: id,
       name: name,
       email: email,

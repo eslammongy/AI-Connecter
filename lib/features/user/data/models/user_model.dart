@@ -43,7 +43,7 @@ class UserModel extends UserEntity {
       id: map['id'] != null ? map['id'] as String : null,
       name: map['username'] != null ? map['username'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
-      photoUrl: map['photoUrl'] != null ? map['photoUrl'] as String : null,
+      photoUrl: map['photo_url'] != null ? map['photo_url'] as String : null,
       phone: map['phone'] != null ? map['phone'] as String : null,
       token: map['token'] != null ? map['token'] as String : null,
       createdAt: map['createdAt'],

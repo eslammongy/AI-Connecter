@@ -36,8 +36,14 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   Future<Either<Failure, UserEntity>> fetchUserProfile() async {
     try {
       final result = await dataSource.fetchUserProfile();
+
       if (result.data.isNotEmpty) {
-        final user = UserModel.fromMap(result.data[0]);
+        final metaData = result.data[0];
+        final imageUrl =
+            dataSource.retrieveProfileImgUrl(metaData['photo_url']);
+        metaData['photo_url'] = imageUrl;
+        debugPrint("User JsonInfo: $metaData");
+        final user = UserModel.fromMap(metaData);
         return Right(user);
       }
       return left(_unknowingExp(msg: "user not found"));
@@ -74,7 +80,6 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
       );
       return Right(imgPath);
     } catch (exp) {
-      debugPrint("Profile Img Exp: $exp");
       return left(_catchExceptions(exp: exp));
     }
   }
