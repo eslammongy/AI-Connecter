@@ -4,6 +4,8 @@ import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/utils/helper.dart';
 import 'package:ai_connect/core/widgets/image_picker/image_picker_button.dart';
 import 'package:ai_connect/core/widgets/image_picker/image_picker_sheet.dart';
+import 'package:ai_connect/features/user/presentation/bloc/user_profile_bloc.dart';
+import 'package:ai_connect/features/user/presentation/bloc/user_profile_events.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,6 +25,7 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
 
   @override
   Widget build(BuildContext context) {
+    final userBloc = UserProfileBloc.get(context);
     return SizedBox(
       height: 160,
       child: Stack(
@@ -53,7 +56,7 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                       GoRouter.of(context).pop();
                       final imgFile = await pickGalleryImage(context);
                       if (imgFile != null) {
-                        updateProfileImage(imgFile);
+                        updateProfileImage(userBloc, imgFile);
                       }
                     },
                     onCameraTap: () async {
@@ -61,7 +64,7 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                       GoRouter.of(context).pop();
                       final imgFile = await pickImageFromCamera(context);
                       if (imgFile != null) {
-                        updateProfileImage(imgFile);
+                        updateProfileImage(userBloc, imgFile);
                       }
                     },
                   );
@@ -77,15 +80,19 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
     side: const BorderSide(width: 2, color: Colors.white),
   );
 
-  updateProfileImage(XFile imgFile) => setState(() {
-        selectedImg = File(imgFile.path);
-      });
+  updateProfileImage(UserProfileBloc userBloc, XFile imgFile) {
+    userBloc.add(
+      UserProfileSetImgEvent(imgFile: imgFile),
+    );
+    setState(() => selectedImg = File(imgFile.path));
+  }
 
   /// pick an image from camera
   Future<XFile?> pickImageFromCamera(BuildContext context) async {
     try {
       final imagePicker = ImagePicker();
       final pickedImg = await imagePicker.pickImage(source: ImageSource.camera);
+
       if (pickedImg == null) return null;
       return pickedImg;
     } on Exception catch (e) {

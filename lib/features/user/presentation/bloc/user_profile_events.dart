@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
+import 'package:image_picker/image_picker.dart';
 
 abstract class UserProfileEvents {
   const UserProfileEvents();
@@ -23,10 +22,8 @@ class UserProfileFetchEvent extends UserProfileEvents {
 }
 
 class UserProfileSetImgEvent extends UserProfileEvents {
-  final File imgFile;
-  final String userName;
+  final XFile imgFile;
   const UserProfileSetImgEvent({
     required this.imgFile,
-    required this.userName,
   });
 }

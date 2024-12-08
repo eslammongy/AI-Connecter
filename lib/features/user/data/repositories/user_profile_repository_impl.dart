@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ai_connect/core/error/api_failure.dart';
 import 'package:ai_connect/features/user/data/datasource/db_datasource.dart';
 import 'package:ai_connect/features/user/data/models/user_model.dart';
@@ -7,6 +5,7 @@ import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
 import 'package:ai_connect/features/user/domain/repositories/user_profile_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserProfileRepositoryImpl implements UserProfileRepository {
@@ -66,13 +65,16 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   }
 
   @override
-  Future<Either<Failure, String>> setUserProfileImg(
-      {required File imgFile, required String userName}) async {
+  Future<Either<Failure, String>> setUserProfileImg({
+    required XFile imgFile,
+  }) async {
     try {
       final imgPath = await dataSource.setUserProfileImg(
-          imgFile: imgFile, userName: userName);
+        imgFile: imgFile,
+      );
       return Right(imgPath);
     } catch (exp) {
+      debugPrint("Profile Img Exp: $exp");
       return left(_catchExceptions(exp: exp));
     }
   }

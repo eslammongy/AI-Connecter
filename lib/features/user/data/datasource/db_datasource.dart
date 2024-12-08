@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:ai_connect/core/datasource/supabase_client.dart';
 import 'package:ai_connect/features/user/data/models/user_model.dart';
 import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 const String tblName = "profiles";
@@ -45,12 +44,23 @@ class DbDataSource {
   }
 
   Session? get currentSession => supabaseClient.instance.auth.currentSession;
+  Future<String> setUserProfileImg({
+    required XFile imgFile,
+  }) async {
+    final userId = currentSession!.user.id;
 
-  Future<String> setUserProfileImg(
-      {required File imgFile, required String userName}) async {
-    final String uploadPath = 'profile_images/${userName}profile_img';
+    final String uploadPath = '/$userId/profile';
+    final imgExtension = imgFile.path.split('.').last.toLowerCase();
+    final imgBytes = await imgFile.readAsBytes();
     return await supabaseClient.instance.storage
-        .from('usersImg')
-        .upload(uploadPath, imgFile);
+        .from('profile_images')
+        .uploadBinary(
+          uploadPath,
+          imgBytes,
+          fileOptions: FileOptions(
+              cacheControl: '3600',
+              upsert: true,
+              contentType: 'image/$imgExtension'),
+        );
   }
 }

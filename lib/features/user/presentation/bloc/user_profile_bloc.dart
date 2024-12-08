@@ -78,7 +78,6 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
     emit(UserProfileLoadingState());
     final result = await setUserProfileImgUcase.call(
       imgFile: event.imgFile,
-      userName: event.userName,
     );
     result.fold((error) {
       final errorMsg = error.message;

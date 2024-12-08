@@ -34,15 +34,14 @@ class ProfileScreenBody extends StatelessWidget {
       bloc: UserProfileBloc.get(context)..add(UserProfileFetchEvent()),
       listener: (context, state) {
         if (state is UserProfileFailureState) {
+          _updateUserData(userBloc.user);
           displaySnackBar(context, state.errorMsg ?? "");
         }
         if (state is UserProfileFetchState) {
-          userBloc.user = state.user;
-          _updateUserData(userBloc.user);
+          _updateUserData(state.user);
         }
         if (state is UserProfileUpdateState) {
-          userBloc.user = state.user;
-          _updateUserData(userBloc.user);
+          _updateUserData(state.user);
         }
       },
       builder: (context, state) {
@@ -101,6 +100,10 @@ class ProfileScreenBody extends StatelessWidget {
                   bkColor: context.theme.appColors.surface,
                   focusColor: context.theme.appColors.primary,
                   prefix: const Icon(FontAwesomeIcons.solidEnvelope),
+                  onSubmitted: (value) {
+                    final user = userBloc.user.toModel.copyWith(email: value);
+                    userBloc.add(UserProfileUpdateEvent(user: user));
+                  },
                 ),
                 const SizedBox(
                   height: 20,
