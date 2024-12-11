@@ -34,6 +34,7 @@ class ProfileScreenBody extends StatelessWidget {
       bloc: UserProfileBloc.get(context)..add(UserProfileFetchEvent()),
       listener: (context, state) {
         if (state is UserProfileFailureState) {
+          debugPrint("UserProfileFailureState: ${state.errorMsg}");
           displaySnackBar(context, state.errorMsg ?? "");
         }
         if (state is UserProfileFetchState) {
@@ -43,7 +44,6 @@ class ProfileScreenBody extends StatelessWidget {
           _updateUserData(state.user);
         }
         if (state is UserProfileSetImgState) {
-          debugPrint("Image Url: ${state.imgUrl}");
           userBloc.user =
               userBloc.user.toModel.copyWith(photoUrl: state.imgUrl);
           userBloc.add(UserProfileUpdateEvent(user: userBloc.user));
@@ -143,6 +143,7 @@ class ProfileScreenBody extends StatelessWidget {
                       title: "Sign out",
                       description: "Are you sure you want to sign out",
                       onConfirm: () {
+                        userBloc.shouldFetch = false;
                         AuthBloc.get(context).add(AuthSignOutEvent());
                       },
                     );

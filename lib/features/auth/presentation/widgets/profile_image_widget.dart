@@ -39,6 +39,7 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                   shape: roundedShape,
                   child: CircleAvatar(
                     radius: 80,
+                    backgroundColor: Colors.transparent,
                     backgroundImage: FileImage(selectedImg!),
                   ),
                 )

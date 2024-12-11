@@ -149,7 +149,7 @@ Future<bool> checkIsUserSigned() async {
     final token = await appStorage.getFromAppStorage(
       AppConstants.keepUserLoggedKey,
     );
-
+    debugPrint("Auth Token: $token");
     return token == null ? false : true;
   } catch (e) {
     return false;

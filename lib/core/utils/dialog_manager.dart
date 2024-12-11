@@ -13,14 +13,14 @@ class LoadingDialogManager {
   LoadingDialogManager._internal();
 
   factory LoadingDialogManager.of(BuildContext context) {
-    _context ??= context;
+    _context = context;
     return _instance;
   }
   // Show the dialog
   void displayDialog({
     String? message = "Please waiting...",
   }) {
-    if (_context == null) return;
+    if (_context == null || !_context!.mounted) return;
     showDialog(
       context: _context!,
       barrierDismissible: false, // Prevents dismissing the dialog

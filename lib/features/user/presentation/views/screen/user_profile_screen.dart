@@ -22,14 +22,14 @@ class UserProfileScreen extends StatelessWidget {
         if (state is AuthLoadingState) {
           LoadingDialogManager.of(context).displayDialog();
         }
-
         if (state is AuthSignOutState) {
+          LoadingDialogManager.closeDialog();
           AuthBloc.get(context).add(AuthKeepUserSignedInEvent(token: null));
           GoRouter.of(context).pushReplacement(AppRoutes.auth);
         }
+
         if (state is AuthFailureState) {
           LoadingDialogManager.closeDialog();
-          debugPrint("PhoneErrorMsg: ${state.message}");
           displaySnackBar(context, state.message ?? "");
         }
       },

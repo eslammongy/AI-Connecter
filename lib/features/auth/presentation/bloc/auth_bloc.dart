@@ -20,6 +20,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthStatus> {
   final SignOutUCase signOutUCase;
 
   bool isUserSigned = false;
+
   AuthBloc({
     required this.authWithAppleUCase,
     required this.authWithGoogleUCase,
@@ -109,15 +110,13 @@ class AuthBloc extends Bloc<AuthEvents, AuthStatus> {
     AuthKeepUserSignedInEvent event,
     Emitter<AuthStatus> emit,
   ) async {
-    if (event.token == null) return;
     final result = await keepUserSignedInUCase.call(value: event.token);
     result.fold((exception) {
       final error = LocalFailure.handleError(exception);
       emit(AuthFailureState(message: error.message));
     }, (token) {
-      emit(AuthKeepUserSignedInState(
-        token: token,
-      ));
+      if (token == null) return;
+      emit(AuthKeepUserSignedInState(token: token));
     });
   }
 
@@ -131,7 +130,7 @@ class AuthBloc extends Bloc<AuthEvents, AuthStatus> {
       (errMessage) {
         emit(AuthFailureState(message: errMessage.message));
       },
-      (state) {
+      (_) {
         emit(AuthSignOutState());
       },
     );

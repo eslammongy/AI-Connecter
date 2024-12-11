@@ -133,9 +133,6 @@ class AuthRepositoryImpl implements AuthRepository {
     String? token,
   }) async {
     try {
-      if (!InternetConnectivityChecker.hasConnection) {
-        return Left(ConnectionFailure(message: connectionFailureMsg));
-      }
       await appStorage.putInAppStorage(AppConstants.keepUserLoggedKey, token);
       return Right(token);
     } catch (e) {
