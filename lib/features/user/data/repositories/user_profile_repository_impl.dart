@@ -39,9 +39,6 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
 
       if (result.data.isNotEmpty) {
         final metaData = result.data[0];
-        final imageUrl =
-            dataSource.retrieveProfileImgUrl(metaData['photo_url']);
-        metaData['photo_url'] = imageUrl;
         debugPrint("User JsonInfo: $metaData");
         final user = UserModel.fromMap(metaData);
         return Right(user);

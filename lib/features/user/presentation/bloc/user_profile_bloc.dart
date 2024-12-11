@@ -19,10 +19,15 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
     required this.setUserProfileImgUcase,
     required this.updateUserProfileUcase,
   }) : super(UserProfileInitialState()) {
+    
     on<UserProfileCreateEvent>(onCreateUserProfileEvent);
     on<UserProfileFetchEvent>(onFetchUserProfileEvent);
     on<UserProfileUpdateEvent>(onUpdateUserProfileEvent);
     on<UserProfileSetImgEvent>(onSetUserProfileImgEvent);
+  }
+
+  mapEventToState(UserProfileEvents event) {
+
   }
   static UserProfileBloc get(context) => BlocProvider.of(context);
   UserEntity user = UserEntity();

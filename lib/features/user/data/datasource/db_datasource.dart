@@ -46,7 +46,7 @@ class DbDataSource {
   String retrieveProfileImgUrl(String url) {
     return supabaseClient.instance.storage
         .from('profile_images')
-        .getPublicUrl("c732f09d-d9c9-4766-9ec8-1336cfff9d43/profile");
+        .getPublicUrl(url);
   }
 
   Session? get currentSession => supabaseClient.instance.auth.currentSession;
@@ -57,17 +57,18 @@ class DbDataSource {
     final userId = currentSession!.user.id;
     final String uploadPath = '/$userId/profile';
     final imgExtension = imgFile.path.split('.').last.toLowerCase();
-    final imgBytes = await imgFile.readAsBytes();
     final fileOptions = FileOptions(
-      cacheControl: '3600',
+      cacheControl: '10',
       upsert: true,
       contentType: 'image/$imgExtension',
     );
-    return await supabaseClient.instance.storage.from('profile_images').upload(
+    await supabaseClient.instance.storage.from('profile_images').upload(
           uploadPath,
           File(imgFile.path),
           fileOptions: fileOptions,
         );
+    return supabaseClient.instance.storage
+        .from('profile_images')
+        .getPublicUrl(uploadPath);
   }
 }
-//

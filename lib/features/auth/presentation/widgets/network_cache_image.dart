@@ -9,6 +9,7 @@ class CacheNetworkProfileImg extends StatelessWidget {
     required this.imgUrl,
     this.radius = 80,
   });
+
   final String imgUrl;
   final double radius;
 
@@ -19,24 +20,20 @@ class CacheNetworkProfileImg extends StatelessWidget {
       imageUrl: imgUrl,
       fadeInCurve: Curves.bounceInOut,
       fit: BoxFit.contain,
-      imageBuilder: (context, imageProvider) => _buildImageRoundedCard(
-        imgUrl,
-        theme,
-      ),
+      imageBuilder: (context, imageProvider) =>
+          _buildImageRoundedCard(theme, imageProvider: imageProvider),
       placeholder: (context, url) => _buildImageRoundedCard(
-        imgUrl,
         theme,
         isLoading: true,
       ),
       errorWidget: (context, url, error) => _buildImageRoundedCard(
-        imgUrl,
         theme,
       ),
     );
   }
 
-  _buildImageRoundedCard(String imgUrl, ThemeData theme,
-      {bool isLoading = false}) {
+  _buildImageRoundedCard(ThemeData theme,
+      {bool isLoading = false, ImageProvider? imageProvider}) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(100),
@@ -48,19 +45,30 @@ class CacheNetworkProfileImg extends StatelessWidget {
       child: CircleAvatar(
         radius: radius,
         backgroundColor: Colors.transparent,
-        // backgroundImage: AssetImage(AppAssetsManager.aiIMage),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: isLoading
-              ? CircularProgressIndicator(
-                  color: theme.appColors.primary,
-                )
-              : Image.asset(
-                  AppAssetsManager.softwareAgent,
-                  fit: BoxFit.contain,
-                ),
-        ),
+            padding: const EdgeInsets.all(10.0),
+            child: _setRoundedImgCardChild(
+              theme,
+              isLoading: isLoading,
+              imageProvider: imageProvider,
+            )),
       ),
     );
+  }
+
+  Widget _setRoundedImgCardChild(ThemeData theme,
+      {bool isLoading = false, ImageProvider? imageProvider}) {
+    if (isLoading) {
+      return CircularProgressIndicator(
+        color: theme.appColors.primary,
+      );
+    }
+    return imageProvider != null
+        ? Image(image: imageProvider, fit: BoxFit.contain)
+        : Image.asset(
+            AppAssetsManager.logo,
+            width: 32,
+            fit: BoxFit.contain,
+          );
   }
 }
