@@ -90,6 +90,11 @@ Future<void> initGoogleGeminiAI() async {
     model: 'gemini-1.5-flash-latest',
     apiKey: dotenv.get(AppConstants.googleGeminiAPIKey),
   );
+  // final session = geminiAI.startChat(history: [
+  //   Content("user", [TextPart("text"), DataPart(mimeType, bytes), FilePart()])
+  // ]);
+  // await session.sendMessage();
+  // await session.sendMessageStream(message);
   getIt.registerLazySingleton<GenerativeModel>(() => geminiAI);
 }
 

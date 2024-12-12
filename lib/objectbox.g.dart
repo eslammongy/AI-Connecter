@@ -40,7 +40,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 2781195762046084675),
       name: 'MessageEntity',
-      lastPropertyId: const obx_int.IdUid(6, 8813076200884821610),
+      lastPropertyId: const obx_int.IdUid(7, 8012861659051901636),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
@@ -74,7 +74,12 @@ final _entities = <obx_int.ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const obx_int.IdUid(3, 6041271803203078139),
-            relationTarget: 'ChatEntity')
+            relationTarget: 'ChatEntity'),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 8012861659051901636),
+            name: 'dataBytesPath',
+            type: 9,
+            flags: 0)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
@@ -187,13 +192,17 @@ obx_int.ModelDefinition getObjectBoxModel() {
               : fbb.writeString(object.filePath!);
           final ruleOffset =
               object.rule == null ? null : fbb.writeString(object.rule!);
-          fbb.startTable(7);
+          final dataBytesPathOffset = object.dataBytesPath == null
+              ? null
+              : fbb.writeString(object.dataBytesPath!);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, textOffset);
           fbb.addOffset(2, filePathOffset);
           fbb.addOffset(3, ruleOffset);
           fbb.addInt64(4, object.sentAt?.millisecondsSinceEpoch);
           fbb.addInt64(5, object.chat.targetId);
+          fbb.addOffset(6, dataBytesPathOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -208,6 +217,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
               .vTableGetNullable(buffer, rootOffset, 6);
           final filePathParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 8);
+          final dataBytesPathParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 16);
           final ruleParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 10);
           final sentAtParam = sentAtValue == null
@@ -217,6 +229,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               id: idParam,
               text: textParam,
               filePath: filePathParam,
+              dataBytesPath: dataBytesPathParam,
               rule: ruleParam,
               sentAt: sentAtParam);
           object.chat.targetId =
@@ -265,4 +278,8 @@ class MessageEntity_ {
   /// See [MessageEntity.chat].
   static final chat = obx.QueryRelationToOne<MessageEntity, ChatEntity>(
       _entities[1].properties[5]);
+
+  /// See [MessageEntity.dataBytesPath].
+  static final dataBytesPath =
+      obx.QueryStringProperty<MessageEntity>(_entities[1].properties[6]);
 }

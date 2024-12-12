@@ -30,4 +30,5 @@ abstract class AppStrings {
       'Please enter a valid phone number.';
   static const String otpVerificationMsg =
       "please enter the otp code sent to your phone";
+  static const String chattingScreenBlankMsg = "Hello! How can I help you?";
 }

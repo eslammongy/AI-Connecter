@@ -19,7 +19,7 @@
     },
     {
       "id": "4:2781195762046084675",
-      "lastPropertyId": "6:8813076200884821610",
+      "lastPropertyId": "7:8012861659051901636",
       "name": "MessageEntity",
       "properties": [
         {
@@ -55,6 +55,11 @@
           "flags": 520,
           "indexId": "3:6041271803203078139",
           "relationTarget": "ChatEntity"
+        },
+        {
+          "id": "7:8012861659051901636",
+          "name": "dataBytesPath",
+          "type": 9
         }
       ],
       "relations": []

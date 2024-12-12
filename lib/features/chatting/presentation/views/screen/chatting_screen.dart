@@ -1,5 +1,8 @@
+import 'package:ai_connect/core/constant/app_assets_manager.dart';
+import 'package:ai_connect/core/constant/app_strings.dart';
 import 'package:ai_connect/core/constant/fake_json.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:ai_connect/features/chatting/domain/entities/chat_entity.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/chatting_screen_appbar.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/msg_question_bubble.dart';
@@ -18,7 +21,7 @@ class ChattingScreen extends StatelessWidget {
     return Scaffold(
       appBar: ChattingScreenAppBar(title: title),
       body: chatEntity == null
-          ? const Center(child: Text("Start with asking me any thing"))
+          ? buildBlankWidget(context)
           : ListView.builder(
               padding: EdgeInsets.only(bottom: 10, left: 15, right: 15),
               physics: const BouncingScrollPhysics(),
@@ -53,6 +56,29 @@ class ChattingScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Center buildBlankWidget(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            AppAssetsManager.softwareAgent,
+            width: 220,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            AppStrings.chattingScreenBlankMsg,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.styleBold30(context),
+          ),
+        ],
       ),
     );
   }

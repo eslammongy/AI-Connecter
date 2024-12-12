@@ -8,14 +8,13 @@ class MessageEntity {
   @Id(assignable: true)
   int id;
   final String? text;
-  final String? filePath;
   String? rule = MsgRules.user.name;
+  // used for indicating that the message has a file part
+  final String? filePath;
+  // used for indicating that the message has a data part
+  final String? dataBytesPath;
   @Property(type: PropertyType.date)
   final DateTime? sentAt;
-
-  // This property won't be stored in the ObjectBox database
-  @Transient()
-  final Uri? fileBytes;
 
   // Transient field for the actual enum
   @Transient()
@@ -27,9 +26,9 @@ class MessageEntity {
     this.id = 0,
     this.text,
     this.filePath,
+    this.dataBytesPath,
     this.rule,
     this.sentAt,
-    this.fileBytes,
   });
 }
 

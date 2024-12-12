@@ -7,7 +7,7 @@ class MessageModel extends MessageEntity {
     super.rule,
     super.filePath,
     super.sentAt,
-    super.fileBytes,
+    super.dataBytesPath,
   });
 
   Map<String, dynamic> toJson() {
@@ -16,7 +16,7 @@ class MessageModel extends MessageEntity {
       'filePath': filePath,
       'rule': rule,
       'sentAt': sentAt?.millisecondsSinceEpoch,
-      'fileBytes': fileBytes,
+      'fileBytes': dataBytesPath,
     };
   }
 
@@ -27,7 +27,8 @@ class MessageModel extends MessageEntity {
       filePath: map['filePath'] != null ? map['filePath'] as String : null,
       rule: map['rule'] != null ? map['rule'] as String : MsgRules.user.name,
       sentAt: map['sentAt'] != null ? DateTime.tryParse(map['sentAt']) : null,
-      fileBytes: map['fileBytes'] != null ? map['fileBytes'] as Uri : null,
+      dataBytesPath:
+          map['dataBytesPath'] != null ? map['dataBytesPath'] as String : null,
     );
   }
 
@@ -41,7 +42,7 @@ class MessageModel extends MessageEntity {
           filePath == other.filePath &&
           rule == other.rule &&
           sentAt == other.sentAt &&
-          fileBytes == other.fileBytes;
+          dataBytesPath == other.dataBytesPath;
 
   @override
   int get hashCode =>
@@ -50,10 +51,10 @@ class MessageModel extends MessageEntity {
       filePath.hashCode ^
       rule.hashCode ^
       sentAt.hashCode ^
-      fileBytes.hashCode;
+      dataBytesPath.hashCode;
 
   @override
   String toString() {
-    return 'MessageEntity{id: $id, text: $text, filePath: $filePath, rule: $rule, sentAt: $sentAt, fileBytes: $fileBytes, chat: $chat}';
+    return 'MessageEntity{id: $id, text: $text, filePath: $filePath, rule: $rule, sentAt: $sentAt, fileBytes: $dataBytesPath, chat: $chat}';
   }
 }
