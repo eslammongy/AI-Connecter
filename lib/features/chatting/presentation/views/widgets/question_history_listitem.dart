@@ -70,42 +70,44 @@ class QuestionHistoryListItem extends StatelessWidget {
                   ),
                 ),
               ),
+              // Positioned(
+              //   top: 4,
+              //   right: 10,
+              //   child: Card(
+              //     color: context.theme.appColors.primary,
+              //     elevation: 0,
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(100)),
+              //     child: InkWell(
+              //       onTap: () {},
+              //       borderRadius: BorderRadius.circular(100),
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Icon(
+              //           isArchived
+              //               ? Icons.unarchive_rounded
+              //               : Icons.archive_rounded,
+              //           color: Colors.white,
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Positioned(
-                top: 4,
+                bottom: 5,
                 right: 10,
                 child: Card(
+                  elevation: 0,
                   color: context.theme.appColors.primary,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100)),
-                  child: InkWell(
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(100),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        isArchived
-                            ? Icons.unarchive_rounded
-                            : Icons.archive_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ),
-              ),
-              Positioned(
-                bottom: 10,
-                right: 10,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(
-                          width: 1, color: context.theme.appColors.tertiary)),
                   child: Padding(
-                    padding: const EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.all(6.0),
                     child: Text(
                       dateTimeFormatter(DateTime.now()),
                       textAlign: TextAlign.start,
-                      style: AppTextStyles.styleSemiBold20(context),
+                      style: AppTextStyles.styleBold16(context),
                     ),
                   ),
                 ),

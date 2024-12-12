@@ -9,16 +9,26 @@ import 'package:ai_connect/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'core/utils/helper.dart';
 
 Future<void> main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await dotenv.load(fileName: ".env");
   fillQuestionList();
   await initAppDependencies();
-  runApp(
-    const AIConnector(),
-  );
+  await runAiConnectorApp();
+}
+
+Future<void> runAiConnectorApp() async {
+  return await Future.delayed(const Duration(milliseconds: 400), () {
+    FlutterNativeSplash.remove();
+    runApp(
+      const AIConnector(),
+    );
+  });
 }
 
 class AIConnector extends StatelessWidget {

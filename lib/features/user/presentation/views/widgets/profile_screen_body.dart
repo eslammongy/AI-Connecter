@@ -27,8 +27,7 @@ class ProfileScreenBody extends StatelessWidget {
           displaySnackBar(context, state.errorMsg ?? "");
         }
         if (state is UserProfileSetImgState) {
-          userBloc.user =
-              userBloc.user.toModel.copyWith(photoUrl: state.imgUrl);
+          userBloc.user.photoUrl = state.imgUrl;
           userBloc.add(UserProfileUpdateEvent(user: userBloc.user));
         }
       },

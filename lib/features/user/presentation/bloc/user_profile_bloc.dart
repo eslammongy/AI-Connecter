@@ -5,7 +5,6 @@ import 'package:ai_connect/features/user/domain/usecases/set_user_profile_img_uc
 import 'package:ai_connect/features/user/domain/usecases/update_user_profile_ucase.dart';
 import 'package:ai_connect/features/user/presentation/bloc/user_profile_events.dart';
 import 'package:ai_connect/features/user/presentation/bloc/user_profile_status.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
@@ -40,8 +39,7 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
       final errorMsg = error.message;
       emit(UserProfileFailureState(errorMsg: errorMsg));
     }, (user) {
-      this.user = user;
-      emit(UserProfileCreateState(user: user));
+      emit(UserProfileCreateState(user: this.user = user));
     });
   }
 
@@ -54,11 +52,10 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
     final result = await fetchUserProfileUcase.call();
     result.fold((error) {
       final errorMsg = error.message;
-      debugPrint("Fetch User Event Error: $errorMsg");
       emit(UserProfileFailureState(errorMsg: errorMsg));
     }, (user) {
-      this.user = user;
-      emit(UserProfileFetchState(user: user));
+      shouldFetch = false;
+      emit(UserProfileFetchState(user: this.user = user));
     });
   }
 

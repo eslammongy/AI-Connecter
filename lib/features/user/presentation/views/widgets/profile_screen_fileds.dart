@@ -17,19 +17,24 @@ class ProfileScreenChangeableComponent extends StatelessWidget {
     final userPhoneField = TextEditingController();
     final userEmailField = TextEditingController();
     final userBloc = UserProfileBloc.get(context);
+
     return BlocConsumer<UserProfileBloc, UserProfileStatus>(
       listener: (context, state) {
-        if (state is UserProfileFetchState || state is UserProfileUpdateState) {
+        debugPrint("Current Profile State: $state");
+        if (state is UserProfileFetchState) {
           updateProfileFields(
-            userBloc,
-            state,
-            userNameField,
-            userEmailField,
-            userPhoneField,
-          );
+              userBloc, state, userNameField, userEmailField, userPhoneField);
+        }
+        if (state is UserProfileFetchState) {
+          updateProfileFields(
+              userBloc, state, userNameField, userEmailField, userPhoneField);
         }
       },
       builder: (context, state) {
+        if (!userBloc.shouldFetch) {
+          updateProfileFields(
+              userBloc, state, userNameField, userEmailField, userPhoneField);
+        }
         return Column(
           children: [
             Visibility(
@@ -109,11 +114,12 @@ class ProfileScreenChangeableComponent extends StatelessWidget {
   }
 
   void updateProfileFields(
-      UserProfileBloc userBloc,
-      UserProfileStatus state,
-      TextEditingController userNameField,
-      TextEditingController userEmailField,
-      TextEditingController userPhoneField) {
+    UserProfileBloc userBloc,
+    UserProfileStatus state,
+    TextEditingController userNameField,
+    TextEditingController userEmailField,
+    TextEditingController userPhoneField,
+  ) {
     userNameField.text = state.user?.name ?? userBloc.user.name ?? "";
     userEmailField.text = state.user?.email ?? userBloc.user.email ?? "";
     userPhoneField.text = state.user?.phone ?? userBloc.user.phone ?? "";
