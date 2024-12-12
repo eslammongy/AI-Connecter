@@ -1,5 +1,3 @@
-import 'package:ai_connect/core/constant/constants.dart';
-import 'package:ai_connect/core/datasource/app_storage.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:ai_connect/features/auth/domain/usecases/auth_with_apple_ucase.dart';
@@ -141,17 +139,3 @@ AuthBloc get getAuthBloc => AuthBloc(
       verifyPhoneOtpUCase: getIt<VerifyPhoneOtpUCase>(),
       signOutUCase: getIt<SignOutUCase>(),
     );
-
-@override
-Future<bool> checkIsUserSigned() async {
-  final appStorage = getIt<AppStorage>();
-  try {
-    final token = await appStorage.getFromAppStorage(
-      AppConstants.keepUserLoggedKey,
-    );
-    debugPrint("Auth Token: $token");
-    return token == null ? false : true;
-  } catch (e) {
-    return false;
-  }
-}

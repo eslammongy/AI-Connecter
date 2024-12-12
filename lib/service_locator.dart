@@ -31,26 +31,44 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'features/auth/domain/usecases/keep_user_logged_uc.dart';
 
 final getIt = GetIt.instance;
-
+late final GenerativeModel geminiModel;
+late final bool isUserSigned;
 Future<void> initAppDependencies() async {
-  await dotenv.load(fileName: ".env");
-  // Supabase Client Dependency
-  AppSupabaseClient supabaseClient = await initSupabaseClient();
+  isUserSigned = await checkIsUserSigned();
   InternetConnectivityChecker.initialize();
-
-  await initGoogleGeminiAI();
-  AppStorage appStorage = initAppStorage();
+  geminiModel = googleGeminiAI;
   await initSettingsModule(appStorage: appStorage);
-
   await initAuthModule(supabaseClient: supabaseClient, appStorage: appStorage);
   await initUserProfileModule(supabaseClient);
 }
 
+Future<bool> checkIsUserSigned() async {
+  try {
+    final token = await appStorage.getFromAppStorage(
+      AppConstants.keepUserLoggedKey,
+    );
+    return token == null ? false : true;
+  } catch (e) {
+    return false;
+  }
+}
+
+AppSupabaseClient get supabaseClient => AppSupabaseClient();
+
+AppStorage get appStorage => AppStorage();
+
+GenerativeModel get googleGeminiAI {
+  return GenerativeModel(
+    model: 'gemini-1.5-flash-latest',
+    apiKey: dotenv.get(AppConstants.googleGeminiAPIKey),
+  );
+}
+
 Future<void> initUserProfileModule(AppSupabaseClient supabaseClient) async {
-  getIt.registerLazySingleton<DbDataSource>(
-      () => DbDataSource(supabaseClient: supabaseClient));
+  final dbDataSource = DbDataSource(supabaseClient: supabaseClient);
+
   getIt.registerLazySingleton<UserProfileRepository>(
-      () => UserProfileRepositoryImpl(dataSource: getIt<DbDataSource>()));
+      () => UserProfileRepositoryImpl(dataSource: dbDataSource));
 
   getIt.registerLazySingleton<CreateUserProfileUCase>(
     () => CreateUserProfileUCase(
@@ -79,25 +97,6 @@ Future<void> initUserProfileModule(AppSupabaseClient supabaseClient) async {
   );
 }
 
-Future<AppSupabaseClient> initSupabaseClient() async {
-  final supabaseClient = AppSupabaseClient();
-  getIt.registerLazySingleton<AppSupabaseClient>(() => supabaseClient);
-  return supabaseClient;
-}
-
-Future<void> initGoogleGeminiAI() async {
-  final geminiAI = GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
-    apiKey: dotenv.get(AppConstants.googleGeminiAPIKey),
-  );
-  // final session = geminiAI.startChat(history: [
-  //   Content("user", [TextPart("text"), DataPart(mimeType, bytes), FilePart()])
-  // ]);
-  // await session.sendMessage();
-  // await session.sendMessageStream(message);
-  getIt.registerLazySingleton<GenerativeModel>(() => geminiAI);
-}
-
 Future<void> initSettingsModule({required AppStorage appStorage}) async {
   getIt.registerLazySingleton<SettingsRepository>(
       () => SettingsRepositoryImpl(appStorage: appStorage));
@@ -121,25 +120,16 @@ Future<void> initSettingsModule({required AppStorage appStorage}) async {
   );
 }
 
-AppStorage initAppStorage() {
-  final appStorage = AppStorage();
-  return getIt.registerSingleton<AppStorage>(appStorage);
-}
-
 Future<void> initAuthModule({
   required AppSupabaseClient supabaseClient,
   required AppStorage appStorage,
 }) async {
   // Auth Repository Dependency
-  getIt.registerLazySingleton<AuthService>(
-    () => AuthService(supabaseClient: supabaseClient),
-  );
-  getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(
-        authService: getIt<AuthService>(), appStorage: appStorage),
-  );
+  final authService = AuthService(supabaseClient: supabaseClient);
 
-  // Auth UseCase Dependencies
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(authService: authService, appStorage: appStorage),
+  );
 
   getIt.registerLazySingleton<KeepUserSignedInUCase>(
     () => KeepUserSignedInUCase(

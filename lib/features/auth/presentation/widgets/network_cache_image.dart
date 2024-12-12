@@ -64,7 +64,11 @@ class CacheNetworkProfileImg extends StatelessWidget {
       );
     }
     return imageProvider != null
-        ? Image(image: imageProvider, fit: BoxFit.contain)
+        ? Image(
+            image: imageProvider,
+            fit: BoxFit.contain,
+            width: 110,
+          )
         : Image.asset(
             AppAssetsManager.logo,
             width: 32,

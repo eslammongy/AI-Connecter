@@ -8,15 +8,14 @@ import 'package:ai_connect/features/settings/presentation/bloc/settings_status.d
 import 'package:ai_connect/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'core/utils/helper.dart';
 
-late final bool isUserSigned;
-
 Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   fillQuestionList();
   await initAppDependencies();
-  isUserSigned = await checkIsUserSigned();
   runApp(
     const AIConnector(),
   );
