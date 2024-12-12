@@ -3,6 +3,7 @@ import 'package:ai_connect/core/routes/app_routes.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:ai_connect/core/theme/text_style.dart';
 import 'package:ai_connect/core/utils/helper.dart';
+import 'package:ai_connect/features/chatting/domain/entities/chat_entity.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,8 +15,10 @@ class QuestionHistoryListItem extends StatelessWidget {
   const QuestionHistoryListItem({
     super.key,
     this.isArchived = false,
+    required this.chat,
   });
   final bool isArchived;
+  final ChatEntity chat;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +27,7 @@ class QuestionHistoryListItem extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 10),
       child: InkWell(
         onTap: () {
-          GoRouter.of(context).push(
-            AppRoutes.chattingScreen,
-          );
+          GoRouter.of(context).push(AppRoutes.chattingScreen, extra: chat);
         },
         child: SizedBox(
           height: 150,

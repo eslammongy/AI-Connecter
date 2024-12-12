@@ -3,6 +3,7 @@ import 'package:ai_connect/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:ai_connect/features/auth/presentation/screen/auth_screen.dart';
 import 'package:ai_connect/features/auth/presentation/screen/otp_verification_screen.dart';
 import 'package:ai_connect/features/auth/presentation/screen/phone_auth_screen.dart';
+import 'package:ai_connect/features/chatting/domain/entities/chat_entity.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/chat_history_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/chatting_screen.dart';
 import 'package:ai_connect/features/chatting/presentation/views/screen/home_screen.dart';
@@ -83,7 +84,8 @@ abstract class AppRoutes {
         GoRoute(
           path: chattingScreen,
           builder: (context, state) {
-            return const ChattingScreen();
+            final chat = state.extra as ChatEntity?;
+            return ChattingScreen(chatEntity: chat);
           },
         ),
         GoRoute(

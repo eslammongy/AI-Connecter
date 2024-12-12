@@ -1,5 +1,6 @@
 import 'package:ai_connect/core/constant/fake_json.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/features/chatting/domain/entities/chat_entity.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/chatting_screen_appbar.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/msg_question_bubble.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/question_input_builder.dart';
@@ -9,22 +10,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 const title = "This Test Sample Title Chatting Screen more more";
 
 class ChattingScreen extends StatelessWidget {
-  const ChattingScreen({super.key});
+  const ChattingScreen({super.key, this.chatEntity});
+  final ChatEntity? chatEntity;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ChattingScreenAppBar(title: title),
-      body: ListView.builder(
-        padding: EdgeInsets.only(bottom: 10, left: 15, right: 15),
-        physics: const BouncingScrollPhysics(),
-        itemCount: listOfQuestions.length,
-        itemBuilder: (context, index) {
-          return MsgQuestionBubble(
-            msgEntity: listOfQuestions[index],
-          );
-        },
-      ),
+      body: chatEntity == null
+          ? const Center(child: Text("Start with asking me any thing"))
+          : ListView.builder(
+              padding: EdgeInsets.only(bottom: 10, left: 15, right: 15),
+              physics: const BouncingScrollPhysics(),
+              itemCount: listOfQuestions.length,
+              itemBuilder: (context, index) {
+                return MsgQuestionBubble(
+                  msgEntity: listOfQuestions[index],
+                );
+              },
+            ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 16, right: 16, bottom: 30),
         child: Row(

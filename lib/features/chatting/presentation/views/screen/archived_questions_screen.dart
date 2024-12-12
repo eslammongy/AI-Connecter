@@ -1,3 +1,4 @@
+import 'package:ai_connect/features/chatting/domain/entities/chat_entity.dart';
 import 'package:ai_connect/features/chatting/presentation/views/widgets/question_history_listitem.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class ArchivedQuestionsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return QuestionHistoryListItem(
                   isArchived: true,
+                  chat: ChatEntity(),
                 );
               },
               itemCount: 10,

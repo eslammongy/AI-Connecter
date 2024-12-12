@@ -1,3 +1,4 @@
+import 'package:ai_connect/features/chatting/domain/entities/chat_entity.dart';
 import 'package:flutter/material.dart';
 
 import 'question_history_listitem.dart';
@@ -13,7 +14,9 @@ class QuestionsHistoryList extends StatelessWidget {
         scrollDirection: Axis.vertical,
         itemExtent: 150,
         itemBuilder: (context, index) {
-          return QuestionHistoryListItem();
+          return QuestionHistoryListItem(
+            chat: ChatEntity(),
+          );
         },
         itemCount: 10,
       ),
