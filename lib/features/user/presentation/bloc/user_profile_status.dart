@@ -2,9 +2,11 @@ import 'package:ai_connect/features/user/domain/entities/user_entity.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class UserProfileStatus extends Equatable {
-  const UserProfileStatus();
+  final String? errorMsg;
+  final UserEntity? user;
+  const UserProfileStatus({this.errorMsg, this.user});
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [errorMsg, user];
 }
 
 class UserProfileInitialState extends UserProfileStatus {}
@@ -12,25 +14,19 @@ class UserProfileInitialState extends UserProfileStatus {}
 class UserProfileLoadingState extends UserProfileStatus {}
 
 class UserProfileCreateState extends UserProfileStatus {
-  final UserEntity user;
-
-  const UserProfileCreateState({required this.user});
+  const UserProfileCreateState({required UserEntity user}) : super(user: user);
   @override
   List<Object?> get props => [user];
 }
 
 class UserProfileUpdateState extends UserProfileStatus {
-  final UserEntity user;
-
-  const UserProfileUpdateState({required this.user});
+  const UserProfileUpdateState({required UserEntity user}) : super(user: user);
   @override
   List<Object?> get props => [user];
 }
 
 class UserProfileFetchState extends UserProfileStatus {
-  final UserEntity user;
-
-  const UserProfileFetchState({required this.user});
+  const UserProfileFetchState({required UserEntity user}) : super(user: user);
   @override
   List<Object?> get props => [user];
 }
@@ -44,8 +40,7 @@ class UserProfileSetImgState extends UserProfileStatus {
 }
 
 class UserProfileFailureState extends UserProfileStatus {
-  final String? errorMsg;
-  const UserProfileFailureState({this.errorMsg});
+  const UserProfileFailureState({super.errorMsg});
   @override
   List<Object?> get props => [errorMsg];
 }

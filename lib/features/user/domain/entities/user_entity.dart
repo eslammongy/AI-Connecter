@@ -1,13 +1,13 @@
 import 'package:ai_connect/features/user/data/models/user_model.dart';
 
 class UserEntity {
-  final String? id;
-  final String? name;
-  final String? email;
-  final String? photoUrl;
-  final String? phone;
-  final DateTime? createdAt;
-  final String? token;
+  String? id;
+  String? name;
+  String? email;
+  String? photoUrl;
+  String? phone;
+  DateTime? createdAt;
+  String? token;
 
   UserEntity({
     this.id,

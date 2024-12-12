@@ -67,13 +67,12 @@ class UserProfileBloc extends Bloc<UserProfileEvents, UserProfileStatus> {
     Emitter<UserProfileStatus> emit,
   ) async {
     emit(UserProfileLoadingState());
-    final result = await updateUserProfileUcase.call(user: event.user);
+    final result = await updateUserProfileUcase.call(user: event.user ?? user);
     result.fold((error) {
       final errorMsg = error.message;
       emit(UserProfileFailureState(errorMsg: errorMsg));
     }, (user) {
-      this.user = user;
-      emit(UserProfileUpdateState(user: user));
+      emit(UserProfileUpdateState(user: this.user = user));
     });
   }
 

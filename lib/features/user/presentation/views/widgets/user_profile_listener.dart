@@ -22,7 +22,7 @@ class UserProfileListener extends StatelessWidget {
         // after creating user profile success we navigate to dashboard, and keep the use signed in
         if (state is UserProfileCreateState) {
           AuthBloc.get(context).add(AuthKeepUserSignedInEvent(
-            token: state.user.token,
+            token: state.user?.token,
           ));
         }
         if (state is UserProfileFailureState) {

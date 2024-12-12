@@ -14,10 +14,7 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userNameField = TextEditingController();
-    final userPhoneField = TextEditingController();
-    final userEmailField = TextEditingController();
-    return BlocConsumer<AuthBloc, AuthStatus>(
+    return BlocListener<AuthBloc, AuthStatus>(
       listener: (context, state) {
         if (state is AuthLoadingState) {
           LoadingDialogManager.of(context).displayDialog();
@@ -33,12 +30,7 @@ class UserProfileScreen extends StatelessWidget {
           displaySnackBar(context, state.message ?? "");
         }
       },
-      builder: (context, state) {
-        return ProfileScreenBody(
-            userNameField: userNameField,
-            userEmailField: userEmailField,
-            userPhoneField: userPhoneField);
-      },
+      child: ProfileScreenBody(),
     );
   }
 }

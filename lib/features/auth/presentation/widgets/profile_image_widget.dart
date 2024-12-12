@@ -40,7 +40,10 @@ class _ProfileImageSectionState extends State<ProfileImageSection> {
                   child: CircleAvatar(
                     radius: 80,
                     backgroundColor: Colors.transparent,
-                    backgroundImage: FileImage(selectedImg!),
+                    child: Image.file(
+                      selectedImg!,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 )
               : CacheNetworkProfileImg(

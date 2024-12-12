@@ -12,9 +12,9 @@ class UserProfileCreateEvent extends UserProfileEvents {
 }
 
 class UserProfileUpdateEvent extends UserProfileEvents {
-  final UserEntity user;
+  final UserEntity? user;
 
-  const UserProfileUpdateEvent({required this.user});
+  const UserProfileUpdateEvent({this.user});
 }
 
 class UserProfileFetchEvent extends UserProfileEvents {
