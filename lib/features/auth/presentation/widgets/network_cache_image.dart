@@ -1,7 +1,7 @@
-import 'package:ai_connect/core/constant/app_assets_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:ai_connect/core/theme/app_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
+import 'package:ai_connect/core/constant/app_assets_manager.dart';
 
 class CacheNetworkProfileImg extends StatelessWidget {
   const CacheNetworkProfileImg({
@@ -45,13 +45,12 @@ class CacheNetworkProfileImg extends StatelessWidget {
       child: CircleAvatar(
         radius: radius,
         backgroundColor: Colors.transparent,
-        child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: _setRoundedImgCardChild(
-              theme,
-              isLoading: isLoading,
-              imageProvider: imageProvider,
-            )),
+        backgroundImage: imageProvider,
+        child: _setRoundedImgCardChild(
+          theme,
+          isLoading: isLoading,
+          imageProvider: imageProvider,
+        ),
       ),
     );
   }

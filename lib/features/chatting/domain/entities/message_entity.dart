@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:ai_connect/features/chatting/domain/entities/chat_entity.dart';
+import 'package:flutter/foundation.dart';
 import 'package:objectbox/objectbox.dart';
 
 enum MsgRules { user, bot }
@@ -15,13 +18,15 @@ class MessageEntity {
   final String? dataBytesPath;
   @Property(type: PropertyType.date)
   final DateTime? sentAt;
-
-  // Transient field for the actual enum
   @Transient()
   MsgRules get msgRule => MsgRules.values.byName(rule!);
   set msgRule(MsgRules value) => rule = value.name;
-  final ToOne<ChatEntity> chat = ToOne<ChatEntity>();
+  @Transient()
+  File? file;
+  @Transient()
+  Uint8List? dataBytes;
 
+  final chat = ToOne<ChatEntity>();
   MessageEntity({
     this.id = 0,
     this.text,

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:ai_connect/core/error/api_failure.dart';
 import 'package:ai_connect/features/chatting/domain/entities/chat_entity.dart';
 import 'package:ai_connect/features/chatting/domain/entities/message_entity.dart';
 import 'package:ai_connect/features/chatting/domain/repositories/chatting_repository.dart';
+import 'package:ai_connect/service_locator.dart';
 import 'package:dartz/dartz.dart';
-import 'package:google_generative_ai/src/api.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 class ChattingRepositoryImpl implements ChattingRepository {
   @override
@@ -40,9 +43,23 @@ class ChattingRepositoryImpl implements ChattingRepository {
 
   @override
   Future<Either<GenerateContentResponse, Failure>> sendGeminiMessage(
-      {required MessageEntity message}) {
-    // TODO: implement sendGeminiMessage
-    throw UnimplementedError();
+      {required MessageEntity msg, List<Content>? history}) async {
+    final geminiSession = geminiModel.startChat(history: history);
+    final content = Content(msg.msgRule.name, [TextPart(msg.text ?? "")]);
+    try {
+      if (msg.filePath != null) {
+        final uriFile = File(msg.filePath!).uri;
+        content.parts.add(FilePart(uriFile));
+      }
+      if (msg.dataBytesPath != null) {
+        final byteData = await File(msg.filePath!).readAsBytes();
+        content.parts.add(DataPart("image/png", byteData));
+      }
+      final response = await geminiSession.sendMessage(content);
+      return left(response);
+    } catch (exp) {
+      return right(ConnectionFailure(message: exp.toString()));
+    }
   }
 
   @override

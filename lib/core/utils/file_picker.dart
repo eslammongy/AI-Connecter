@@ -1,49 +1,48 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FilePickerUtil {
-  // Singleton pattern for reuse
-  FilePickerUtil._privateConstructor();
-  static final FilePickerUtil instance = FilePickerUtil._privateConstructor();
-
-  final ImagePicker _imagePicker = ImagePicker();
+abstract class FilePickerUtil {
+  static final ImagePicker _imagePicker = ImagePicker();
 
   /// Pick an image from the gallery
-  Future<File?> pickImageFromGallery() async {
+  static Future<Uint8List?> pickImageFromGallery() async {
     try {
-      final XFile? image = await _imagePicker.pickImage(source: ImageSource.gallery);
+      final XFile? image =
+          await _imagePicker.pickImage(source: ImageSource.gallery);
       if (image != null) {
-        return File(image.path);
+        return File(image.path).readAsBytes();
       }
     } catch (e) {
-      print('Error picking image from gallery: $e');
+      debugPrint('Error picking image from gallery: $e');
     }
-    return null; // Return null if no file selected or an error occurs
+    return null;
   }
 
   /// Pick an image from the camera
   Future<File?> pickImageFromCamera() async {
     try {
-      final XFile? image = await _imagePicker.pickImage(source: ImageSource.camera);
+      final XFile? image =
+          await _imagePicker.pickImage(source: ImageSource.camera);
       if (image != null) {
         return File(image.path);
       }
     } catch (e) {
-      print('Error picking image from camera: $e');
+      debugPrint('Error picking image from camera: $e');
     }
-    return null; // Return null if no file selected or an error occurs
+    return null;
   }
 
   /// Pick any file from device storage
-  Future<File?> pickFile() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
-      if (result != null && result.files.single.path != null) {
-        return File(result.files.single.path!);
-      }
-    } catch (e) {
-      print('Error picking file: $e');
-    }
-    return null; // Return null if no file selected or an error occurs
-  }
+  // Future<File?> pickFile() async {
+  //   try {
+  //     FilePickerResult? result = await FilePicker.platform.pickFiles();
+  //     if (result != null && result.files.single.path != null) {
+  //       return File(result.files.single.path!);
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error picking file: $e');
+  //   }
+  //   return null;
+  // }
 }

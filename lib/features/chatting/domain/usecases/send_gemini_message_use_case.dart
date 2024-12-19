@@ -8,9 +8,9 @@ class SendGeminiMessageUseCase {
   final ChattingRepository chattingRepository;
   const SendGeminiMessageUseCase({required this.chattingRepository});
 
-  Future<Either<GenerateContentResponse, Failure>> call({
-    required MessageEntity message,
-  }) async {
-    return await chattingRepository.sendGeminiMessage(message: message);
+  Future<Either<GenerateContentResponse, Failure>> call(
+      {required MessageEntity message, List<Content>? history}) async {
+    return await chattingRepository.sendGeminiMessage(
+        msg: message, history: history);
   }
 }

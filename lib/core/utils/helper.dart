@@ -82,7 +82,8 @@ Center displayLoadingWidget(
 }
 
 get staticBoxShadow => BoxShadow(
-      color: Colors.black.withOpacity(0.2), // Shadow color with transparency
+      color:
+          Colors.black.withValues(alpha: 0.3), // Shadow color with transparency
       spreadRadius: 2, // How far the shadow extends
       blurRadius: 2, // Blur effect
       offset: const Offset(1, 1), // Shadow position (x, y)
@@ -94,7 +95,7 @@ String dateTimeFormatter(DateTime dateTime) {
   return formatDT;
 }
 
-/// displaying a customized snackbar
+/// displaying a customized snack bar
 void displaySnackBar(BuildContext context, String msg,
     {bool isFailState = true}) {
   final theme = Theme.of(context);

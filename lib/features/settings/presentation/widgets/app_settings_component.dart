@@ -1,4 +1,6 @@
 import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/features/chatting/data/repositories/chatting_repository_impl.dart';
+import 'package:ai_connect/features/chatting/domain/entities/message_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,8 +20,24 @@ class AppSettingsComponent extends StatelessWidget {
           borderRadius: BorderRadius.circular(80),
         ),
         child: InkWell(
-          onTap: () {
-            _displaySettingSheet(context);
+          onTap: () async {
+            //_displaySettingSheet(context);
+            final chattingRepo = ChattingRepositoryImpl();
+            await chattingRepo
+                .sendGeminiMessage(
+                    msg: MessageEntity(
+                        text: "I will send you my CV to analysis it",
+                        rule: MsgRules.user.name))
+                .then(
+              (value) {
+                value.fold((res) {
+                  debugPrint(
+                      "Gemini Response: text:${res.text}:MetaData:${res.usageMetadata}");
+                }, (exp) {
+                  debugPrint("Gemini Expiation: $exp");
+                });
+              },
+            );
           },
           borderRadius: BorderRadius.circular(100),
           child: Padding(

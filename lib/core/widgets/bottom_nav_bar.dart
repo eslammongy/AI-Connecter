@@ -29,7 +29,7 @@ class FloatingBottomNavBar extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.black
-                  .withOpacity(0.3), // Shadow color with transparency
+                  .withValues(alpha: 0.3), // Shadow color with transparency
               spreadRadius: 6, // How far the shadow extends
               blurRadius: 4, // Blur effect
               offset: const Offset(1, 1), // Shadow position (x, y)

@@ -21,7 +21,7 @@ class SocialAuthContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         boxShadow: [staticBoxShadow],
-        color: context.theme.appColors.surface.withOpacity(0.3),
+        color: context.theme.appColors.surface.withValues(alpha: 0.3),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(

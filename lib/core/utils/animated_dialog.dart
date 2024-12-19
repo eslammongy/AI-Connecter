@@ -12,7 +12,7 @@ void showAnimatedDialog(
   showGeneralDialog(
     context: context,
     transitionDuration: const Duration(milliseconds: 350),
-    barrierColor: Colors.black.withOpacity(0.8),
+    barrierColor: Colors.black.withValues(alpha: 0.8),
     transitionBuilder: (_, anim, __, child) => _dialogAnimation(anim, child),
     pageBuilder: (_, __, ___) {
       return PopScope(

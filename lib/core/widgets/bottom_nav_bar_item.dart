@@ -33,8 +33,9 @@ class BottomNavItem extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            color:
-                isActive ? activeColor.withOpacity(0.45) : Colors.transparent,
+            color: isActive
+                ? activeColor.withValues(alpha: 0.45)
+                : Colors.transparent,
             elevation: 0,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

@@ -1,16 +1,15 @@
 import 'dart:io';
-
-import 'package:ai_connect/core/theme/app_theme.dart';
-import 'package:ai_connect/core/utils/image_picker.dart';
-import 'package:ai_connect/core/widgets/image_picker/image_picker_button.dart';
-import 'package:ai_connect/core/widgets/image_picker/image_picker_sheet.dart';
-import 'package:ai_connect/features/user/presentation/bloc/user_profile_bloc.dart';
-import 'package:ai_connect/features/user/presentation/bloc/user_profile_events.dart';
+import 'network_cache_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ai_connect/core/theme/app_theme.dart';
+import 'package:ai_connect/core/utils/image_picker.dart';
+import 'package:ai_connect/core/widgets/image_picker/image_picker_sheet.dart';
+import 'package:ai_connect/core/widgets/image_picker/image_picker_button.dart';
+import 'package:ai_connect/features/user/presentation/bloc/user_profile_bloc.dart';
+import 'package:ai_connect/features/user/presentation/bloc/user_profile_events.dart';
 
-import 'network_cache_image.dart';
 
 class ProfileImageSection extends StatefulWidget {
   const ProfileImageSection({super.key, required this.profileImgUrl});

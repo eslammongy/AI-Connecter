@@ -13,7 +13,7 @@ displayConfirmationActionDialog(
   await showDialog(
     context: context,
     barrierDismissible: false,
-    barrierColor: Theme.of(context).colorScheme.surface.withOpacity(0.6),
+    barrierColor: Theme.of(context).colorScheme.surface.withValues(alpha: 0.6),
     builder: (context) {
       return AlertDialog(
           backgroundColor: theme.appColors.surface,

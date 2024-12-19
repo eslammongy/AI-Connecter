@@ -38,7 +38,7 @@ class PhoneSubmissionCountryCode extends StatelessWidget {
                 showOnlyCountryWhenClosed: false,
                 dialogTextStyle: AppTextStyles.styleMedium16(context),
                 textStyle: AppTextStyles.styleMedium16(context),
-                barrierColor: theme.appColors.surface.withOpacity(0.4),
+                barrierColor: theme.appColors.surface.withValues(alpha: 0.4),
                 alignLeft: false,
                 dialogSize: Size(300, 360),
                 onChanged: (value) {

@@ -5,9 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 abstract class ChattingRepository {
-  Future<Either<GenerateContentResponse, Failure>> sendGeminiMessage({
-    required MessageEntity message,
-  });
+  Future<Either<GenerateContentResponse, Failure>> sendGeminiMessage(
+      {required MessageEntity msg, List<Content>? history});
 
   Future<Either<GenerateContentResponse, Failure>> sendChatGptMessage({
     required MessageEntity message,
